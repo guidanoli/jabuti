@@ -30,7 +30,7 @@ public class MainFrame extends JFrame {
 		// set panel layout
 		getContentPane().add(p);
 		// set menu bar
-		this.setJMenuBar(new MenuBar());
+		this.setJMenuBar(new MenuBar(this));
 		// set look and feel
 		try {
 			// windows :)
