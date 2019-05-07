@@ -15,11 +15,11 @@ public class MenuBar extends JMenuBar {
 		this.parent = parent;
 		edit_menu.setMnemonic(KeyEvent.VK_E);
 		// to do - parent pop up
-		pref_item.addActionListener(new MenuItemListener(this.parent,null));
+		pref_item.addActionListener(new MenuItemListener(this.parent,new MenuPopupPreferences()));
 		edit_menu.add(pref_item);
 		add(edit_menu);
 		about_menu.setMnemonic(KeyEvent.VK_A);
-		about_item.addActionListener(new MenuItemListener(this.parent,new AboutPopup()));
+		about_item.addActionListener(new MenuItemListener(this.parent,new MenuPopupAbout()));
 		about_menu.add(about_item);
 		add(about_menu);
 	}
