@@ -29,6 +29,8 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		// set panel layout
 		getContentPane().add(p);
+		// set menu bar
+		this.setJMenuBar(new MenuBar());
 		// set look and feel
 		try {
 			// windows :)
