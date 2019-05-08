@@ -6,8 +6,8 @@ import java.awt.*;
 public class MainFrame extends JFrame {
 
 	// size parameters
-	public final int DEF_H = 600;
-	public final int DEF_W = 800;
+	public final int DEF_H = 300;
+	public final int DEF_W = 400;
 	
 	// containers
 	JPanel p = new MainPanel();
