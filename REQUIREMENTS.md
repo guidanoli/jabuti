@@ -2,11 +2,16 @@
 
 * GUI on Java Swing
 * Show branches names on screen
-* Options: Setup / Make / Both / None as toggles
+* Options: Setup and Make as checkboxes
 * Select diferent options for diferent branches
-* Set me up button
-* Multithreads using Thread class
-* Call vis s and vis mlldamt using system calls
+* Set up button
+
+# Challenges
+
+* Call programs through Java
+* Make it efficient through the use of Threads
+* Make Properties file and popup dialog
+* Handle conflicts without prompting to shell
 
 # Future improvements
 
