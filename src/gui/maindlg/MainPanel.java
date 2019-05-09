@@ -18,7 +18,7 @@ public class MainPanel extends JPanel {
 		this.prop = prop;
 		this.branchManager = new BranchManager(prop);
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-		setBackground(Color.WHITE);
+		setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 		buildTable();
 	}
 		
@@ -28,6 +28,15 @@ public class MainPanel extends JPanel {
 		table = new JTable(model);
 		// Disable column dragging
 		table.getTableHeader().setReorderingAllowed(false);
+		// Set toggle's width
+		for( int i = 0 ; i < table.getColumnCount() ; i++ )
+		{
+			Class<?> type = table.getColumnClass(i);
+			if( type == Boolean.class )
+				table.getColumnModel().getColumn(i).setPreferredWidth(1);
+			else
+				table.getColumnModel().getColumn(i).setPreferredWidth(200);
+		}
 		// Centralizes all string values in table
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment( JLabel.CENTER );

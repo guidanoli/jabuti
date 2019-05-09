@@ -14,7 +14,7 @@ public class MainFrame extends JFrame {
 
 	// size parameters
 	public final int DEF_H = 300;
-	public final int DEF_W = 400;
+	public final int DEF_W = 600;
 
 	// containers
 	JPanel panel = new MainPanel(prop);
@@ -39,6 +39,8 @@ public class MainFrame extends JFrame {
 		panel = new MainPanel(prop);
 		// exit on close
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		// can't resize
+		setResizable(false);
 		// set panel layout
 		getContentPane().add(panel);
 		// set menu bar

@@ -41,9 +41,9 @@ public class BranchTableModel extends AbstractTableModel {
 		if(make) boolMake = manager.getBoolMake();
 	}
 	
-	public boolean isCellEditable(int rowIndex, int columnIndex) {
+/*	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		return false;
-	}
+	}*/
 	
 	public String getColumnName(int col) { return columnNames[col]; }
 	@SuppressWarnings({ "unchecked", "rawtypes" })
