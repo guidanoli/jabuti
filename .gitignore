@@ -1,3 +1,6 @@
+# Software Properties
+*.properties
+
 # Eclipse files
 .classpath
 .project
