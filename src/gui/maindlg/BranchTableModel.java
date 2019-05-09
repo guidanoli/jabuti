@@ -1,4 +1,4 @@
-package gui;
+package gui.maindlg;
 import javax.swing.table.*;
 import vis.BranchManager;
 
@@ -42,12 +42,17 @@ public class BranchTableModel extends AbstractTableModel {
 	}
 	
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return ( columnIndex == 2 || columnIndex == 3 );
+		return false;
 	}
+	
 	public String getColumnName(int col) { return columnNames[col]; }
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Class getColumnClass(int col) { return columnClasses[col]; }
-	public int getRowCount() { return branchNames.length; }
+	public int getRowCount() {
+		if( branchNames == null )
+			return 0;
+		return branchNames.length;
+	}
 	public int getColumnCount() { return 4; }
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch(columnIndex) {

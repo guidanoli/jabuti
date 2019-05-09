@@ -1,4 +1,4 @@
-package gui;
+package gui.maindlg;
 
 import javax.swing.*;
 import java.awt.*;

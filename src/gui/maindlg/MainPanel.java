@@ -1,6 +1,7 @@
-package gui;
+package gui.maindlg;
 import javax.swing.*;
 import javax.swing.table.*;
+
 import java.awt.*;
 import java.util.Properties;
 
@@ -30,6 +31,8 @@ public class MainPanel extends JPanel {
 	{
 		AbstractTableModel model = new BranchTableModel(branchManager);
 		table = new JTable(model);
+		// Disable column dragging
+		table.getTableHeader().setReorderingAllowed(false);
 		// Centralizes all string values in table
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment( JLabel.CENTER );

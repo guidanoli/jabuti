@@ -23,6 +23,7 @@ public class BranchManager {
 		    return new File(current, name).isDirectory();
 		  }
 		});
+		if( branches == null ) { return null; }
 		num_branches = branches.length;
 		return branches;
 	}
