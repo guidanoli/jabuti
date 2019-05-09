@@ -7,7 +7,7 @@ import javax.swing.ComboBoxModel;
 public class PreferencesComboModel extends AbstractListModel<String> implements ComboBoxModel<String> {
 
 	Object[][] list = { 
-			{ "path" , "Branches directory" , new DefaultPreferenceType() }
+			{ "path" , "Branches directory" , new DirectoryPreferenceType() }
 	};
 	
 	String selected;

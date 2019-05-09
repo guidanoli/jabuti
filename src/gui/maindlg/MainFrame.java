@@ -51,9 +51,7 @@ public class MainFrame extends JFrame {
 
 	protected void saveDefaultProperties() throws FileNotFoundException, IOException {
 		prop.setProperty("path", System.getProperty("user.home"));
-		while (prop.getProperty("path") == null) {
-			System.out.println("WAITING...");
-		}
+		while (prop.getProperty("path") == null) { }
 		prop.store(new FileOutputStream(PROP_PATH), null);
 	}
 	

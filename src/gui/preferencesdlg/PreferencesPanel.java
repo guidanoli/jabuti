@@ -16,7 +16,10 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 	JTextField txt = new JTextField();
 	JButton apply_btn = new JButton("Apply");
 	JButton close_btn = new JButton("Close");
+	
+	// Current preference
 	PreferenceType type;
+	Object value;
 	
 	// Meta components
 	PreferencesComboModel model;
@@ -44,7 +47,10 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 		combo.setSelectedItem(combo.getItemAt(0));
 		combo.setAlignmentX(CENTER_ALIGNMENT);
 		txt.addMouseListener( new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) { type.openDialog(); }
+			public void mouseClicked(MouseEvent e) {
+				value = type.openDialog(value);
+				txt.setText((String) value);
+			}
 		});
 		close_btn.addActionListener(this);
 		close_btn.setAlignmentX(CENTER_ALIGNMENT);
@@ -71,24 +77,25 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 		{
 			if( type.validateNewValue(txt.getText()) )
 			{
+				System.out.println("OK");
 				// TODO: set new value and prompt OK message
 			}
 			else
 			{
+				System.out.println("Invalid!");
 				// TODO: set back to default value and prompt Error message
 			}
 		}
 		else if( source == combo )
 		{
-			String action = arg0.getActionCommand();
-			if( action == "comboBoxChanged" )
+			if( arg0.getActionCommand() == "comboBoxChanged" )
 			{
 				String key = model.getSelectedItemLabel();
-				String value = prop.getProperty(key);
+				value = prop.getProperty(key);
 				type = model.getSelectedItemType();
-				txt.setText(value);
+				txt.setText((String) value);
 			}
 		}
 	}
-	
+		
 }

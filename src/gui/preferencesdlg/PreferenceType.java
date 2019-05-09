@@ -6,6 +6,6 @@ public interface PreferenceType {
 	public boolean validateNewValue( String value );
 	
 	// opens dialog for appropriate user input
-	public void openDialog();
+	public Object openDialog(Object prefvalue);
 	
 }
