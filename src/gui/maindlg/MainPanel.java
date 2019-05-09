@@ -1,22 +1,19 @@
 package gui.maindlg;
 import javax.swing.*;
 import javax.swing.table.*;
-
-import java.awt.*;
-import java.util.Properties;
-
+import io.GlobalProperties;
 import vis.BranchManager;
 
 @SuppressWarnings("serial")
 public class MainPanel extends JPanel {
 	
-	protected Properties prop;
+	protected GlobalProperties gp;
 	protected JTable table;
 	protected BranchManager branchManager;
 	
-	public MainPanel(Properties prop) {
-		this.prop = prop;
-		this.branchManager = new BranchManager(prop);
+	public MainPanel(GlobalProperties gp) {
+		this.gp = gp;
+		this.branchManager = new BranchManager(gp);
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 		buildTable();

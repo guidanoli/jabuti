@@ -19,7 +19,7 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 	
 	// Current preference
 	PreferenceType type;
-	Object value;
+	String value;
 	
 	// Meta components
 	PreferencesComboModel model;
@@ -49,7 +49,7 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 		txt.addMouseListener( new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				value = type.openDialog(value);
-				txt.setText((String) value);
+				txt.setText(value);
 			}
 		});
 		close_btn.addActionListener(this);
@@ -66,6 +66,13 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 		add(buttons);
 	}
 
+	public void updateTextBox() {
+		String key = model.getSelectedItemLabel();
+		value = prop.getProperty(key);
+		type = model.getSelectedItemType();
+		txt.setText((String) value);
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		Object source = arg0.getSource();
@@ -77,25 +84,26 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 		{
 			if( type.validateNewValue(txt.getText()) )
 			{
-				System.out.println("OK");
-				// TODO: set new value and prompt OK message
+				String label = model.getSelectedItemLabel();
+				prop.setProperty(label,value);
+				JOptionPane.showMessageDialog(	frame, "Preference successfully saved.",
+												"SetMeUp", JOptionPane.INFORMATION_MESSAGE	);
 			}
 			else
 			{
-				System.out.println("Invalid!");
-				// TODO: set back to default value and prompt Error message
+				JOptionPane.showMessageDialog(	frame, "Could not save preference properly.",
+												"SetMeUp", JOptionPane.ERROR_MESSAGE	);
 			}
 		}
 		else if( source == combo )
 		{
 			if( arg0.getActionCommand() == "comboBoxChanged" )
 			{
-				String key = model.getSelectedItemLabel();
-				value = prop.getProperty(key);
-				type = model.getSelectedItemType();
-				txt.setText((String) value);
+				updateTextBox();
 			}
 		}
 	}
 		
+	
+	
 }

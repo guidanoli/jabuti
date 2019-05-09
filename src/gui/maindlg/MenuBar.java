@@ -1,11 +1,9 @@
 package gui.maindlg;
 import java.awt.event.*;
-import java.util.Properties;
-
 import javax.swing.*;
-
 import gui.aboutdlg.MenuPopupAbout;
 import gui.preferencesdlg.MenuPopupPreferences;
+import io.GlobalProperties;
 
 @SuppressWarnings("serial")
 public class MenuBar extends JMenuBar {
@@ -16,11 +14,11 @@ public class MenuBar extends JMenuBar {
 	private JMenuItem pref_item = new JMenuItem("Preferences...",KeyEvent.VK_P);
 	private JMenuItem about_item = new JMenuItem("About SetMeUp",KeyEvent.VK_S);
 		
-	public MenuBar(JFrame parent, Properties prop) {
+	public MenuBar(JFrame parent, GlobalProperties gp) {
 		this.parent = parent;
 		edit_menu.setMnemonic(KeyEvent.VK_E);
 		// to do - parent pop up
-		pref_item.addActionListener(new MenuItemListener(this.parent,new MenuPopupPreferences(prop)));
+		pref_item.addActionListener(new MenuItemListener(this.parent,new MenuPopupPreferences(gp)));
 		edit_menu.add(pref_item);
 		add(edit_menu);
 		about_menu.setMnemonic(KeyEvent.VK_A);

@@ -4,6 +4,6 @@ public class DefaultPreferenceType implements PreferenceType {
 
 	public DefaultPreferenceType() { }
 	public boolean validateNewValue(String value) { return true; }
-	public Object openDialog(Object prefvalue) { return prefvalue; }
+	public String openDialog(String prefvalue) { return prefvalue; }
 
 }
