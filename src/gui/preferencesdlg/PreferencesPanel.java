@@ -1,12 +1,10 @@
 package gui.preferencesdlg;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.Properties;
-
+import java.awt.event.*;
 import javax.swing.*;
+
+import gui.maindlg.MainFrame;
+import io.GlobalProperties;
 
 @SuppressWarnings("serial")
 public class PreferencesPanel extends JPanel implements ActionListener {
@@ -24,17 +22,19 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 	// Meta components
 	PreferencesComboModel model;
 	
-	Properties prop;
+	GlobalProperties gp;
 	JFrame frame;
+	MainFrame parent;
 	
 	// Layout
 	int hborder = 40;
 	int vborder = 20;
 	int vgap = 10;
 	
-	public PreferencesPanel(Properties prop, JFrame frame) {
-		this.prop = prop;
+	public PreferencesPanel(GlobalProperties gp, JFrame frame, MainFrame parent) {
+		this.gp = gp;
 		this.frame = frame;
+		this.parent = parent;
 		setBorder(BorderFactory.createEmptyBorder(vborder, hborder, vborder, hborder));
 		// Panels
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
@@ -68,7 +68,7 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 
 	public void updateTextBox() {
 		String key = model.getSelectedItemLabel();
-		value = prop.getProperty(key);
+		value = gp.getProperty(key);
 		type = model.getSelectedItemType();
 		txt.setText((String) value);
 	}
@@ -85,15 +85,17 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 			if( type.validateNewValue(txt.getText()) )
 			{
 				String label = model.getSelectedItemLabel();
-				prop.setProperty(label,value);
-				JOptionPane.showMessageDialog(	frame, "Preference successfully saved.",
-												"SetMeUp", JOptionPane.INFORMATION_MESSAGE	);
+				gp.setProperty(label,value);
+				if( gp.save() )
+				{
+					JOptionPane.showMessageDialog(	frame, "Preference successfully saved.",
+													"SetMeUp", JOptionPane.INFORMATION_MESSAGE	);
+					parent.panel.updateTable();
+					return;
+				}
 			}
-			else
-			{
-				JOptionPane.showMessageDialog(	frame, "Could not save preference properly.",
-												"SetMeUp", JOptionPane.ERROR_MESSAGE	);
-			}
+			JOptionPane.showMessageDialog(	frame, "Could not save preference properly.",
+											"SetMeUp", JOptionPane.ERROR_MESSAGE	);
 		}
 		else if( source == combo )
 		{

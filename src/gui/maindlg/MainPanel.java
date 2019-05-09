@@ -1,6 +1,9 @@
 package gui.maindlg;
 import javax.swing.*;
 import javax.swing.table.*;
+
+import com.sun.media.sound.ModelAbstractChannelMixer;
+
 import io.GlobalProperties;
 import vis.BranchManager;
 
@@ -10,6 +13,7 @@ public class MainPanel extends JPanel {
 	protected GlobalProperties gp;
 	protected JTable table;
 	protected BranchManager branchManager;
+	protected BranchTableModel tablemodel;
 	
 	public MainPanel(GlobalProperties gp) {
 		this.gp = gp;
@@ -21,8 +25,8 @@ public class MainPanel extends JPanel {
 		
 	private void buildTable()
 	{
-		AbstractTableModel model = new BranchTableModel(branchManager);
-		table = new JTable(model);
+		tablemodel = new BranchTableModel(branchManager);
+		table = new JTable(tablemodel);
 		// Disable column dragging
 		table.getTableHeader().setReorderingAllowed(false);
 		// Set toggle's width
@@ -43,6 +47,12 @@ public class MainPanel extends JPanel {
 													JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 									                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.add(scrollingBox);
+	}
+	
+	public void updateTable() {
+		System.out.println("Updating...");
+		// TODO: Make it update the table!
+		tablemodel.updateAllColumns();
 	}
 	
 	// nothing much yet...

@@ -30,7 +30,7 @@ public class BranchTableModel extends AbstractTableModel {
 	
 	public BranchTableModel( BranchManager manager ) {
 		this.manager = manager;
-		updateColumns(true,true,true,true);
+		updateAllColumns();
 	}
 	
 	public void updateColumns(boolean names, boolean dates, boolean setup, boolean make)
@@ -40,6 +40,8 @@ public class BranchTableModel extends AbstractTableModel {
 		if(setup) boolSetup = manager.getBoolSetup();
 		if(make) boolMake = manager.getBoolMake();
 	}
+	
+	public void updateAllColumns() { updateColumns(true,true,true,true); }
 		
 	public String getColumnName(int col) { return columnNames[col]; }
 	@SuppressWarnings({ "unchecked", "rawtypes" })
