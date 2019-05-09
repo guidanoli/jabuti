@@ -6,6 +6,7 @@ import java.util.Properties;
 public class BranchManager {
 	
 	Properties prop;
+	String[] branches;
 	int num_branches;
 	
 	public BranchManager(Properties prop) {
@@ -14,31 +15,40 @@ public class BranchManager {
 	
 	public String[] getBranchNames() {
 		String path = prop.getProperty("path");
-		if( path == null ) { return new String[]{}; }
+		if( path == null ) { return null; }
 		File file = new File(path);
-		String[] dirs = file.list(new FilenameFilter() {
+		branches = file.list(new FilenameFilter() {
 		  @Override
 		  public boolean accept(File current, String name) {
 		    return new File(current, name).isDirectory();
 		  }
 		});
-		num_branches = dirs.length;
-		return dirs;
+		num_branches = branches.length;
+		return branches;
 	}
 	
 	public String[] getLastSetupDates() {
-		// TODO - Collect branches' last setup dates (configuration file)
-		return new String[num_branches];
+		if( branches == null ) { return null; }
+		String[] v = new String[num_branches];
+		for( int i = 0 ; i < v.length; i++ )
+			v[i] = prop.getProperty("branches."+branches[i]+".lastsetupdate");
+		return v;
 	}
 	
 	public boolean[] getBoolSetup() {
-		// TODO - Collect user default (configuration file)
-		return new boolean[num_branches];
+		if( branches == null ) { return null; }
+		boolean[] v = new boolean[num_branches];
+		for( int i = 0 ; i < v.length; i++ )
+			v[i] = prop.getProperty("branches."+branches[i]+".setup") == "true";
+		return v;
 	}
 	
 	public boolean[] getBoolMake() {
-		// TODO - Collect user default (configuration file)
-		return new boolean[num_branches];
+		if( branches == null ) { return null; }
+		boolean[] v = new boolean[num_branches];
+		for( int i = 0 ; i < v.length; i++ )
+			v[i] = prop.getProperty("branches."+branches[i]+".make") == "true";
+		return v;
 	}
 	
 }
