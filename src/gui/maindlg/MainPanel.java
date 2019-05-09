@@ -1,9 +1,6 @@
 package gui.maindlg;
 import javax.swing.*;
 import javax.swing.table.*;
-
-import com.sun.media.sound.ModelAbstractChannelMixer;
-
 import io.GlobalProperties;
 import vis.BranchManager;
 
