@@ -2,8 +2,6 @@ package gui.maindlg;
 import java.awt.event.*;
 import javax.swing.*;
 
-import gui.MenuPopup;
-
 public class MenuItemListener implements ActionListener {
 
 	private JFrame parent;

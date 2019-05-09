@@ -2,11 +2,7 @@ package gui.maindlg;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Properties;
 
 @SuppressWarnings("serial")
@@ -46,20 +42,9 @@ public class MainFrame extends JFrame {
 		// set panel layout
 		getContentPane().add(panel);
 		// set menu bar
-		this.setJMenuBar(new MenuBar(this));
+		this.setJMenuBar(new MenuBar(this,prop));
 		// set look and feel
 		UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-	}
-
-	public static void main(String[] args) {
-		MainFrame painel;
-		try {
-			painel = new MainFrame("SetMeUp v.1.0");
-			painel.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		// code
 	}
 
 	protected void saveDefaultProperties() throws FileNotFoundException, IOException {

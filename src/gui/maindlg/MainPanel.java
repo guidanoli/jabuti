@@ -21,12 +21,7 @@ public class MainPanel extends JPanel {
 		setBackground(Color.WHITE);
 		buildTable();
 	}
-	
-	public void paintComponent( Graphics g )
-	{
-		// loop
-	}
-	
+		
 	private void buildTable()
 	{
 		AbstractTableModel model = new BranchTableModel(branchManager);

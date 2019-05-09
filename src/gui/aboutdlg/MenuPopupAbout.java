@@ -1,7 +1,7 @@
 package gui.aboutdlg;
 import javax.swing.*;
 
-import gui.MenuPopup;
+import gui.maindlg.MenuPopup;
 
 public class MenuPopupAbout implements MenuPopup {
 	
