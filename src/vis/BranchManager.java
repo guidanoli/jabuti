@@ -1,27 +1,44 @@
 package vis;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.Properties;
 
 public class BranchManager {
 	
-	public BranchManager() {	}
+	Properties prop;
+	int num_branches;
+	
+	public BranchManager(Properties prop) {
+		this.prop = prop;
+	}
 	
 	public String[] getBranchNames() {
-		// TODO - Collect branches' names given directory
-		return new String[]{"branch1","branch2","branch3"};
+		String path = prop.getProperty("path");
+		if( path == null ) { return new String[]{}; }
+		File file = new File(path);
+		String[] dirs = file.list(new FilenameFilter() {
+		  @Override
+		  public boolean accept(File current, String name) {
+		    return new File(current, name).isDirectory();
+		  }
+		});
+		num_branches = dirs.length;
+		return dirs;
 	}
 	
 	public String[] getLastSetupDates() {
 		// TODO - Collect branches' last setup dates (configuration file)
-		return new String[]{"01/01/2019","02/01/2019","03/01/2019"};
+		return new String[num_branches];
 	}
 	
 	public boolean[] getBoolSetup() {
 		// TODO - Collect user default (configuration file)
-		return new boolean[]{true,true,false};
+		return new boolean[num_branches];
 	}
 	
 	public boolean[] getBoolMake() {
 		// TODO - Collect user default (configuration file)
-		return new boolean[]{false,true,false};
+		return new boolean[num_branches];
 	}
 	
 }

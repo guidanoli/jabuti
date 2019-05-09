@@ -2,16 +2,20 @@ package gui;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
+import java.util.Properties;
+
 import vis.BranchManager;
 
 @SuppressWarnings("serial")
 public class MainPanel extends JPanel {
 	
-	JTable table;
-	BranchManager branchManager = new BranchManager();
+	protected Properties prop;
+	protected JTable table;
+	protected BranchManager branchManager;
 	
-	public MainPanel() {
-		// constructor
+	public MainPanel(Properties prop) {
+		this.prop = prop;
+		this.branchManager = new BranchManager(prop);
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		setBackground(Color.WHITE);
 		buildTable();
