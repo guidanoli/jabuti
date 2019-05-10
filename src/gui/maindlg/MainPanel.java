@@ -47,9 +47,8 @@ public class MainPanel extends JPanel {
 	}
 	
 	public void updateTable() {
-		System.out.println("Updating...");
-		// TODO: Make it update the table!
 		tablemodel.updateAllColumns();
+		table.repaint();
 	}
 	
 	// nothing much yet...
