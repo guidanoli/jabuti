@@ -27,14 +27,9 @@ public class MainPanel extends JPanel {
 		// Disable column dragging
 		table.getTableHeader().setReorderingAllowed(false);
 		// Set toggle's width
+		int weighted_widths[] = { 300, 100, 1, 1 };
 		for( int i = 0 ; i < table.getColumnCount() ; i++ )
-		{
-			Class<?> type = table.getColumnClass(i);
-			if( type == Boolean.class )
-				table.getColumnModel().getColumn(i).setPreferredWidth(1);
-			else
-				table.getColumnModel().getColumn(i).setPreferredWidth(200);
-		}
+			table.getColumnModel().getColumn(i).setPreferredWidth(weighted_widths[i]);
 		// Centralizes all string values in table
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment( JLabel.CENTER );

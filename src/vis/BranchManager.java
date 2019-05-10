@@ -32,7 +32,10 @@ public class BranchManager {
 		if( branches == null ) { return null; }
 		String[] v = new String[num_branches];
 		for( int i = 0 ; i < v.length; i++ )
-			v[i] = gp.getProperty("branches."+branches[i]+".lastsetupdate");
+		{
+			String prop = gp.getProperty("branches."+branches[i]+".lastsetupdate");
+			v[i] = prop == null ? "Unknown" : prop;
+		}
 		return v;
 	}
 	

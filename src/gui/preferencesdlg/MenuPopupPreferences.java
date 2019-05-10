@@ -13,7 +13,7 @@ public class MenuPopupPreferences implements MenuPopup {
 
 	// size parameters
 	public final int DEF_H = 170;
-	public final int DEF_W = 300;
+	public final int DEF_W = 400;
 
 	// containers
 	PreferencesPanel panel;

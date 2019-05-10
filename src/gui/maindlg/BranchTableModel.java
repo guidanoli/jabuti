@@ -44,8 +44,7 @@ public class BranchTableModel extends AbstractTableModel {
 	public void updateAllColumns() { updateColumns(true,true,true,true); }
 		
 	public String getColumnName(int col) { return columnNames[col]; }
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public Class getColumnClass(int col) { return columnClasses[col]; }
+	public Class<?> getColumnClass(int col) { return columnClasses[col]; }
 	public int getRowCount() {
 		if( branchNames == null )
 			return 0;

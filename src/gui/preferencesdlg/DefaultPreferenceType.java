@@ -2,8 +2,8 @@ package gui.preferencesdlg;
 
 public class DefaultPreferenceType implements PreferenceType {
 
-	public DefaultPreferenceType() { }
-	public boolean validateNewValue(String value) { return true; }
-	public String openDialog(String prefvalue) { return prefvalue; }
+	public PreferenceTypePanel panel = getPanel();
+	public boolean validateState() { return panel.getValue() != null; }
+	public PreferenceTypePanel getPanel() { return panel; }
 
 }

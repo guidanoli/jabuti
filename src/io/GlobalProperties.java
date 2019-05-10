@@ -11,7 +11,7 @@ public class GlobalProperties extends Properties {
 		GlobalProperties gp = new GlobalProperties();
 		try {
 			if (new File(propertiesFilePath).createNewFile()) {
-				gp.setProperty("path", System.getProperty("user.home"));
+				gp.setProperty("path", "D\\:\\users\\"+System.getProperty("user.name"));
 				if( !gp.save() ) return null; 
 			}
 			else

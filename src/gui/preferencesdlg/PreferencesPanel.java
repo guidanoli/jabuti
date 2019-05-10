@@ -1,4 +1,5 @@
 package gui.preferencesdlg;
+import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.event.*;
 import javax.swing.*;
@@ -11,9 +12,10 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 
 	// Components
 	JComboBox<String> combo;
-	JTextField txt = new JTextField();
+	JPanel text_field = new JPanel(new CardLayout());
 	JButton apply_btn = new JButton("Apply");
-	JButton close_btn = new JButton("Close");
+	JButton default_btn = new JButton("Restore Default");
+	JButton cancel_btn = new JButton("Cancel");
 	
 	// Current preference
 	PreferenceType type;
@@ -46,23 +48,20 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 		combo.addActionListener(this);
 		combo.setSelectedItem(combo.getItemAt(0));
 		combo.setAlignmentX(CENTER_ALIGNMENT);
-		txt.addMouseListener( new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				value = type.openDialog(value);
-				txt.setText(value);
-			}
-		});
-		close_btn.addActionListener(this);
-		close_btn.setAlignmentX(CENTER_ALIGNMENT);
+		cancel_btn.addActionListener(this);
+		cancel_btn.setAlignmentX(CENTER_ALIGNMENT);
 		apply_btn.addActionListener(this);
 		apply_btn.setAlignmentX(CENTER_ALIGNMENT);
+		default_btn.addActionListener(this);
+		default_btn.setAlignmentX(CENTER_ALIGNMENT);
 		// Add components to panel
 		add(combo);
 		add(Box.createVerticalStrut(vgap));
-		add(txt);
+		add(text_field);
 		add(Box.createVerticalStrut(vgap));
 		buttons.add(apply_btn);
-		buttons.add(close_btn);
+		buttons.add(default_btn);
+		buttons.add(cancel_btn);
 		add(buttons);
 	}
 
@@ -70,19 +69,18 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 		String key = model.getSelectedItemLabel();
 		value = gp.getProperty(key);
 		type = model.getSelectedItemType();
-		txt.setText((String) value);
+		type.getPanel().setState(value);
 	}
 	
-	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		Object source = arg0.getSource();
-		if( source == close_btn )
+		if( source == cancel_btn )
 		{
 			frame.setVisible(false);
 		}
 		else if( source == apply_btn )
 		{
-			if( type.validateNewValue(txt.getText()) )
+			if( type.validateState() )
 			{
 				String label = model.getSelectedItemLabel();
 				gp.setProperty(label,value);
