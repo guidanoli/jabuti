@@ -13,7 +13,7 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 	// Components
 	JComboBox<String> combo;
 	CardLayout cl = new CardLayout();
-	JPanel text_field = new JPanel(cl);
+	JPanel value_panel = new JPanel(cl);
 	JButton apply_btn = new JButton("Apply");
 	JButton default_btn = new JButton("Restore Default");
 	JButton cancel_btn = new JButton("Cancel");
@@ -58,26 +58,26 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 		// Add components to panel
 		add(combo);
 		add(Box.createVerticalStrut(vgap));
-		add(text_field);
+		add(value_panel);
 		add(Box.createVerticalStrut(vgap));
 		buttons.add(apply_btn);
 		buttons.add(default_btn);
 		buttons.add(cancel_btn);
 		add(buttons);
 		// get object that implements a PreferenceTypePanel
-		DirectoryPreferenceTypePanel temp = new DirectoryPreferenceTypePanel();
-		// add it to text_field with its container and name
-		text_field.add(temp.getPanel(),temp.getPanelName());
-		// show it using only its name and on text_fields's layout which can be
+		PreferenceType temp = new DefaultPreferenceType();
+		// add it to value_panel with its container and name
+		value_panel.add(temp.getPanel(),"2");
+		// show it using only its name and on value_panel layout which can be
 		// accessed through getLayout() then casted with (CardLayout) to use show(_,_)
-		cl.show(text_field,temp.getPanelName());
+		cl.show(value_panel,"2");
 	}
 
 	public void updateTextBox() {
 		String key = model.getSelectedItemLabel();
 		value = gp.getProperty(key);
 		type = model.getSelectedItemType();
-		type.getPanel().setState(value);
+		type.setState(value);
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {
