@@ -1,20 +1,20 @@
 package vis;
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.Properties;
+import io.GlobalProperties;
 
 public class BranchManager {
 	
-	Properties prop;
+	GlobalProperties gp;
 	String[] branches;
 	int num_branches;
 	
-	public BranchManager(Properties prop) {
-		this.prop = prop;
+	public BranchManager(GlobalProperties gp) {
+		this.gp = gp;
 	}
 	
 	public String[] getBranchNames() {
-		String path = prop.getProperty("path");
+		String path = gp.getProperty("path");
 		if( path == null ) { return null; }
 		File file = new File(path);
 		branches = file.list(new FilenameFilter() {
@@ -23,6 +23,7 @@ public class BranchManager {
 		    return new File(current, name).isDirectory();
 		  }
 		});
+		if( branches == null ) { return null; }
 		num_branches = branches.length;
 		return branches;
 	}
@@ -31,7 +32,10 @@ public class BranchManager {
 		if( branches == null ) { return null; }
 		String[] v = new String[num_branches];
 		for( int i = 0 ; i < v.length; i++ )
-			v[i] = prop.getProperty("branches."+branches[i]+".lastsetupdate");
+		{
+			String prop = gp.getProperty("branches."+branches[i]+".lastsetupdate");
+			v[i] = prop == null ? "Unknown" : prop;
+		}
 		return v;
 	}
 	
@@ -39,7 +43,7 @@ public class BranchManager {
 		if( branches == null ) { return null; }
 		boolean[] v = new boolean[num_branches];
 		for( int i = 0 ; i < v.length; i++ )
-			v[i] = prop.getProperty("branches."+branches[i]+".setup") == "true";
+			v[i] = gp.getProperty("branches."+branches[i]+".setup") == "true";
 		return v;
 	}
 	
@@ -47,7 +51,7 @@ public class BranchManager {
 		if( branches == null ) { return null; }
 		boolean[] v = new boolean[num_branches];
 		for( int i = 0 ; i < v.length; i++ )
-			v[i] = prop.getProperty("branches."+branches[i]+".make") == "true";
+			v[i] = gp.getProperty("branches."+branches[i]+".make") == "true";
 		return v;
 	}
 	
