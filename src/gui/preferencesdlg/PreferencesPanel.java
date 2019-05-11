@@ -12,7 +12,8 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 
 	// Components
 	JComboBox<String> combo;
-	JPanel text_field = new JPanel(new CardLayout());
+	CardLayout cl = new CardLayout();
+	JPanel text_field = new JPanel(cl);
 	JButton apply_btn = new JButton("Apply");
 	JButton default_btn = new JButton("Restore Default");
 	JButton cancel_btn = new JButton("Cancel");
@@ -63,6 +64,13 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 		buttons.add(default_btn);
 		buttons.add(cancel_btn);
 		add(buttons);
+		// get object that implements a PreferenceTypePanel
+		DirectoryPreferenceTypePanel temp = new DirectoryPreferenceTypePanel();
+		// add it to text_field with its container and name
+		text_field.add(temp.getPanel(),temp.getPanelName());
+		// show it using only its name and on text_fields's layout which can be
+		// accessed through getLayout() then casted with (CardLayout) to use show(_,_)
+		cl.show(text_field,temp.getPanelName());
 	}
 
 	public void updateTextBox() {
