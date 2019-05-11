@@ -12,15 +12,13 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 
 	// Components
 	JComboBox<String> combo;
-	CardLayout cl = new CardLayout();
-	JPanel value_panel = new JPanel(cl);
+	JPanel value_panel = new JPanel(new CardLayout());
 	JButton apply_btn = new JButton("Apply");
 	JButton default_btn = new JButton("Restore Default");
 	JButton cancel_btn = new JButton("Cancel");
 	
 	// Current preference
 	PreferenceType type;
-	String value;
 	
 	// Meta components
 	PreferencesComboModel model;
@@ -64,19 +62,15 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 		buttons.add(default_btn);
 		buttons.add(cancel_btn);
 		add(buttons);
-		// get object that implements a PreferenceTypePanel
-		PreferenceType temp = new DefaultPreferenceType();
-		// add it to value_panel with its container and name
-		value_panel.add(temp.getPanel(),"2");
-		// show it using only its name and on value_panel layout which can be
-		// accessed through getLayout() then casted with (CardLayout) to use show(_,_)
-		cl.show(value_panel,"2");
 	}
 
 	public void updateTextBox() {
 		String key = model.getSelectedItemLabel();
-		value = gp.getProperty(key);
+		String value = gp.getProperty(key);
 		type = model.getSelectedItemType();
+		if( type.getPanel().getParent() != value_panel ) //if not added
+			value_panel.add(type.getPanel(), key); //key as unique identifier
+		((CardLayout) value_panel.getLayout()).show(value_panel, key);
 		type.setState(value);
 	}
 	
@@ -91,6 +85,7 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 			if( type.validateState() )
 			{
 				String label = model.getSelectedItemLabel();
+				String value = model.getSelectedItemType().getState();
 				gp.setProperty(label,value);
 				if( gp.save() )
 				{

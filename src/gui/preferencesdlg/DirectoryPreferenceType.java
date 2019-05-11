@@ -17,8 +17,6 @@ public class DirectoryPreferenceType implements PreferenceType {
 	protected JPanel panel;
 	protected JTextField txt = new JTextField();
 	protected JButton btn = new JButton("Open...");
-	public boolean validateState() { return new File(getState()).isDirectory(); }
-	public JPanel getPanel() { return panel; }
 	public DirectoryPreferenceType() {
 		GridBagLayout layout = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints ();
@@ -32,20 +30,12 @@ public class DirectoryPreferenceType implements PreferenceType {
 			}
 		});
 		c.fill = GridBagConstraints.BOTH;
-		c.ipadx = 10;
-		c.gridx = 0;
-		c.gridy = 0;
 		c.weightx = 2;
-		c.weighty = 1;
 		panel.add(txt,c);
 		c.insets = new Insets(0,5,0,0);
-		c.gridx = 1;
-		c.weightx = 1;
+		c.weightx = 0;
 		panel.add(btn,c);
-		System.out.println("Panel constructed!");
 	}
-	public void setState(String value) { txt.setText(value); }
-	public String getState() { return txt.getText(); }
 	protected String openDialog(String defaultDir) {
 		// TODO: get Default Directory from VIS
 		File defdir = FileSystemView.getFileSystemView().getHomeDirectory();
@@ -58,4 +48,8 @@ public class DirectoryPreferenceType implements PreferenceType {
 			return jfc.getSelectedFile().getAbsolutePath();
 		return defaultDir;
 	}
+	public void setState(String value) { txt.setText(value); }
+	public String getState() { return txt.getText(); }
+	public boolean validateState() { return new File(getState()).isDirectory(); }
+	public JPanel getPanel() { return panel; }
 }

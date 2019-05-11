@@ -24,6 +24,7 @@ public class MenuPopupPreferences implements MenuPopup {
 		frame = new JFrame("Preferences");
 		panel = new PreferencesPanel(gp,frame,parent);
 		frame.setSize(DEF_W, DEF_H);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 		frame.getContentPane().add(panel);
 	}
