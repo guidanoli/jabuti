@@ -6,36 +6,15 @@ import javax.swing.ComboBoxModel;
 @SuppressWarnings("serial")
 public class PreferencesComboModel extends AbstractListModel<String> implements ComboBoxModel<String> {
 
+	String selected;
 	Object[][] list = { 
 			{ "path" , "Branches directory" , new DirectoryPreferenceType() }
 	};
 	
-	String selected;
-	
-	@Override
-	public String getElementAt(int arg0) {
-		// TODO Auto-generated method stub
-		return (String) list[arg0][1];
-	}
-
-	@Override
-	public int getSize() {
-		// TODO Auto-generated method stub
-		return list.length;
-	}
-
-	@Override
-	public String getSelectedItem() {
-		// TODO Auto-generated method stub
-		return selected;
-	}
-
-	@Override
-	public void setSelectedItem(Object anItem) {
-		// TODO Auto-generated method stub
-		selected = (String) anItem;
-	}
-	
+	public String getElementAt(int arg0) { return (String) list[arg0][1]; }
+	public int getSize() { return list.length; }
+	public String getSelectedItem() { return selected; }
+	public void setSelectedItem(Object anItem) { selected = (String) anItem; }
 	public String getSelectedItemLabel()
 	{
 		for( Object[] item : list )
@@ -45,7 +24,6 @@ public class PreferencesComboModel extends AbstractListModel<String> implements 
 		}
 		return null;
 	}
-	
 	public PreferenceType getSelectedItemType()
 	{
 		for( Object[] item : list )

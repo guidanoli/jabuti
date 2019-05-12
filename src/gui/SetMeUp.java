@@ -1,19 +1,17 @@
 package gui;
-
+import javax.swing.SwingUtilities;
 import gui.maindlg.MainFrame;
 
 public class SetMeUp {
 
-	public static String version = "1.0";
+	public static final String version = "1.0";
 	
 	public static void main(String[] args) {
-		MainFrame painel;
-		try {
-			painel = new MainFrame("SetMeUp v."+version);
-			painel.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+            	new MainFrame("SetMeUp v."+version);
+            }
+        });
 	}
 
 }

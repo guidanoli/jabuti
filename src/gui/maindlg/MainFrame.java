@@ -51,6 +51,7 @@ public class MainFrame extends JFrame {
 		} catch (Exception e) {
 			FatalError.show(e.getMessage(),this);
 		}
+		setVisible(true);
 	}
 	
 }
