@@ -5,6 +5,12 @@ import vis.BranchManager;
 @SuppressWarnings("serial")
 public class BranchTableModel extends AbstractTableModel {
 
+	protected static final int BRANCH_NAME = 0;
+	protected static final int LAST_SETUP = 1;
+	protected static final int SETUP = 2;
+	protected static final int MAKE = 3;
+	
+	// manager
 	protected BranchManager manager;
 	
 	// fields
@@ -42,7 +48,6 @@ public class BranchTableModel extends AbstractTableModel {
 	}
 	
 	public void updateAllColumns() { updateColumns(true,true,true,true); }
-		
 	public String getColumnName(int col) { return columnNames[col]; }
 	public Class<?> getColumnClass(int col) { return columnClasses[col]; }
 	public int getRowCount() {
@@ -53,16 +58,44 @@ public class BranchTableModel extends AbstractTableModel {
 	public int getColumnCount() { return 4; }
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch(columnIndex) {
-		case 0:
+		case BRANCH_NAME:
 			return branchNames[rowIndex];
-		case 1:
+		case LAST_SETUP:
 			return lastSetupDate[rowIndex];
-		case 2:
+		case SETUP:
 			return boolSetup[rowIndex] ? Boolean.TRUE : Boolean.FALSE ;
-		case 3:
+		case MAKE:
 			return boolMake[rowIndex] ? Boolean.TRUE : Boolean.FALSE ;
 		default:
 			return null;
+		}
+	}
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		return columnIndex == SETUP || columnIndex == MAKE;			
+	}
+	public void setValueAt(	Object aValue,
+						    int rowIndex,
+						    int columnIndex) {
+		String branchName = (String) getValueAt(rowIndex,BRANCH_NAME);
+		switch(columnIndex) {
+//		
+//		NOT EDITABLE
+//		
+//		case BRANCH_NAME:
+//			break;
+//		case LAST_SETUP:
+//			break;
+//		
+		case SETUP:
+			boolSetup[rowIndex] = (Boolean) aValue;
+			manager.setBoolSetup(branchName,(boolean) aValue);
+			break;
+		case MAKE:
+			boolMake[rowIndex] = (Boolean) aValue;
+			manager.setBoolMake(branchName,(boolean) aValue);
+			break;
+		default:
+			break;
 		}
 	}
 	
