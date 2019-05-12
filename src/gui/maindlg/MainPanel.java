@@ -29,7 +29,7 @@ public class MainPanel extends JPanel {
 		// Disable column dragging
 		table.getTableHeader().setReorderingAllowed(false);
 		// Set toggle's width
-		int weighted_widths[] = { 300, 100, 1, 1 };
+		int weighted_widths[] = { 300, 100, 50, 50 };
 		for( int i = 0 ; i < table.getColumnCount() ; i++ )
 			table.getColumnModel().getColumn(i).setPreferredWidth(weighted_widths[i]);
 		// Centralizes all string values in table
