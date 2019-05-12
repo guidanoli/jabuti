@@ -23,19 +23,16 @@ public class GlobalProperties extends Properties {
 		try {
 			if (new File(propertiesFilePath).createNewFile()) {
 				// if XML file isn't found, create one
-				System.out.println("File does not exist.");
 				if( !gp.save() ) return null; // save it, if possible
 			}
 			else
 			{
 				// if XML file is found, load it
-				System.out.println("File exists.");
 				gp.loadFromXML(new FileInputStream(propertiesFilePath));
 			}
 		} catch (IOException e) {
 			return null;
 		}
-		gp.list(System.out);
 		gp.save();
 		return gp;
 	}
