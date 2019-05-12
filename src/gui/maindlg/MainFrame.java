@@ -2,7 +2,7 @@ package gui.maindlg;
 
 import javax.swing.*;
 
-import error.FatalError;
+import gui.error.FatalError;
 import io.GlobalProperties;
 import java.awt.*;
 

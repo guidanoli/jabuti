@@ -56,6 +56,7 @@ public class GlobalProperties extends Properties {
 				remove(key);
 			}
 		}
+		// save difference
 		save();
 	}
 	

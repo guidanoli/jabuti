@@ -1,4 +1,4 @@
-package gui.preferencesdlg;
+package gui.popup.preferences;
 import javax.swing.JPanel;
 
 public interface PreferenceType {

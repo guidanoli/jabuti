@@ -1,4 +1,4 @@
-package gui.preferencesdlg;
+package gui.popup.preferences;
 import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.event.*;

@@ -1,7 +1,5 @@
-package gui.updatedlg;
-
+package gui.popup;
 import javax.swing.JFrame;
-
 import gui.maindlg.MenuPopup;
 import io.GlobalProperties;
 

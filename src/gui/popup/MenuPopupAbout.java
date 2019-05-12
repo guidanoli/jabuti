@@ -1,4 +1,4 @@
-package gui.aboutdlg;
+package gui.popup;
 import javax.swing.*;
 
 import gui.maindlg.MenuPopup;
