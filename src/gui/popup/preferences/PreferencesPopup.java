@@ -11,10 +11,6 @@ public class PreferencesPopup implements MenuPopup {
 	GlobalProperties gp;
 	MainFrame parent;
 
-	// size parameters
-	public final int DEF_H = 170;
-	public final int DEF_W = 400;
-
 	// containers
 	PreferencesPanel panel;
 	
@@ -23,10 +19,8 @@ public class PreferencesPopup implements MenuPopup {
 		this.gp = gp;
 		frame = new JFrame("Preferences");
 		panel = new PreferencesPanel(gp,frame,parent);
-		frame.setSize(DEF_W, DEF_H);
-		frame.setResizable(false);
-		frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 		frame.getContentPane().add(panel);
+		gui.DefaultFrame.set(frame);
 	}
 
 	public void open(JFrame parent) {
