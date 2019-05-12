@@ -11,7 +11,7 @@ public class DefaultFrame {
 	public static void set(JFrame frame, CloseFrameCallback close_cb) {
 		frame.pack();
 		frame.setLocationRelativeTo(null);
-		frame.setIconImage(new ImageIcon("ressources/setmeup.png").getImage());
+		frame.setIconImage(new ImageIcon(io.LocalRessources.icon).getImage());
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -25,4 +25,8 @@ public class DefaultFrame {
 		});
 	}
 
+	public static void set(JFrame frame) {
+		set(frame, new CloseFrameCallback() { public void close() { frame.setVisible(false); } });
+	}
+	
 }

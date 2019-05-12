@@ -6,17 +6,11 @@ import io.GlobalProperties;
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
 	
-	// properties
 	protected GlobalProperties gp;
-
-	// size parameters
-	public final int DEF_H = 300;
-	public final int DEF_W = 600;
-
-	// containers
 	public MainPanel panel;
 
 	public MainFrame(String name) {
+		super(name);
 		gp = GlobalProperties.get();
 		if( gp == null ) FatalError.show("Could not manage preferences",this);
 		panel = new MainPanel(gp);

@@ -33,7 +33,7 @@ public class MenuBar extends JMenuBar {
 		edit_menu.add(pref_item);
 		add(edit_menu);
 		about_menu.setMnemonic(KeyEvent.VK_A);
-		about_item.addActionListener(new MenuItemListener(this.parent,new AboutPopup()));
+		about_item.addActionListener(new MenuItemListener(this.parent,new AboutPopup(parent)));
 		about_menu.add(about_item);
 		add(about_menu);
 	}
