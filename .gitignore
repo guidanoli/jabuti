@@ -1,5 +1,5 @@
 # Software Properties
-*.properties
+properties.xml
 
 # Eclipse files
 .classpath

@@ -26,8 +26,7 @@ public class MainFrame extends JFrame {
 		super(name);
 		// properties
 		gp = GlobalProperties.get();
-		if( gp == null )
-			FatalError.show("Could not manage preferences",this);
+		if( gp == null ) FatalError.show("Could not manage preferences",this);
 		// set bounds in the middle
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension d = tk.getScreenSize();
@@ -38,7 +37,7 @@ public class MainFrame extends JFrame {
 		setBounds(x, y, DEF_W, DEF_H);
 		panel = new MainPanel(gp);
 		// exit on close
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		// can't resize
 		setResizable(false);
 		// set panel layout
@@ -51,6 +50,13 @@ public class MainFrame extends JFrame {
 		} catch (Exception e) {
 			FatalError.show(e.getMessage(),this);
 		}
+		this.addWindowListener(new java.awt.event.WindowAdapter() {
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		        // Closing window
+				gp.cleanUp();
+	            System.exit(0);
+		    }
+		});
 		setVisible(true);
 	}
 	
