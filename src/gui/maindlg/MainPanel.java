@@ -11,6 +11,8 @@ public class MainPanel extends JPanel {
 	protected JTable table;
 	protected BranchManager branchManager;
 	protected BranchTableModel tablemodel;
+	JScrollPane scrollingBox = new JScrollPane(	JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+												JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	
 	public MainPanel(GlobalProperties gp) {
 		this.gp = gp;
@@ -34,16 +36,13 @@ public class MainPanel extends JPanel {
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
 		table.setDefaultRenderer(String.class, centerRenderer);
-		//
-		JScrollPane scrollingBox = new JScrollPane(	table,
-													JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-									                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		this.add(scrollingBox);
+		scrollingBox.setViewportView(table);
+		add(scrollingBox);
 	}
 	
 	public void updateTable() {
 		tablemodel.updateAllColumns();
-		table.repaint();
+		table.revalidate();
 	}
 	
 	// nothing much yet...
