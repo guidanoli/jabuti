@@ -5,7 +5,7 @@ import gui.maindlg.MainFrame;
 import gui.maindlg.MenuPopup;
 import io.GlobalProperties;
 
-public class MenuPopupPreferences implements MenuPopup {
+public class PreferencesPopup implements MenuPopup {
 	
 	JFrame frame;
 	GlobalProperties gp;
@@ -18,7 +18,7 @@ public class MenuPopupPreferences implements MenuPopup {
 	// containers
 	PreferencesPanel panel;
 	
-	public MenuPopupPreferences(GlobalProperties gp, MainFrame parent) {
+	public PreferencesPopup(GlobalProperties gp, MainFrame parent) {
 		this.parent = parent;
 		this.gp = gp;
 		frame = new JFrame("Preferences");

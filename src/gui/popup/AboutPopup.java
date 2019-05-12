@@ -3,9 +3,9 @@ import javax.swing.*;
 
 import gui.maindlg.MenuPopup;
 
-public class MenuPopupAbout implements MenuPopup {
+public class AboutPopup implements MenuPopup {
 	
-	public MenuPopupAbout() { }
+	public AboutPopup() { }
 
 	public void open(JFrame parent) {
 		// TODO: Better dialog with better format

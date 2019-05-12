@@ -5,10 +5,10 @@ import javax.swing.JFrame;
 import gui.maindlg.MenuPopup;
 import io.GlobalProperties;
 
-public class MenuPopupNewBranch implements MenuPopup {
+public class NewBranchPopup implements MenuPopup {
 
 	GlobalProperties gp;
-	public MenuPopupNewBranch(GlobalProperties gp) {
+	public NewBranchPopup(GlobalProperties gp) {
 		this.gp = gp;
 		// TODO Auto-generated constructor stub
 	}

@@ -50,7 +50,7 @@ public class MainFrame extends JFrame {
 		} catch (Exception e) {
 			FatalError.show(e.getMessage(),this);
 		}
-		this.setIconImage(new ImageIcon("sprites/setmeup.png").getImage());
+		this.setIconImage(new ImageIcon("ressources/setmeup.png").getImage());
 		this.addWindowListener(new java.awt.event.WindowAdapter() {
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 		        // Closing window

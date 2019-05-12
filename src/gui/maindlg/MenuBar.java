@@ -2,10 +2,10 @@ package gui.maindlg;
 import java.awt.event.*;
 import javax.swing.*;
 
-import gui.popup.MenuPopupAbout;
-import gui.popup.MenuPopupNewBranch;
-import gui.popup.MenuPopupUpdate;
-import gui.popup.preferences.MenuPopupPreferences;
+import gui.popup.AboutPopup;
+import gui.popup.NewBranchPopup;
+import gui.popup.UpdateBranchesPopup;
+import gui.popup.preferences.PreferencesPopup;
 import io.GlobalProperties;
 
 @SuppressWarnings("serial")
@@ -22,18 +22,18 @@ public class MenuBar extends JMenuBar {
 		
 	public MenuBar(MainFrame parent, GlobalProperties gp) {
 		this.parent = parent;
-		new_branch_item.addActionListener(new MenuItemListener(this.parent, new MenuPopupNewBranch(gp)));
-		update_item.addActionListener(new MenuItemListener(this.parent,new MenuPopupUpdate(gp)));
+		new_branch_item.addActionListener(new MenuItemListener(this.parent, new NewBranchPopup(gp)));
+		update_item.addActionListener(new MenuItemListener(this.parent,new UpdateBranchesPopup(gp)));
 		branches_menu.add(new_branch_item);
 		branches_menu.add(update_item);
 		branches_menu.setMnemonic(KeyEvent.VK_B);
 		add(branches_menu);
 		edit_menu.setMnemonic(KeyEvent.VK_E);
-		pref_item.addActionListener(new MenuItemListener(this.parent,new MenuPopupPreferences(gp,parent)));
+		pref_item.addActionListener(new MenuItemListener(this.parent,new PreferencesPopup(gp,parent)));
 		edit_menu.add(pref_item);
 		add(edit_menu);
 		about_menu.setMnemonic(KeyEvent.VK_A);
-		about_item.addActionListener(new MenuItemListener(this.parent,new MenuPopupAbout()));
+		about_item.addActionListener(new MenuItemListener(this.parent,new AboutPopup()));
 		about_menu.add(about_item);
 		add(about_menu);
 	}
