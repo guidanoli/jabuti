@@ -66,9 +66,9 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 	}
 
 	public void updateTextBox() {
-		String key = model.getSelectedItemLabel();
+		String key = (String) model.getSelectedItemProperty(PreferencesComboModel.KEY);
 		String value = gp.getProperty(key);
-		type = model.getSelectedItemType();
+		type = (PreferenceType) model.getSelectedItemProperty(PreferencesComboModel.TYPE);
 		if( type.getPanel().getParent() != value_panel ) //if not added
 			value_panel.add(type.getPanel(), key); //key as unique identifier
 		((CardLayout) value_panel.getLayout()).show(value_panel, key);
@@ -85,8 +85,8 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 		{
 			if( type.validateState() )
 			{
-				String label = model.getSelectedItemLabel();
-				String value = model.getSelectedItemType().getState();
+				String label = (String) model.getSelectedItemProperty(PreferencesComboModel.LABEL);
+				String value = ((PreferenceType) model.getSelectedItemProperty(PreferencesComboModel.TYPE)).getState();
 				gp.setProperty(label,value);
 				if( gp.save() )
 				{
