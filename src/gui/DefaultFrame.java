@@ -16,7 +16,7 @@ public class DefaultFrame {
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		} catch (Exception e) {
-			FatalError.show(e.getMessage(),frame);
+			FatalError.show(e,frame);
 		}
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {

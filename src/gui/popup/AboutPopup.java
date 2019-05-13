@@ -24,35 +24,37 @@ public class AboutPopup implements MenuPopup {
 	private final int img_size = 50;
 	String [] lines = {	SetMeUp.getName(),
 						SetMeUp.getAuthors(),
-						SetMeUp.getRepositoryLinkHTML("GitHub Repository") };
+						getRepositoryLinkHTML("GitHub Repository") };
 	
 	public AboutPopup(JFrame parent) {
 		GridBagLayout layout = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
 		JPanel panel = new JPanel(layout);
-		BufferedImage myPicture;
+		BufferedImage myPicture = null;
 		try {
 			myPicture = ImageIO.read(new File(io.LocalRessources.icon));
 		} catch (IOException e) {
-			FatalError.show(e.getMessage());
-			return; //for compiler's sake
+			FatalError.show(e,parent,false);
 		}
-		JLabel picLabel = new JLabel(new ImageIcon(myPicture.getScaledInstance(img_size, img_size, Image.SCALE_FAST)));
+		JLabel picLabel;
+		if( myPicture != null )
+			picLabel = new JLabel(new ImageIcon(myPicture.getScaledInstance(img_size, img_size, Image.SCALE_FAST)));
+		else
+			picLabel = new JLabel("<Missing image>");
 		JEditorPane jep = new JEditorPane();
 	    jep.setContentType("text/html");
 	    jep.setText(getHyperText());
 	    jep.setEditable(false);
 	    jep.setOpaque(false);
 	    jep.addHyperlinkListener( e -> {
-	      if (HyperlinkEvent.EventType.ACTIVATED.equals(e.getEventType())) {
-	        System.out.println(e.getURL());
-	        Desktop desktop = Desktop.getDesktop();
-	        try {
-	          desktop.browse(e.getURL().toURI());
-	        } catch (Exception ex) {
-	          FatalError.show(ex.getMessage());
-	        }
-	      }
+		    if (HyperlinkEvent.EventType.ACTIVATED.equals(e.getEventType())) {
+		    	Desktop desktop = Desktop.getDesktop();
+		        try {
+		        	desktop.browse(e.getURL().toURI());
+		        } catch (Exception ex) {
+		        	FatalError.show(ex);
+		        }
+		    }
 	    });
 		c.fill = GridBagConstraints.BOTH;
 		panel.add(picLabel, c);
@@ -66,5 +68,8 @@ public class AboutPopup implements MenuPopup {
 
 	public void open(JFrame parent) { frame.setVisible(true); }
 	protected String getHyperText() { return String.join("<br>", lines); }
+	protected String getRepositoryLinkHTML(String label) {
+		return String.format("<a href=\"%s\">%s</a>", gui.SetMeUp.repository, label);
+	}
 	
 }

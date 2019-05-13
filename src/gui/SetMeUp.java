@@ -19,8 +19,5 @@ public class SetMeUp {
 
 	public static String getName() { return String.format("%s %s", name,version); }
 	public static String getAuthors() { return String.join(", ", authors); }
-	public static String getRepositoryLinkHTML(String label) {
-		return String.format("<a href=\"%s\">%s</a>", repository, label);
-	}
 	
 }
