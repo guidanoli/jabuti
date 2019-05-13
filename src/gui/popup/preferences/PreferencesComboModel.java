@@ -3,12 +3,14 @@ package gui.popup.preferences;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
+import io.GlobalStrings;
+
 @SuppressWarnings("serial")
 public class PreferencesComboModel extends AbstractListModel<String> implements ComboBoxModel<String> {
 
 	String selected;
 	Object[][] list = { 
-			{ "path" , "Branches directory" , new DirectoryPreferenceType() }
+			{ "path" , GlobalStrings.gui_popup_preferences_proplabel_path , new DirectoryPreferenceType() }
 	};
 	
 	public String getElementAt(int arg0) { return (String) list[arg0][1]; }

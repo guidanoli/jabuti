@@ -13,17 +13,17 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 
-import gui.SetMeUp;
 import gui.error.FatalError;
 import gui.maindlg.MenuPopup;
+import io.GlobalStrings;
 
 public class AboutPopup implements MenuPopup {
 	
 	protected JFrame frame = new JFrame("About");
 	private final int margin = 20;
 	private final int img_size = 50;
-	String [] lines = {	SetMeUp.getName(),
-						SetMeUp.getAuthors(),
+	String [] lines = {	GlobalStrings.getFullName(),
+						GlobalStrings.getAuthors(),
 						getRepositoryLinkHTML("GitHub Repository") };
 	
 	public AboutPopup(JFrame parent) {
@@ -69,7 +69,7 @@ public class AboutPopup implements MenuPopup {
 	public void open(JFrame parent) { frame.setVisible(true); }
 	protected String getHyperText() { return String.join("<br>", lines); }
 	protected String getRepositoryLinkHTML(String label) {
-		return String.format("<a href=\"%s\">%s</a>", gui.SetMeUp.repository, label);
+		return String.format("<a href=\"%s\">%s</a>", GlobalStrings.repository, label);
 	}
 	
 }

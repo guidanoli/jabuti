@@ -9,6 +9,7 @@ public class MainPanel extends JPanel {
 	
 	protected GlobalProperties gp;
 	protected JTable table;
+	protected JButton launchBtn;
 	protected BranchManager branchManager;
 	protected BranchTableModel tablemodel;
 	JScrollPane scrollingBox = new JScrollPane(	JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,

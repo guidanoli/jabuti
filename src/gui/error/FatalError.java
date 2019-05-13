@@ -10,10 +10,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import io.GlobalStrings;
+
 public class FatalError {
 
-	protected final static String ERROR_MSG_TITLE = "Error";
-	protected final static String ERROR_LOG_TITLE = "Error log";
+	protected final static String ERROR_MSG_TITLE = GlobalStrings.gui_error_msg_title;
+	protected final static String ERROR_LOG_TITLE = GlobalStrings.gui_error_log_title;
+	protected final static String ERROR_GENERAL_MSG = GlobalStrings.gui_error_general_msg;
 	protected final static JFrame DEFAULT_PARENT = null;
 	protected final static boolean DEFAULT_EXIT = true;
 	
@@ -45,7 +48,7 @@ public class FatalError {
 	    String data = new String(baos.toByteArray(), StandardCharsets.UTF_8);
 	    String [] options = {"OK","Show log"};
 	    String msg = e.getMessage();
-	    if( msg == null ) msg = "An unhandled error occurred.";
+	    if( msg == null ) msg = ERROR_GENERAL_MSG;
 	    int choice = JOptionPane.showOptionDialog(	parent,
 				    								msg,
 			    									ERROR_MSG_TITLE,
