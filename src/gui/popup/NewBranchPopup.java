@@ -3,7 +3,7 @@ package gui.popup;
 import javax.swing.JFrame;
 
 import gui.maindlg.MenuPopup;
-import io.GlobalProperties;
+import vars.GlobalProperties;
 
 public class NewBranchPopup implements MenuPopup {
 

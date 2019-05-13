@@ -1,7 +1,8 @@
 package vis;
 import java.io.File;
 import java.io.FilenameFilter;
-import io.GlobalProperties;
+
+import vars.GlobalProperties;
 
 public class BranchManager {
 	

@@ -6,20 +6,20 @@ import gui.popup.AboutPopup;
 import gui.popup.NewBranchPopup;
 import gui.popup.UpdateBranchesPopup;
 import gui.popup.preferences.PreferencesPopup;
-import io.GlobalProperties;
-import io.GlobalStrings;
+import vars.GlobalProperties;
+
 
 @SuppressWarnings("serial")
 public class MenuBar extends JMenuBar {
 
 	private MainFrame parent; 
-	private JMenu branches_menu = new JMenu(GlobalStrings.gui_menubar_branch_menu);
-	private JMenu edit_menu = new JMenu(GlobalStrings.gui_menubar_edit_menu);
-	private JMenu about_menu = new JMenu(GlobalStrings.gui_menubar_about_menu);
-	private JMenuItem new_branch_item = new JMenuItem(GlobalStrings.gui_menubar_branch_new,KeyEvent.VK_N);
-	private JMenuItem update_item = new JMenuItem(GlobalStrings.gui_menubar_branch_update,KeyEvent.VK_U);
-	private JMenuItem pref_item = new JMenuItem(GlobalStrings.gui_menubar_edit_preferences,KeyEvent.VK_P);
-	private JMenuItem about_item = new JMenuItem(GlobalStrings.gui_menubar_about_about,KeyEvent.VK_S);
+	private JMenu branches_menu = new JMenu(vars.Language.get().gui_menubar_branch_menu);
+	private JMenu edit_menu = new JMenu(vars.Language.get().gui_menubar_edit_menu);
+	private JMenu about_menu = new JMenu(vars.Language.get().gui_menubar_about_menu);
+	private JMenuItem new_branch_item = new JMenuItem(vars.Language.get().gui_menubar_branch_new,KeyEvent.VK_N);
+	private JMenuItem update_item = new JMenuItem(vars.Language.get().gui_menubar_branch_update,KeyEvent.VK_U);
+	private JMenuItem pref_item = new JMenuItem(vars.Language.get().gui_menubar_edit_preferences,KeyEvent.VK_P);
+	private JMenuItem about_item = new JMenuItem(vars.Language.get().gui_menubar_about_about,KeyEvent.VK_S);
 		
 	public MenuBar(MainFrame parent, GlobalProperties gp) {
 		this.parent = parent;

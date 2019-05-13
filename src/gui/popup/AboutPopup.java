@@ -15,15 +15,15 @@ import javax.swing.event.HyperlinkEvent;
 
 import gui.error.FatalError;
 import gui.maindlg.MenuPopup;
-import io.GlobalStrings;
+
 
 public class AboutPopup implements MenuPopup {
 	
 	protected JFrame frame = new JFrame("About");
 	private final int margin = 20;
 	private final int img_size = 50;
-	String [] lines = {	GlobalStrings.getFullName(),
-						GlobalStrings.getAuthors(),
+	String [] lines = {	vars.Language.get().getFullName(),
+						vars.Language.get().getAuthors(),
 						getRepositoryLinkHTML("GitHub Repository") };
 	
 	public AboutPopup(JFrame parent) {
@@ -32,7 +32,7 @@ public class AboutPopup implements MenuPopup {
 		JPanel panel = new JPanel(layout);
 		BufferedImage myPicture = null;
 		try {
-			myPicture = ImageIO.read(new File(io.LocalRessources.icon));
+			myPicture = ImageIO.read(new File(vars.LocalRessources.icon));
 		} catch (IOException e) {
 			FatalError.show(e,parent,false);
 		}
@@ -69,7 +69,7 @@ public class AboutPopup implements MenuPopup {
 	public void open(JFrame parent) { frame.setVisible(true); }
 	protected String getHyperText() { return String.join("<br>", lines); }
 	protected String getRepositoryLinkHTML(String label) {
-		return String.format("<a href=\"%s\">%s</a>", GlobalStrings.repository, label);
+		return String.format("<a href=\"%s\">%s</a>", vars.Language.get().repository, label);
 	}
 	
 }

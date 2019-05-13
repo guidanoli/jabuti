@@ -1,7 +1,7 @@
 package gui.maindlg;
 import javax.swing.table.*;
 
-import io.GlobalStrings;
+
 import vis.BranchManager;
 
 @SuppressWarnings("serial")
@@ -23,10 +23,10 @@ public class BranchTableModel extends AbstractTableModel {
 	
 	// meta fields
 	protected String[] columnNames = new String[]{
-			GlobalStrings.gui_branchtable_columns_branch ,
-			GlobalStrings.gui_branchtable_columns_lastsetup ,
-			GlobalStrings.gui_branchtable_columns_setup ,
-			GlobalStrings.gui_branchtable_columns_make
+			vars.Language.get().gui_branchtable_columns_branch ,
+			vars.Language.get().gui_branchtable_columns_lastsetup ,
+			vars.Language.get().gui_branchtable_columns_setup ,
+			vars.Language.get().gui_branchtable_columns_make
 	};
 	@SuppressWarnings("rawtypes")
 	protected Class[] columnClasses = new Class[]{

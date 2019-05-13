@@ -7,8 +7,8 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 import gui.DefaultFrame;
-import io.GlobalProperties;
-import io.GlobalStrings;
+import vars.GlobalProperties;
+
 import vis.BranchManager;
 
 @SuppressWarnings("serial")
@@ -16,8 +16,8 @@ public class MainPanel extends JPanel implements ActionListener {
 	
 	protected GlobalProperties gp;
 	protected JTable table;
-	protected JButton launchBtn = new JButton(GlobalStrings.gui_mainpanel_btnlabel_launch);
-	protected JButton closeBtn = new JButton(GlobalStrings.gui_mainpanel_btnlabel_close);
+	protected JButton launchBtn = new JButton(vars.Language.get().gui_mainpanel_btnlabel_launch);
+	protected JButton closeBtn = new JButton(vars.Language.get().gui_mainpanel_btnlabel_close);
 	protected BranchManager branchManager;
 	protected BranchTableModel tablemodel;
 	JScrollPane scrollingBox = new JScrollPane(	JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,

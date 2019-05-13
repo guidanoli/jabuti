@@ -1,4 +1,4 @@
-package io;
+package vars;
 import java.io.*;
 import java.util.Properties;
 import vis.BranchManager;
@@ -11,6 +11,7 @@ public class GlobalProperties extends Properties {
 	public GlobalProperties() {
 		String[][] defaultValues = {
 				{"path","D:\\users\\"+System.getProperty("user.name")},	
+				{"lang","English"}
 		};
 		for( String[] prop : defaultValues )
 			if( getProperty(prop[1]) == null )
