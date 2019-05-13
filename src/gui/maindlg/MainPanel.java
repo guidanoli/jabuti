@@ -12,7 +12,7 @@ import io.GlobalStrings;
 import vis.BranchManager;
 
 @SuppressWarnings("serial")
-public class MainPanel extends JPanel {
+public class MainPanel extends JPanel implements ActionListener {
 	
 	protected GlobalProperties gp;
 	protected JTable table;
@@ -30,23 +30,15 @@ public class MainPanel extends JPanel {
 		setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 		buildTable();
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		launchBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if ( e.getSource() instanceof JButton )
-					branchManager.launch();
-			}
-		});
-		MainPanel me = this; // can't use "this" inside ActionListener definition
-		closeBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DefaultFrame.forceClosing((JFrame) SwingUtilities.getWindowAncestor(me));
-			}
-		});
+		launchBtn.addActionListener(this);
+		closeBtn.addActionListener(this);
 		buttons.add(launchBtn);
 		buttons.add(closeBtn);
 		add(buttons);
 	}
 		
+	
+	
 	private void buildTable()
 	{
 		tablemodel = new BranchTableModel(branchManager);
@@ -68,6 +60,14 @@ public class MainPanel extends JPanel {
 	public void updateTable() {
 		tablemodel.updateAllColumns();
 		table.revalidate();
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		if( source == closeBtn )
+			DefaultFrame.forceClosing((JFrame) SwingUtilities.getWindowAncestor(this));
+		else if( source == launchBtn )
+			branchManager.launch();
 	}
 	
 	// nothing much yet...
