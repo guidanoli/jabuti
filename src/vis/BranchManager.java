@@ -18,6 +18,12 @@ public class BranchManager {
 		this.gp = gp;
 	}
 	
+	
+	public void launch() {
+		// TODO: launcher
+		System.out.println("Launched!");
+	}
+	
 	public String[] getBranchNames() {
 		String path = gp.getProperty("path");
 		if( path == null ) { return null; }

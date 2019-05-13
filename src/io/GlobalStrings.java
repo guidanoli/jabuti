@@ -16,6 +16,10 @@ public class GlobalStrings {
 	// Main Frame
 	public static final String gui_mainframe_gp_error = "Could not manage preferences";
 	
+	// Main Panel
+	public static final String gui_mainpanel_btnlabel_launch = "Launch";
+	public static final String gui_mainpanel_btnlabel_close = "Close";
+	
 	// Branch Table
 	public static final String gui_branchtable_columns_branch = "Branch name";
 	public static final String gui_branchtable_columns_lastsetup = "Last Setup";

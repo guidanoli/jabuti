@@ -1,9 +1,14 @@
 package gui.maindlg;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.table.*;
+
+import gui.DefaultFrame;
 import io.GlobalProperties;
+import io.GlobalStrings;
 import vis.BranchManager;
 
 @SuppressWarnings("serial")
@@ -11,8 +16,8 @@ public class MainPanel extends JPanel {
 	
 	protected GlobalProperties gp;
 	protected JTable table;
-	protected JButton launchBtn = new JButton("Launch");
-	protected JButton closeBtn = new JButton("Close");
+	protected JButton launchBtn = new JButton(GlobalStrings.gui_mainpanel_btnlabel_launch);
+	protected JButton closeBtn = new JButton(GlobalStrings.gui_mainpanel_btnlabel_close);
 	protected BranchManager branchManager;
 	protected BranchTableModel tablemodel;
 	JScrollPane scrollingBox = new JScrollPane(	JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -20,11 +25,23 @@ public class MainPanel extends JPanel {
 	
 	public MainPanel(GlobalProperties gp) {
 		this.gp = gp;
-		this.branchManager = new BranchManager(gp);
+		branchManager = new BranchManager(gp);
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 		buildTable();
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		launchBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if ( e.getSource() instanceof JButton )
+					branchManager.launch();
+			}
+		});
+		MainPanel me = this; // can't use "this" inside ActionListener definition
+		closeBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DefaultFrame.forceClosing((JFrame) SwingUtilities.getWindowAncestor(me));
+			}
+		});
 		buttons.add(launchBtn);
 		buttons.add(closeBtn);
 		add(buttons);

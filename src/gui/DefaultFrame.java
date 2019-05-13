@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -19,14 +20,18 @@ public class DefaultFrame {
 			FatalError.show(e,frame);
 		}
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
-			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+			public void windowClosing(WindowEvent windowEvent) {
 				close_cb.close();
 		    }
 		});
 	}
-
+	
 	public static void set(JFrame frame) {
 		set(frame, new CloseFrameCallback() { public void close() { frame.setVisible(false); } });
+	}
+	
+	public static void forceClosing(JFrame frame) {
+		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 	}
 	
 }
