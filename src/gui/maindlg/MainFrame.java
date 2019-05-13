@@ -13,7 +13,7 @@ public class MainFrame extends JFrame {
 	public MainFrame(String name) {
 		super(name);
 		gp = GlobalProperties.get();
-		if( gp == null ) FatalError.show(vars.Language.get().gui_mainframe_gp_error,this);
+		if( gp == null ) FatalError.show(vars.Language.get("gui_mainframe_gp_error"),this);
 		panel = new MainPanel(gp);
 		getContentPane().add(panel);
 		setJMenuBar(new MenuBar(this,gp));

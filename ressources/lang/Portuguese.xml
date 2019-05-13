@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="meta_name">Portuguese</entry>
+<entry key="gui_error_msg_title">Erro</entry>
+<entry key="gui_error_log_title">Log de erro</entry>
+<entry key="gui_error_general_msg">Ocorreu um erro não tratado.</entry>
+<entry key="gui_mainframe_gp_error">Não foi possível gerenciar as preferências</entry>
+<entry key="gui_mainpanel_btnlabel_launch">Inicializar</entry>
+<entry key="gui_mainpanel_btnlabel_close">Fechar</entry>
+<entry key="gui_branchtable_columns_branch">Nome do Branch</entry>
+<entry key="gui_branchtable_columns_lastsetup">Último setup</entry>
+<entry key="gui_branchtable_columns_setup">Setup</entry>
+<entry key="gui_branchtable_columns_make">Make</entry>
+<entry key="gui_menubar_branch_menu">Branches</entry>
+<entry key="gui_menubar_branch_new">Novo Branch...</entry>
+<entry key="gui_menubar_branch_update">Atualizar</entry>
+<entry key="gui_menubar_edit_menu">Editar</entry>
+<entry key="gui_menubar_edit_preferences">Configurações...</entry>
+<entry key="gui_menubar_about_menu">Sobre</entry>
+<entry key="gui_popup_preferences_type_dir_panel_btnlabel">Abrir...</entry>
+<entry key="gui_popup_preferences_type_dir_dlg_title">Abrir um diretório</entry>
+<entry key="gui_popup_preferences_type_dir_dlg_btnlabel">Abrir</entry>
+<entry key="gui_popup_preferences_title">Configurações</entry>
+<entry key="gui_popup_preferences_proplabel_path">Diretório raiz</entry>
+<entry key="gui_popup_preferences_proplabel_lang">Idioma</entry>
+<entry key="gui_popup_preferences_btn_apply">Aplicar</entry>
+<entry key="gui_popup_preferences_btn_restore">Restaurar padrão</entry>
+<entry key="gui_popup_preferences_btn_cancel">Cancelar</entry>
+<entry key="gui_popup_preferences_applymsg_ok">Configuração salva com sucesso.</entry>
+<entry key="gui_popup_preferences_applymsg_error">Não foi possível salvar configuração.</entry>
+</properties>

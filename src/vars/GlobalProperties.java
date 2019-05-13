@@ -6,12 +6,12 @@ import vis.BranchManager;
 @SuppressWarnings("serial")
 public class GlobalProperties extends Properties {
 
-	protected static final String propertiesFilePath = "properties.xml";
+	protected static final String propertiesFilePath = vars.LocalRessources.properties;
 	
 	public GlobalProperties() {
 		String[][] defaultValues = {
 				{"path","D:\\users\\"+System.getProperty("user.name")},	
-				{"lang","English"}
+				{"lang",vars.Language.default_lang}
 		};
 		for( String[] prop : defaultValues )
 			if( getProperty(prop[1]) == null )

@@ -1,27 +1,47 @@
 package vars;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Properties;
+
 import gui.error.FatalError;
-import vars.lang.*;
 
 public class Language {
-
-	public static final String [] langs = {
-			"English" ,
-			"Portuguese"
+	
+	public static String [] langs = {
+		"English" , "Portuguese"	
 	};
 	
-	public static GlobalStrings get(GlobalProperties gp) {
-		String lang = gp.getProperty("lang");
-		GlobalStrings gs = null;
-		if( lang.equals("English") )
-			gs = new English();
-		else {
-			FatalError.show("Could not determine language");
+	public static String default_lang = langs[0];
+	
+	public static String get(String label, GlobalProperties gp) {
+		String langname = gp.getProperty("lang");
+		boolean valid_langname = Arrays.stream(langs).anyMatch(langname::equals);
+		if( !valid_langname ) FatalError.show("Invalid language loaded.");
+		Properties metalang = new Properties();
+		Properties lang = null;
+		try {
+			metalang.loadFromXML(new FileInputStream(LocalRessources.metalang));
+			lang = new Properties(metalang);
+			lang.loadFromXML(new FileInputStream(LocalRessources.langfolder+langname+".xml"));
 		}
-		return gs;
+		catch (IOException e) { FatalError.show(e); }
+		return lang.getProperty(label);
 	}
 	
-	public static GlobalStrings get() {
-		return get(GlobalProperties.get());
-	}
+	public static String get(String label) { return get(label,GlobalProperties.get()); }
 
+	public static String format(String format, String... labels)
+	{
+		Object [] values = new String[labels.length];
+		GlobalProperties gp = GlobalProperties.get();
+		int i = 0;
+		for( String label : labels ) {
+			values[i] = get(label,gp); 
+			i += 1;
+		}
+		return String.format(format, values);
+	}
+	
 }

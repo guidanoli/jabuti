@@ -10,7 +10,7 @@ public class PreferencesComboModel extends AbstractListModel<String> implements 
 
 	String selected;
 	Object[][] list = { 
-			{ "path" , vars.Language.get().gui_popup_preferences_proplabel_path , new DirectoryPreferenceType() } ,
+			{ "path" , vars.Language.get("gui_popup_preferences_proplabel_path") , new DirectoryPreferenceType() } ,
 			{ "lang" , "Language" , new ComboPreferenceType(vars.Language.langs) } ,
 	};
 	

@@ -14,9 +14,9 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 	// Components
 	JComboBox<String> combo;
 	JPanel value_panel = new JPanel(new CardLayout());
-	JButton apply_btn = new JButton(vars.Language.get().gui_popup_preferences_btn_apply);
-	JButton default_btn = new JButton(vars.Language.get().gui_popup_preferences_btn_restore);
-	JButton cancel_btn = new JButton(vars.Language.get().gui_popup_preferences_btn_cancel);
+	JButton apply_btn = new JButton(vars.Language.get("gui_popup_preferences_btn_apply"));
+	JButton default_btn = new JButton(vars.Language.get("gui_popup_preferences_btn_restore"));
+	JButton cancel_btn = new JButton(vars.Language.get("gui_popup_preferences_btn_cancel"));
 	
 	// Current preference
 	PreferenceType type;
@@ -90,14 +90,14 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 				gp.setProperty(label,value);
 				if( gp.save() )
 				{
-					JOptionPane.showMessageDialog(	frame, vars.Language.get().gui_popup_preferences_applymsg_ok,
-													vars.Language.get().name, JOptionPane.INFORMATION_MESSAGE	);
+					JOptionPane.showMessageDialog(	frame, vars.Language.get("gui_popup_preferences_applymsg_ok"),
+													vars.Language.get("name"), JOptionPane.INFORMATION_MESSAGE	);
 					parent.panel.updateTable();
 					return;
 				}
 			}
-			JOptionPane.showMessageDialog(	frame, vars.Language.get().gui_popup_preferences_applymsg_error,
-											vars.Language.get().name, JOptionPane.ERROR_MESSAGE	);
+			JOptionPane.showMessageDialog(	frame, vars.Language.get("gui_popup_preferences_applymsg_error"),
+											vars.Language.get("name"), JOptionPane.ERROR_MESSAGE	);
 		}
 		else if( source == combo )
 		{

@@ -12,9 +12,9 @@ import javax.swing.JTextArea;
 
 public class FatalError {
 
-	protected final static String ERROR_MSG_TITLE = vars.Language.get().gui_error_msg_title;
-	protected final static String ERROR_LOG_TITLE = vars.Language.get().gui_error_log_title;
-	protected final static String ERROR_GENERAL_MSG = vars.Language.get().gui_error_general_msg;
+	protected final static String ERROR_MSG_TITLE = vars.Language.get("gui_error_msg_title");
+	protected final static String ERROR_LOG_TITLE = vars.Language.get("gui_error_log_title");
+	protected final static String ERROR_GENERAL_MSG = vars.Language.get("gui_error_general_msg");
 	protected final static JFrame DEFAULT_PARENT = null;
 	protected final static boolean DEFAULT_EXIT = true;
 	

@@ -22,8 +22,8 @@ public class AboutPopup implements MenuPopup {
 	protected JFrame frame = new JFrame("About");
 	private final int margin = 20;
 	private final int img_size = 50;
-	String [] lines = {	vars.Language.get().getFullName(),
-						vars.Language.get().getAuthors(),
+	String [] lines = {	vars.Language.format("%s %s", "name", "version"),
+						vars.Language.get("authors"),
 						getRepositoryLinkHTML("GitHub Repository") };
 	
 	public AboutPopup(JFrame parent) {
@@ -69,7 +69,7 @@ public class AboutPopup implements MenuPopup {
 	public void open(JFrame parent) { frame.setVisible(true); }
 	protected String getHyperText() { return String.join("<br>", lines); }
 	protected String getRepositoryLinkHTML(String label) {
-		return String.format("<a href=\"%s\">%s</a>", vars.Language.get().repository, label);
+		return String.format("<a href=\"%s\">%s</a>", vars.Language.get("repository"), label);
 	}
 	
 }
