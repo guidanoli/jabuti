@@ -25,6 +25,7 @@ public class FatalError {
 	public static void showScrollPaneMessage (String msg, JFrame parent, boolean exit) {
 		JTextArea txt = new JTextArea(msg);
 		JScrollPane sp = new JScrollPane();
+		txt.setEditable(false);
 		txt.setLineWrap(true);
 		txt.setWrapStyleWord(true);
 		sp.setViewportView(txt);
