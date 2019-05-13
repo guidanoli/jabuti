@@ -1,4 +1,6 @@
 package gui.maindlg;
+import java.awt.FlowLayout;
+
 import javax.swing.*;
 import javax.swing.table.*;
 import io.GlobalProperties;
@@ -9,7 +11,8 @@ public class MainPanel extends JPanel {
 	
 	protected GlobalProperties gp;
 	protected JTable table;
-	protected JButton launchBtn;
+	protected JButton launchBtn = new JButton("Launch");
+	protected JButton closeBtn = new JButton("Close");
 	protected BranchManager branchManager;
 	protected BranchTableModel tablemodel;
 	JScrollPane scrollingBox = new JScrollPane(	JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -21,6 +24,10 @@ public class MainPanel extends JPanel {
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 		buildTable();
+		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		buttons.add(launchBtn);
+		buttons.add(closeBtn);
+		add(buttons);
 	}
 		
 	private void buildTable()
