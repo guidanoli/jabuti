@@ -19,9 +19,9 @@ public class BranchManager {
 		this.gp = gp;
 	}
 	
-	
 	public void launch() {
 		// TODO: launcher
+		Launcher launcher = new Launcher(this);
 		System.out.println("Launched!");
 	}
 	
