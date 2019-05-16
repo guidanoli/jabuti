@@ -20,9 +20,7 @@ public class BranchManager {
 	}
 	
 	public void launch() {
-		// TODO: launcher
-		Launcher launcher = new Launcher(this);
-		System.out.println("Launched!");
+		new Launcher(this);
 	}
 	
 	public String[] getBranchNames() {
