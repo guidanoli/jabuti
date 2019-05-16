@@ -28,6 +28,7 @@ public class MenuBar extends JMenuBar {
 		update_item.addActionListener(new MenuItemListener(this.parent,new UpdateBranchesPopup(gp)));
 		branches_menu.add(new_branch_item);
 		branches_menu.add(update_item);
+		branches_menu.setEnabled(false); //TODO: Branches menu items functionalities
 		add(branches_menu);
 		pref_item.addActionListener(new MenuItemListener(this.parent,new PreferencesPopup(gp,parent)));
 		edit_menu.add(pref_item);

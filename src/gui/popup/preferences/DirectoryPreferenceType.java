@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileSystemView;
 
+import vars.GlobalProperties;
+
 
 
 public class DirectoryPreferenceType implements PreferenceType {
@@ -39,9 +41,9 @@ public class DirectoryPreferenceType implements PreferenceType {
 		panel.add(btn,c);
 	}
 	protected String openDialog(String defaultDir) {
-		// TODO: get Default Directory from VIS
-		File defdir = FileSystemView.getFileSystemView().getHomeDirectory();
-		if( defaultDir != null ) defdir = new File(defaultDir);
+		if( defaultDir == null )
+			defaultDir = GlobalProperties.getDefaults().getProperty("path");
+		File defdir = new File(defaultDir);
 		JFileChooser jfc = new JFileChooser(defdir);
 		jfc.setDialogTitle(vars.Language.get("gui_popup_preferences_type_dir_dlg_title"));
 		jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);

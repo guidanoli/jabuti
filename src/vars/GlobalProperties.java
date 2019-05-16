@@ -7,12 +7,12 @@ import vis.BranchManager;
 public class GlobalProperties extends Properties {
 
 	protected static final String propertiesFilePath = vars.LocalRessources.properties;
+	protected static final String[][] defaultValues = {
+		{"path","D:\\users\\"+System.getProperty("user.name")},	
+		{"lang",vars.Language.default_lang}
+	};
 	
 	public GlobalProperties() {
-		String[][] defaultValues = {
-				{"path","D:\\users\\"+System.getProperty("user.name")},	
-				{"lang",vars.Language.default_lang}
-		};
 		for( String[] prop : defaultValues )
 			if( getProperty(prop[1]) == null )
 				setProperty(prop[0], prop[1]);
@@ -20,7 +20,7 @@ public class GlobalProperties extends Properties {
 	
 	// gets global properties
 	public static GlobalProperties get() {
-		GlobalProperties gp = new GlobalProperties();
+		GlobalProperties gp = getDefaults();
 		try {
 			if (new File(propertiesFilePath).createNewFile()) {
 				// if XML file isn't found, create one
@@ -38,6 +38,10 @@ public class GlobalProperties extends Properties {
 		return gp;
 	}
 
+	public static GlobalProperties getDefaults() {
+		return new GlobalProperties();
+	}
+	
 	// saves global properties
 	public boolean save() {
 		try {
