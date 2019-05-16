@@ -19,10 +19,6 @@ public class BranchManager {
 		this.gp = gp;
 	}
 	
-	public void launch() {
-		new Launcher(this);
-	}
-	
 	public String[] getBranchNames() {
 		String path = gp.getProperty("path");
 		if( path == null ) { return null; }

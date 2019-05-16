@@ -10,9 +10,11 @@ import gui.DefaultFrame;
 import vars.GlobalProperties;
 
 import vis.BranchManager;
+import vis.LaunchProgressListener;
+import vis.Launcher;
 
 @SuppressWarnings("serial")
-public class MainPanel extends JPanel implements ActionListener {
+public class MainPanel extends JPanel implements ActionListener, LaunchProgressListener {
 	
 	protected GlobalProperties gp;
 	protected JTable table;
@@ -37,8 +39,6 @@ public class MainPanel extends JPanel implements ActionListener {
 		add(buttons);
 	}
 		
-	
-	
 	private void buildTable()
 	{
 		tablemodel = new BranchTableModel(branchManager);
@@ -67,7 +67,34 @@ public class MainPanel extends JPanel implements ActionListener {
 		if( source == closeBtn )
 			DefaultFrame.forceClosing((JFrame) SwingUtilities.getWindowAncestor(this));
 		else if( source == launchBtn )
-			branchManager.launch();
+		{
+			new Launcher(branchManager,this);
+		}
+	}
+
+	public void progressUpdate(int i, int setup, int make) {
+		System.out.printf("[%s]%s%s\n",branchManager.getBranchNames()[i],idtos(setup,'s'),idtos(make,'m'));
+	}
+	
+	private String idtos(int i, char c) {
+		switch(i) {
+		case LaunchProgressListener.OFF:
+			return " o";
+		case LaunchProgressListener.WAITING:
+			return " w";
+		case LaunchProgressListener.RUNNING:
+			return " r";
+		case LaunchProgressListener.ENDED:
+			return " e";
+		case LaunchProgressListener.FAILED:
+			return " f";
+		default:
+			return "";
+		}
+	}
+	
+	public void launchEnded() {
+		System.out.println("All branches are set up!");
 	}
 	
 	// nothing much yet...
