@@ -85,9 +85,9 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 		{
 			if( type.validateState() )
 			{
-				String label = (String) model.getSelectedItemProperty(PreferencesComboModel.LABEL);
+				String key = (String) model.getSelectedItemProperty(PreferencesComboModel.KEY);
 				String value = ((PreferenceType) model.getSelectedItemProperty(PreferencesComboModel.TYPE)).getState();
-				gp.setProperty(label,value);
+				gp.setProperty(key,value);
 				if( gp.save() )
 				{
 					JOptionPane.showMessageDialog(	frame, vars.Language.get("gui_popup_preferences_applymsg_ok"),
