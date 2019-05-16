@@ -7,16 +7,15 @@ import vars.GlobalProperties;
 
 public class NewBranchPopup implements MenuPopup {
 
+	//TODO: New Branch dialog
+	
 	GlobalProperties gp;
 	public NewBranchPopup(GlobalProperties gp) {
 		this.gp = gp;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void open(JFrame parent) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

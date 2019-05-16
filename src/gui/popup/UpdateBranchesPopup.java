@@ -7,11 +7,12 @@ public class UpdateBranchesPopup implements MenuPopup {
 
 	GlobalProperties gp;
 	
+	// TODO Update dialog
+	
 	public UpdateBranchesPopup(GlobalProperties gp) { this.gp = gp; }
 
 	@Override
 	public void open(JFrame parent) {
-		// TODO Update dialog
 	}
 
 }
