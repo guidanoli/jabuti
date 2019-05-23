@@ -10,6 +10,8 @@ public class BranchManager {
 	public static final String INDEX_LAST_SETUP = "lastsetup";
 	public static final String INDEX_SETUP = "setup";
 	public static final String INDEX_MAKE = "make";
+	public static final String INDEX_SETUP_STATUS = "setup_s";
+	public static final String INDEX_MAKE_STATUS = "make_s";
 	
 	GlobalProperties gp;
 	String[] branches;
@@ -21,7 +23,7 @@ public class BranchManager {
 	
 	public String[] getBranchNames() {
 		String path = gp.getProperty("path");
-		if( path == null ) { return null; }
+		if( path == null ) return null;
 		File file = new File(path);
 		branches = file.list(new FilenameFilter() {
 		  @Override
@@ -35,7 +37,7 @@ public class BranchManager {
 	}
 	
 	public String[] getLastSetupDates() {
-		if( branches == null ) { return null; }
+		if( branches == null ) return null;
 		String[] v = new String[num_branches];
 		for( int i = 0 ; i < v.length; i++ )
 		{
@@ -46,7 +48,7 @@ public class BranchManager {
 	}
 	
 	public boolean[] getBoolSetup() {
-		if( branches == null ) { return null; }
+		if( branches == null ) return null;
 		boolean[] v = new boolean[num_branches];
 		for( int i = 0 ; i < v.length; i++ ) {
 			String b = gp.getProperty(KEY_BRANCHES+"."+branches[i]+"."+INDEX_SETUP);
@@ -61,7 +63,7 @@ public class BranchManager {
 	}
 	
 	public boolean[] getBoolMake() {
-		if( branches == null ) { return null; }
+		if( branches == null ) return null;
 		boolean[] v = new boolean[num_branches];
 		for( int i = 0 ; i < v.length; i++ )
 		{
@@ -76,4 +78,37 @@ public class BranchManager {
 		gp.setProperty(KEY_BRANCHES+"."+branchName+"."+INDEX_MAKE, value_str);
 	}
 	
+	public int[] getStatusSetup() {
+		if( branches == null ) return null;
+		int[] v = new int[num_branches];
+		for( int i = 0 ; i < v.length; i++ )
+		{
+			String s = gp.getProperty(KEY_BRANCHES+'.'+branches[i]+'.'+INDEX_SETUP_STATUS);
+			if( s == null ) v[i] = 0; else v[i] = Integer.parseInt(s);
+		}
+		return v;
+	}
+	
+	public void setStatusSetup(String branchName, int value) {
+		if( value == 0 ) return;
+		String value_str = Integer.toString(value);
+		gp.setProperty(KEY_BRANCHES+'.'+branchName+'.'+INDEX_SETUP_STATUS, value_str);
+	}
+
+	public int[] getStatusMake() {
+		if( branches == null ) return null;
+		int[] v = new int[num_branches];
+		for( int i = 0 ; i < v.length; i++ )
+		{
+			String s = gp.getProperty(KEY_BRANCHES+'.'+branches[i]+'.'+INDEX_MAKE_STATUS);
+			if( s == null ) v[i] = 0; else v[i] = Integer.parseInt(s);
+		}
+		return v;
+	}
+	
+	public void setStatusMake(String branchName, int value) {
+		if( value == 0 ) return;
+		String value_str = Integer.toString(value);
+		gp.setProperty(KEY_BRANCHES+'.'+branchName+'.'+INDEX_MAKE_STATUS, value_str);
+	}
 }

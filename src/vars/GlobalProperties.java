@@ -9,7 +9,8 @@ public class GlobalProperties extends Properties {
 	protected static final String propertiesFilePath = vars.LocalRessources.properties;
 	protected static final String[][] defaultValues = {
 		{"path","D:\\users\\"+System.getProperty("user.name")},	
-		{"lang",vars.Language.default_lang}
+		{"lang",vars.Language.default_lang},
+		{"maxthreads","3"}
 	};
 	
 	public GlobalProperties() {
@@ -55,11 +56,13 @@ public class GlobalProperties extends Properties {
 	// cleans unnecessary data saved
 	public void cleanUp() {
 		for(String key : stringPropertyNames()) {
-			if( key.startsWith(BranchManager.KEY_BRANCHES) && getProperty(key).equals("false") )
+			boolean removable = false;
+			if( key.startsWith(BranchManager.KEY_BRANCHES) )
 			{
-				// removes "false" keys of check boxes from main dialog JTable
-				remove(key);
+				removable |= getProperty(key).equals("false"); // removes "false" keys of check boxes from main dialog JTable
+				// TODO: remove keys from branches no long existent
 			}
+			if( removable ) remove(key);
 		}
 		// save difference
 		save();

@@ -14,9 +14,12 @@ public class PreferencesComboModel extends AbstractListModel<String> implements 
 	public final static int RESET = 3;
 	
 	protected String selected;
+	
+	// { property label, property string on screen, preference type, asks for restart }
 	protected Object[][] list = { 
 			{ "path" , vars.Language.get("gui_popup_preferences_proplabel_path") , new DirectoryPreferenceType() , false } ,
 			{ "lang" , vars.Language.get("gui_popup_preferences_proplabel_lang") , new ComboPreferenceType(vars.Language.langs) , true } ,
+			{ "maxthreads" , "Maximum Thread Count" , new DefaultPreferenceType() , false }
 	};
 	
 	public String getElementAt(int i) { return (String) list[i][LABEL]; }

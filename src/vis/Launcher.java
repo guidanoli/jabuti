@@ -11,19 +11,24 @@ public class Launcher {
 	LaunchProgressListener listener;
 	String [] branchNames;
 	boolean [] running;
-	static Semaphore semaphore = new Semaphore(1);
+	static Semaphore accessRunningSem = new Semaphore(1);
+	static Semaphore threadBufferSem;
 	
-	//TEMP
+	// TODO: REMOVE RANDOM
 	Random r = new Random();
 	
-	public Launcher(BranchManager manager, LaunchProgressListener listener) {
+	public Launcher(BranchManager manager, LaunchProgressListener listener, int maxThreadCount ) {
 		this.listener = listener;
 		this.branchNames = manager.getBranchNames();
 		running = new boolean[branchNames.length];
+		if( maxThreadCount < 1 )
+			FatalError.show("Maximum number of threads is invalid.");
+		threadBufferSem = new Semaphore(maxThreadCount);
 		boolean [] setup = manager.getBoolSetup();
 		boolean [] make = manager.getBoolMake();
 		if( branchNames == null || setup == null || make == null || listener == null )
 			FatalError.show("Could not gather informations to launch.");
+		listener.launchBegan();
 		for( int i = 0 ; i < branchNames.length ; i++ )
 			launch(i,setup[i],make[i]);
 	}
@@ -34,8 +39,9 @@ public class Launcher {
 				//TODO: hook up to vis
 				int state_setup = setup ? LaunchProgressListener.WAITING : LaunchProgressListener.OFF;
 				int state_make = make ? LaunchProgressListener.WAITING : LaunchProgressListener.OFF;
-				setProgressRunning(i,true);
 				listener.progressUpdate(i, state_setup, state_make);
+				ThreadBufferIsRunning(true);
+				setProgressRunning(i,true);
 				if(setup) {
 					state_setup = LaunchProgressListener.RUNNING;
 					listener.progressUpdate(i, state_setup, state_make);
@@ -58,25 +64,35 @@ public class Launcher {
 					state_make = LaunchProgressListener.ENDED;
 					listener.progressUpdate(i, state_setup, state_make);
 				}
+				ThreadBufferIsRunning(false);
 				setProgressRunning(i,false);
 				checkEndedAll();
 			}
 		}.start();
 	}
 	
-	private void setProgressRunning(int i, boolean b) {
+	private void ThreadBufferIsRunning( boolean isRunning ) {
 		try {
-			semaphore.acquire();
-			running[i] = b;
-			semaphore.release();
+			if( isRunning ) threadBufferSem.acquire();
+			else threadBufferSem.release();
 		} catch (InterruptedException e) {
 			FatalError.show(e);
 		}
 	}
 	
+	private void setProgressRunning(int i, boolean b) {
+		try {
+			accessRunningSem.acquire();
+			running[i] = b;
+			accessRunningSem.release();
+		} catch (InterruptedException e) {
+			FatalError.show(e);
+		}
+	}
+		
 	private void checkEndedAll() {
 		try {
-			semaphore.acquire();
+			accessRunningSem.acquire();
 			boolean all_ended = true;
 			for( boolean rb : running ) {
 				if( rb ) {
@@ -87,7 +103,7 @@ public class Launcher {
 			if(all_ended) {
 				listener.launchEnded();
 			}
-			semaphore.release();
+			accessRunningSem.release();
 		} catch (InterruptedException e) {
 			FatalError.show(e);
 		}

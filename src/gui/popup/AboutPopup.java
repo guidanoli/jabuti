@@ -22,9 +22,11 @@ public class AboutPopup implements MenuPopup {
 	protected JFrame frame = new JFrame("About");
 	private final int margin = 20;
 	private final int img_size = 50;
-	String [] lines = {	vars.Language.format("%s %s", "name", "version"),
+	String [] lines = {	"<div align='center'>" +
+						vars.Language.format("%s %s", "name", "version"),
 						vars.Language.get("authors"),
-						getRepositoryLinkHTML("GitHub Repository") };
+						getRepositoryLinkHTML("GitHub Repository"),
+						"<br>" + getIconsAuthorHTML() + "</div>" };
 	
 	public AboutPopup(JFrame parent) {
 		GridBagLayout layout = new GridBagLayout();
@@ -57,8 +59,11 @@ public class AboutPopup implements MenuPopup {
 		    }
 	    });
 		c.fill = GridBagConstraints.BOTH;
+		c.gridx = 0;
+		c.gridy = 0;
 		panel.add(picLabel, c);
-		c.insets = new Insets(0,margin,0,0);
+		c.gridy = 1;
+		c.insets = new Insets(10,0,0,0);
 		panel.add(jep, c);
 		panel.setBorder(BorderFactory.createEmptyBorder(margin, margin, margin, margin));
 		frame.getContentPane().add(panel);
@@ -70,6 +75,12 @@ public class AboutPopup implements MenuPopup {
 	protected String getHyperText() { return String.join("<br>", lines); }
 	protected String getRepositoryLinkHTML(String label) {
 		return String.format("<a href=\"%s\">%s</a>", vars.Language.get("repository"), label);
+	}
+	private String getIconsAuthorHTML() {
+		return 	"<div>Icons made by <a href=\"https://www.flaticon.com/authors/pixel-buddha\" title=\"Pixel Buddha\">"+
+				"Pixel Buddha</a><br> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">FlatIcon</a> "+
+				"is licensed by <a href=\"http://creativecommons.org/licenses/by/3.0/\" title=\"Creative Commons BY 3.0\"+"
+				+ " target=\"_blank\">CC 3.0 BY</a></div>";
 	}
 	
 }

@@ -1,4 +1,6 @@
 package gui.maindlg;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.table.*;
 
 
@@ -12,14 +14,28 @@ public class BranchTableModel extends AbstractTableModel {
 	protected static final int SETUP = 2;
 	protected static final int MAKE = 3;
 	
+	public static final int STATUS_IDLE = 0;
+	public static final int STATUS_LAUNCH = 1;
+	
+	// status
+	int status = STATUS_IDLE;
+	
 	// manager
 	protected BranchManager manager;
 	
 	// fields
 	protected String[] branchNames;
 	protected String[] lastSetupDate;
-	protected boolean[] boolSetup;
-	protected boolean[] boolMake;
+	protected boolean[] setupToggle;
+	protected boolean[] makeToggle;
+	
+	// launch fields
+	protected int[] setupStatus;
+	protected int[] makeStatus;
+	
+	// icons
+	protected Icon[] icons;
+	protected String[] icon_paths = {};
 	
 	// meta fields
 	protected String[] columnNames = new String[]{
@@ -28,16 +44,28 @@ public class BranchTableModel extends AbstractTableModel {
 			vars.Language.get("gui_branchtable_columns_setup") ,
 			vars.Language.get("gui_branchtable_columns_make")
 	};
-	@SuppressWarnings("rawtypes")
-	protected Class[] columnClasses = new Class[]{
+	protected Class<?>[] idleColumnClasses = new Class[]{
 			String.class ,
 			String.class ,
 			Boolean.class ,
 			Boolean.class
 	};
+	protected Class<?>[] launchColumnClasses = new Class[]{
+			String.class ,
+			String.class ,
+			Icon.class ,
+			Icon.class
+	};
 	
 	public BranchTableModel( BranchManager manager ) {
 		this.manager = manager;
+		icons = new Icon[icon_paths.length];
+		int i = 0;
+		for( String path : icon_paths )
+		{
+			icons[i] = new ImageIcon(path);
+			i++;
+		}
 		updateAllColumns();
 	}
 	
@@ -45,13 +73,20 @@ public class BranchTableModel extends AbstractTableModel {
 	{
 		if(names) branchNames = manager.getBranchNames();
 		if(dates) lastSetupDate = manager.getLastSetupDates();
-		if(setup) boolSetup = manager.getBoolSetup();
-		if(make) boolMake = manager.getBoolMake();
+		if(setup) setupToggle = manager.getBoolSetup();
+		if(make) makeToggle = manager.getBoolMake();
 	}
 	
 	public void updateAllColumns() { updateColumns(true,true,true,true); }
 	public String getColumnName(int col) { return columnNames[col]; }
-	public Class<?> getColumnClass(int col) { return columnClasses[col]; }
+	public Class<?> getColumnClass(int col) {
+		if( status == STATUS_IDLE )
+			return idleColumnClasses[col];
+		else if( status == STATUS_LAUNCH )
+			return launchColumnClasses[col];
+		else
+			return null;
+	}
 	public int getRowCount() {
 		if( branchNames == null )
 			return 0;
@@ -65,15 +100,21 @@ public class BranchTableModel extends AbstractTableModel {
 		case LAST_SETUP:
 			return lastSetupDate[rowIndex];
 		case SETUP:
-			return boolSetup[rowIndex] ? Boolean.TRUE : Boolean.FALSE ;
+			if( status == STATUS_IDLE )
+				return setupToggle[rowIndex] ? Boolean.TRUE : Boolean.FALSE ;
+			else if( status == STATUS_LAUNCH )
+				return setupStatus[rowIndex];
 		case MAKE:
-			return boolMake[rowIndex] ? Boolean.TRUE : Boolean.FALSE ;
+			if( status == STATUS_IDLE )
+				return makeToggle[rowIndex] ? Boolean.TRUE : Boolean.FALSE ;
+			else if( status == STATUS_LAUNCH )
+				return makeStatus[rowIndex];
 		default:
 			return null;
 		}
 	}
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return columnIndex == SETUP || columnIndex == MAKE;			
+		return status != STATUS_LAUNCH && (columnIndex == SETUP || columnIndex == MAKE);			
 	}
 	public void setValueAt(	Object aValue,
 						    int rowIndex,
@@ -89,16 +130,35 @@ public class BranchTableModel extends AbstractTableModel {
 //			break;
 //		
 		case SETUP:
-			boolSetup[rowIndex] = (Boolean) aValue;
-			manager.setBoolSetup(branchName,(boolean) aValue);
+			if( status == STATUS_IDLE )
+			{
+				setupToggle[rowIndex] = (Boolean) aValue;
+				manager.setBoolSetup(branchName,(boolean) aValue);
+			}
+			else if( status == STATUS_LAUNCH )
+			{
+				setupStatus[rowIndex] = (int) aValue;
+			}
 			break;
 		case MAKE:
-			boolMake[rowIndex] = (Boolean) aValue;
-			manager.setBoolMake(branchName,(boolean) aValue);
+			if( status == STATUS_IDLE )
+			{
+				makeToggle[rowIndex] = (Boolean) aValue;
+				manager.setBoolMake(branchName,(boolean) aValue);
+			}
+			else if( status == STATUS_LAUNCH )
+			{
+				makeStatus[rowIndex] = (int) aValue;
+			}
 			break;
 		default:
 			break;
 		}
 	}
+	public void setStatus(int status) {
+		if( status == STATUS_LAUNCH || status == STATUS_IDLE )
+			this.status = status;
+	}
+	
 	
 }

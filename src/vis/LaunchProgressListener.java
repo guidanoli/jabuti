@@ -8,6 +8,9 @@ public interface LaunchProgressListener {
 	public static final int ENDED = 3;
 	public static final int FAILED = 4;
 	
+	// Signal that launch will begin
+	public void launchBegan();
+	
 	// Indicates the launch of a certain branch began
 	// setup and make receive OFF, RUNNING or WAITING
 	public void progressUpdate(int i, int setup, int make);
