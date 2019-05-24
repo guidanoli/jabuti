@@ -69,15 +69,17 @@ public class BranchTableModel extends AbstractTableModel {
 		updateAllColumns();
 	}
 	
-	public void updateColumns(boolean names, boolean dates, boolean setup, boolean make)
+	public void updateColumns(boolean names, boolean dates, boolean setup, boolean make, boolean setup_s, boolean make_s)
 	{
 		if(names) branchNames = manager.getBranchNames();
 		if(dates) lastSetupDate = manager.getLastSetupDates();
 		if(setup) setupToggle = manager.getBoolSetup();
 		if(make) makeToggle = manager.getBoolMake();
+		if(setup_s) setupStatus = manager.getStatusSetup();
+		if(make_s) makeStatus = manager.getStatusMake();
 	}
 	
-	public void updateAllColumns() { updateColumns(true,true,true,true); }
+	public void updateAllColumns() { updateColumns(true,true,true,true,true,true); }
 	public String getColumnName(int col) { return columnNames[col]; }
 	public Class<?> getColumnClass(int col) {
 		if( status == STATUS_IDLE )
@@ -159,6 +161,8 @@ public class BranchTableModel extends AbstractTableModel {
 		if( status == STATUS_LAUNCH || status == STATUS_IDLE )
 			this.status = status;
 	}
-	
+	public int getStatus() {
+		return status;
+	}
 	
 }

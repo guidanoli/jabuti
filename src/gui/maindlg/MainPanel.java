@@ -15,7 +15,7 @@ import vis.Launcher;
 
 @SuppressWarnings("serial")
 public class MainPanel extends JPanel implements ActionListener, LaunchProgressListener {
-	
+
 	protected GlobalProperties gp;
 	protected JTable table;
 	protected JButton launchBtn = new JButton(vars.Language.get("gui_mainpanel_btnlabel_launch"));
@@ -65,7 +65,10 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
 		if( source == closeBtn )
-			DefaultFrame.forceClosing((JFrame) SwingUtilities.getWindowAncestor(this));
+		{
+			MainFrame parent = (MainFrame) SwingUtilities.getWindowAncestor(this);
+			DefaultFrame.forceClosing(parent);
+		}
 		else if( source == launchBtn )
 		{
 			int maxThreadCount = Integer.parseInt(gp.getProperty("maxthreads"));
@@ -99,11 +102,15 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 	public void launchEnded() {
 		System.out.println("All branches are set up!");
 		tablemodel.setStatus(BranchTableModel.STATUS_IDLE);
+		MainFrame parent = (MainFrame) SwingUtilities.getWindowAncestor(this);
+		parent.setCloseOperation(MainFrame.CLOSE);
 	}
 
 	public void launchBegan() {
 		System.out.println("Setting up...");
 		tablemodel.setStatus(BranchTableModel.STATUS_LAUNCH);
+		MainFrame parent = (MainFrame) SwingUtilities.getWindowAncestor(this);
+		parent.setCloseOperation(MainFrame.TRAY);
 	}
 	
 	// nothing much yet...
