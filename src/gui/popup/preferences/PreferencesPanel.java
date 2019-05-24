@@ -88,16 +88,19 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 				String key = (String) model.getSelectedItemProperty(PreferencesComboModel.KEY);
 				String value = ((PreferenceType) model.getSelectedItemProperty(PreferencesComboModel.TYPE)).getState();
 				gp.setProperty(key,value);
-				if( gp.save() )
-				{
-					JOptionPane.showMessageDialog(	frame, vars.Language.get("gui_popup_preferences_applymsg_ok"),
-													vars.Language.get("name"), JOptionPane.INFORMATION_MESSAGE	);
-					parent.panel.updateTable();
-					return;
-				}
+				applyPreference();
+				return;
 			}
-			JOptionPane.showMessageDialog(	frame, vars.Language.get("gui_popup_preferences_applymsg_error"),
+			JOptionPane.showMessageDialog(	frame, vars.Language.get("gui_popup_preferences_applymsg_invalid"),
 											vars.Language.get("name"), JOptionPane.ERROR_MESSAGE	);
+		}
+		else if( source == default_btn )
+		{
+			String key = (String) model.getSelectedItemProperty(PreferencesComboModel.KEY);
+			String default_value = GlobalProperties.getDefaults().getProperty(key);
+			gp.setProperty(key,default_value);
+			type.setState(default_value);
+			applyPreference();
 		}
 		else if( source == combo )
 		{
@@ -107,7 +110,21 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 			}
 		}
 	}
-		
+	
+	private void applyPreference() {
+		if( gp.save() )
+		{
+			JOptionPane.showMessageDialog(	frame, vars.Language.get("gui_popup_preferences_applymsg_ok"),
+					vars.Language.get("name"), JOptionPane.INFORMATION_MESSAGE	);
+			if( (boolean) model.getSelectedItemProperty(PreferencesComboModel.RESET) )
+				JOptionPane.showMessageDialog(	frame, vars.Language.get("gui_popup_preferences_applymsg_reset"),
+						vars.Language.get("name"), JOptionPane.INFORMATION_MESSAGE	);
+			parent.panel.updateTable();
+			return;
+		}
+		JOptionPane.showMessageDialog(	frame, vars.Language.get("gui_popup_preferences_applymsg_error"),
+				vars.Language.get("name"), JOptionPane.ERROR_MESSAGE	);
+	}
 	
 	
 }
