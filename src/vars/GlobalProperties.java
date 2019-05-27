@@ -1,11 +1,15 @@
 package vars;
 import java.io.*;
 import java.util.Properties;
+
+import gui.error.FatalError;
 import vis.BranchManager;
 
 @SuppressWarnings("serial")
 public class GlobalProperties extends Properties {
 
+	protected static final String ressourcesFolderPath = vars.LocalRessources.ressourcefolder;
+	protected static final String configFolderPath = vars.LocalRessources.configfolder;
 	protected static final String propertiesFilePath = vars.LocalRessources.properties;
 	protected static final String[][] defaultValues = {
 		{"path","D:\\users\\"+System.getProperty("user.name")},	
@@ -23,6 +27,7 @@ public class GlobalProperties extends Properties {
 	public static GlobalProperties get() {
 		GlobalProperties gp = getDefaults();
 		try {
+			new File(configFolderPath).mkdirs();
 			if (new File(propertiesFilePath).createNewFile()) {
 				// if XML file isn't found, create one
 				if( !gp.save() ) return null; // save it, if possible
@@ -32,8 +37,8 @@ public class GlobalProperties extends Properties {
 				// if XML file is found, load it
 				gp.loadFromXML(new FileInputStream(propertiesFilePath));
 			}
-		} catch (IOException e) {
-			return null;
+		} catch (Exception e) {
+			FatalError.show(e);
 		}
 		gp.save();
 		return gp;
@@ -49,6 +54,7 @@ public class GlobalProperties extends Properties {
 			storeToXML(new FileOutputStream(propertiesFilePath), null, "UTF-8");
 			return true;
 		} catch (IOException e) {
+			FatalError.show(e,null,false);
 			return false;
 		}
 	}

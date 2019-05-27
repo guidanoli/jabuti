@@ -24,7 +24,7 @@ public class Language {
 		try {
 			metalang.loadFromXML(new FileInputStream(LocalRessources.metalang));
 			lang = new Properties(metalang);
-			lang.loadFromXML(new FileInputStream(LocalRessources.langfolder+langname+".xml"));
+			lang.loadFromXML(new FileInputStream(LocalRessources.langfolder+"/"+langname+".xml"));
 		}
 		catch (IOException e) { FatalError.show(e); }
 		return lang.getProperty(label);

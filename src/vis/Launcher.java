@@ -10,9 +10,9 @@ public class Launcher {
 	
 	LaunchProgressListener listener;
 	String [] branchNames;
-	boolean [] running;
-	static Semaphore accessRunningSem = new Semaphore(1);
 	static Semaphore threadBufferSem;
+	static Semaphore countSem = new Semaphore(1);
+	int toBeRunThreads = 0;
 	
 	// TODO: REMOVE RANDOM
 	Random r = new Random();
@@ -20,7 +20,6 @@ public class Launcher {
 	public Launcher(BranchManager manager, LaunchProgressListener listener, int maxThreadCount ) {
 		this.listener = listener;
 		this.branchNames = manager.getBranchNames();
-		running = new boolean[branchNames.length];
 		if( maxThreadCount < 1 )
 			FatalError.show("Maximum number of threads is invalid.");
 		threadBufferSem = new Semaphore(maxThreadCount);
@@ -28,6 +27,7 @@ public class Launcher {
 		boolean [] make = manager.getBoolMake();
 		if( branchNames == null || setup == null || make == null || listener == null )
 			FatalError.show("Could not gather informations to launch.");
+		toBeRunThreads = branchNames.length;
 		listener.launchBegan();
 		for( int i = 0 ; i < branchNames.length ; i++ )
 			launch(i,setup[i],make[i]);
@@ -41,7 +41,6 @@ public class Launcher {
 				int state_make = make ? LaunchProgressListener.WAITING : LaunchProgressListener.OFF;
 				listener.progressUpdate(i, state_setup, state_make);
 				ThreadBufferIsRunning(true);
-				setProgressRunning(i,true);
 				if(setup) {
 					state_setup = LaunchProgressListener.RUNNING;
 					listener.progressUpdate(i, state_setup, state_make);
@@ -65,8 +64,7 @@ public class Launcher {
 					listener.progressUpdate(i, state_setup, state_make);
 				}
 				ThreadBufferIsRunning(false);
-				setProgressRunning(i,false);
-				checkEndedAll();
+				endThread();
 			}
 		}.start();
 	}
@@ -79,34 +77,19 @@ public class Launcher {
 			FatalError.show(e);
 		}
 	}
-	
-	private void setProgressRunning(int i, boolean b) {
-		try {
-			accessRunningSem.acquire();
-			running[i] = b;
-			accessRunningSem.release();
-		} catch (InterruptedException e) {
-			FatalError.show(e);
-		}
-	}
 		
-	private void checkEndedAll() {
+	private void endThread()
+	{
 		try {
-			accessRunningSem.acquire();
-			boolean all_ended = true;
-			for( boolean rb : running ) {
-				if( rb ) {
-					all_ended = false;
-					break;
-				}
-			}
-			if(all_ended) {
-				listener.launchEnded();
-			}
-			accessRunningSem.release();
+			countSem.acquire();
 		} catch (InterruptedException e) {
 			FatalError.show(e);
 		}
+		toBeRunThreads--;
+		System.out.println(toBeRunThreads);
+		if(toBeRunThreads==0)
+			listener.launchEnded();
+		countSem.release();
 	}
 	
 }
