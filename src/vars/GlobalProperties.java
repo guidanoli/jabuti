@@ -8,11 +8,10 @@ import vis.BranchManager;
 @SuppressWarnings("serial")
 public class GlobalProperties extends Properties {
 
-	protected static final String ressourcesFolderPath = vars.LocalRessources.ressourcefolder;
 	protected static final String configFolderPath = vars.LocalRessources.configfolder;
 	protected static final String propertiesFilePath = vars.LocalRessources.properties;
 	protected static final String[][] defaultValues = {
-		{"path","D:\\users\\"+System.getProperty("user.name")},	
+		{"path",getDefaultPath()},	
 		{"lang",vars.Language.default_lang},
 		{"maxthreads","3"}
 	};
@@ -44,9 +43,8 @@ public class GlobalProperties extends Properties {
 		return gp;
 	}
 
-	public static GlobalProperties getDefaults() {
-		return new GlobalProperties();
-	}
+	// get default properties
+	public static GlobalProperties getDefaults() { return new GlobalProperties(); }
 	
 	// saves global properties
 	public boolean save() {
@@ -72,6 +70,17 @@ public class GlobalProperties extends Properties {
 		}
 		// save difference
 		save();
+	}
+	
+	// get default path
+	private static String getDefaultPath()
+	{
+		String [] candidates = {
+				"D:\\users\\"+System.getProperty("user.name"),
+				System.getProperty("user.home")
+		};
+		for( String c : candidates ) if(new File(c).exists()) return c;
+		return null;
 	}
 	
 }
