@@ -1,21 +1,16 @@
 package svn;
 
-import java.util.Random;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
-
 import gui.error.FatalError;
 
 public class Launcher {
-	
+
+	TortoiseHandler tortoise = new TortoiseHandler();
 	LaunchProgressListener listener;
 	String [] branchNames;
 	static Semaphore threadBufferSem;
 	static Semaphore countSem = new Semaphore(1);
 	int toBeRunThreads = 0;
-	
-	// TODO: REMOVE RANDOM
-	Random r = new Random();
 	
 	public Launcher(BranchManager manager, LaunchProgressListener listener, int maxThreadCount ) {
 		this.listener = listener;
@@ -34,6 +29,7 @@ public class Launcher {
 	}
 	
 	protected void launch(int i, boolean setup, boolean make) {
+		tortoise.getInfo(branchNames[i]);
 		new Thread() {
 			public void run() {
 				//TODO: hook up to vis
@@ -44,22 +40,14 @@ public class Launcher {
 				if(setup) {
 					state_setup = LaunchProgressListener.RUNNING;
 					listener.progressUpdate(i, state_setup, state_make);
-					try {
-						TimeUnit.SECONDS.sleep(r.nextInt(5));
-					} catch (InterruptedException e) {
-						FatalError.show(e);
-					}
+					tortoise.setup(branchNames[i]);
 					state_setup = LaunchProgressListener.ENDED;
 					listener.progressUpdate(i, state_setup, state_make);
 				}
 				if(make) {
 					state_make = LaunchProgressListener.RUNNING;
 					listener.progressUpdate(i, state_setup, state_make);
-					try {
-						TimeUnit.SECONDS.sleep(r.nextInt(5));
-					} catch (InterruptedException e) {
-						FatalError.show(e);
-					}
+					tortoise.make(branchNames[i]);
 					state_make = LaunchProgressListener.ENDED;
 					listener.progressUpdate(i, state_setup, state_make);
 				}
