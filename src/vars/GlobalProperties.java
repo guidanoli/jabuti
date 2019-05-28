@@ -3,7 +3,7 @@ import java.io.*;
 import java.util.Properties;
 
 import gui.error.FatalError;
-import vis.BranchManager;
+import svn.BranchManager;
 
 @SuppressWarnings("serial")
 public class GlobalProperties extends Properties {

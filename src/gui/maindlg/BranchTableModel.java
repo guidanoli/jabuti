@@ -3,8 +3,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.table.*;
 
-
-import vis.BranchManager;
+import svn.BranchManager;
 
 @SuppressWarnings("serial")
 public class BranchTableModel extends AbstractTableModel {

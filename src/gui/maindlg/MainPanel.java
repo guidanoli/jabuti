@@ -7,11 +7,10 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 import gui.DefaultFrame;
+import svn.BranchManager;
+import svn.LaunchProgressListener;
+import svn.Launcher;
 import vars.GlobalProperties;
-
-import vis.BranchManager;
-import vis.LaunchProgressListener;
-import vis.Launcher;
 
 @SuppressWarnings("serial")
 public class MainPanel extends JPanel implements ActionListener, LaunchProgressListener {
