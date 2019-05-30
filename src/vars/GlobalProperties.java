@@ -5,6 +5,18 @@ import java.util.Properties;
 import gui.error.FatalError;
 import svn.BranchManager;
 
+/**
+ * <h1>Global Properties</h1>
+ * 
+ * <p>A way to store global data locally in XML files information about
+ * the software usage, file states, etc.
+ * <p>Keys are set with the <b>set</b> function
+ * <p>and gotten by the <b>get</b> function 
+ * <p>and stored by the <b>save</b> function, very intuitively.
+ * 
+ * @author guidanoli
+ *
+ */
 @SuppressWarnings("serial")
 public class GlobalProperties extends Properties {
 
@@ -24,7 +36,9 @@ public class GlobalProperties extends Properties {
 				setProperty(prop[0], prop[1]);
 	}
 	
-	// gets global properties
+	/**
+	 * @return Global Properties object
+	 */
 	public static GlobalProperties getGP() {
 		GlobalProperties gp = getDefaults();
 		try {
@@ -45,30 +59,56 @@ public class GlobalProperties extends Properties {
 		return gp;
 	}
 
-	// get default properties
+	/**
+	 * @return Default global properties values
+	 */
 	public static GlobalProperties getDefaults() { return new GlobalProperties(); }
 	
 	/* **************
 	 * MAIN FUNCTIONS
 	 * ************** */
 	
-	// gets property with dot separated key
+	/**
+	 * Get property value by dot separated key
+	 * If key is branches.branch.name then the parameters
+	 * passed should be "branches", "branch", "name".
+	 * @param dot_separated_keys - strings separated by '.' in key
+	 * @return property value for said key
+	 */
 	public String get(String... dot_separated_keys ) {
 		String resulting_key = String.join(".", dot_separated_keys);
 		return getProperty(resulting_key);
 	}
 	
+	/**
+	 * Get property value by its key
+	 * @param key - property key
+	 * @return property value for said key
+	 */
 	public String get(String key) { return getProperty(key); }
 	
-	// sets property with dot separated key
+	/**
+	 * Sets value to property of key equal to the result
+	 * of joining the dot separated keys with '.'
+	 * @param value - the value that will be attributed to key
+	 * @param dot_separated_keys - fragments of key separated by '.'
+	 */
 	public void set(String value, String... dot_separated_keys ) {
 		String resulting_key = String.join(".", dot_separated_keys);
 		setProperty(resulting_key, value);
 	}
 	
+	/**
+	 * Sets value to property of a given key
+	 * @param value - the value to be attributed to key
+	 * @param key - the property key
+	 */
 	public void set(String value, String key ) { setProperty(value,key); }
 	
-	// saves global properties
+	/**
+	 * Saves all changes to property object to a XML file in UTF-8 encoding
+	 * @return true if stored successfully
+	 */
 	public boolean save() {
 		try {
 			storeToXML(new FileOutputStream(propertiesFilePath), null, "UTF-8");
@@ -79,14 +119,16 @@ public class GlobalProperties extends Properties {
 		}
 	}
 	
-	// cleans unnecessary data saved
+	/**
+	 * Deletes unnecessary information stored within the XML file
+	 * For example: keys set to their default value are removed
+	 */
 	public void cleanUp() {
 		for(String key : stringPropertyNames()) {
 			boolean removable = false;
 			if( key.startsWith(BranchManager.KEY_BRANCHES) )
 			{
 				removable |= getProperty(key).equals("false"); // removes "false" keys of check boxes from main dialog JTable
-				// TODO: remove keys from branches no long existent
 			}
 			if( removable ) remove(key);
 		}

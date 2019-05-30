@@ -63,7 +63,6 @@ public class Launcher {
 				ThreadBufferIsRunning(false);
 				if( make || setup) {
 					branchManager.setLastSetupDate(branchNames[i], System.currentTimeMillis());
-					// TODO: save last setup
 				}
 				endThread();
 			}

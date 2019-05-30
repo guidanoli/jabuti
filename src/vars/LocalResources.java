@@ -1,5 +1,13 @@
 package vars;
 
+/**
+ * Local Resources store global data in one spot
+ * Centralizing it will make it easier to change certain values
+ * in the future for the programmer - in this case - me.
+ * 
+ * @author guidanoli
+ *
+ */
 public class LocalResources {
 
 	/* *******
