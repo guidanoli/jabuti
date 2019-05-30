@@ -78,6 +78,8 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 	public void progressUpdate(int i, int setup, int make) {
 		tablemodel.setValueAt(setup, i, BranchTableModel.SETUP);
 		tablemodel.setValueAt(make, i, BranchTableModel.MAKE);
+		tablemodel.fireTableCellUpdated(i, BranchTableModel.SETUP);
+		tablemodel.fireTableCellUpdated(i, BranchTableModel.MAKE);
 		System.out.printf("[%s]%s%s\n",branchManager.getBranchNames()[i],idtos(setup,'s'),idtos(make,'m'));
 	}
 	
@@ -100,16 +102,27 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 	
 	public void launchEnded() {
 		System.out.println("All branches are set up!");
-		tablemodel.setStatus(BranchTableModel.STATUS_IDLE);
-		MainFrame parent = (MainFrame) SwingUtilities.getWindowAncestor(this);
-		parent.setCloseOperation(MainFrame.CLOSE);
+		setTableStatus(BranchTableModel.STATUS_IDLE);
 	}
 
 	public void launchBegan() {
 		System.out.println("Setting up...");
-		tablemodel.setStatus(BranchTableModel.STATUS_LAUNCH);
+		setTableStatus(BranchTableModel.STATUS_LAUNCH);
+	}
+	
+	protected void setTableStatus(int status)
+	{
+		tablemodel.setStatus(status);
 		MainFrame parent = (MainFrame) SwingUtilities.getWindowAncestor(this);
-		parent.setCloseOperation(MainFrame.TRAY);
+		if( status == BranchTableModel.STATUS_LAUNCH )
+		{
+			parent.setCloseOperation(MainFrame.TRAY);
+		}
+		else if( status == BranchTableModel.STATUS_IDLE )
+		{
+			parent.setCloseOperation(MainFrame.CLOSE);
+			table.repaint();
+		}
 	}
 	
 	// nothing much yet...

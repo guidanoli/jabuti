@@ -26,7 +26,7 @@ public class AboutPopup implements MenuPopup {
 						vars.Language.format("%s %s", "name", "version"),
 						vars.Language.get("authors"),
 						getRepositoryLinkHTML("GitHub Repository"),
-						"<br><hr>" + getIconsAuthorHTML() + "</div>" };
+						"<br><hr><br>" + getIconsAuthorHTML() + "</div>" };
 	
 	public AboutPopup(JFrame parent) {
 		GridBagLayout layout = new GridBagLayout();

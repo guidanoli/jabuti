@@ -1,6 +1,8 @@
 package svn;
 
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
+
 import gui.error.FatalError;
 
 public class Launcher {
@@ -76,7 +78,14 @@ public class Launcher {
 		toBeRunThreads--;
 		System.out.println(toBeRunThreads);
 		if(toBeRunThreads==0)
+		{
+			try {
+				TimeUnit.SECONDS.sleep(3);
+			} catch (InterruptedException e) {
+				FatalError.show(e);
+			}
 			listener.launchEnded();
+		}
 		countSem.release();
 	}
 	

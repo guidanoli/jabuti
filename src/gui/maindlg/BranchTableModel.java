@@ -4,6 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.table.*;
 
 import svn.BranchManager;
+import vars.LocalResources;
 
 @SuppressWarnings("serial")
 public class BranchTableModel extends AbstractTableModel {
@@ -34,7 +35,13 @@ public class BranchTableModel extends AbstractTableModel {
 	
 	// icons
 	protected Icon[] icons;
-	protected String[] icon_paths = {};
+	protected String[] icon_paths = {
+			LocalResources.empty ,
+			LocalResources.pause ,
+			LocalResources.minus ,
+			LocalResources.success ,
+			LocalResources.error
+	};
 	
 	// meta fields
 	protected String[] columnNames = new String[]{
@@ -104,12 +111,12 @@ public class BranchTableModel extends AbstractTableModel {
 			if( status == STATUS_IDLE )
 				return setupToggle[rowIndex] ? Boolean.TRUE : Boolean.FALSE ;
 			else if( status == STATUS_LAUNCH )
-				return setupStatus[rowIndex];
+				return icons[setupStatus[rowIndex]];
 		case MAKE:
 			if( status == STATUS_IDLE )
 				return makeToggle[rowIndex] ? Boolean.TRUE : Boolean.FALSE ;
 			else if( status == STATUS_LAUNCH )
-				return makeStatus[rowIndex];
+				return icons[makeStatus[rowIndex]];
 		default:
 			return null;
 		}
@@ -157,8 +164,8 @@ public class BranchTableModel extends AbstractTableModel {
 		}
 	}
 	public void setStatus(int status) {
-		if( status == STATUS_LAUNCH || status == STATUS_IDLE )
-			this.status = status;
+		if( status != STATUS_LAUNCH && status != STATUS_IDLE ) return;
+		this.status = status;
 	}
 	public int getStatus() {
 		return status;
