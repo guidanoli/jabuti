@@ -34,7 +34,7 @@ public class AboutPopup implements MenuPopup {
 		JPanel panel = new JPanel(layout);
 		BufferedImage myPicture = null;
 		try {
-			myPicture = ImageIO.read(new File(vars.LocalRessources.icon));
+			myPicture = ImageIO.read(new File(vars.LocalResources.icon));
 		} catch (IOException e) {
 			FatalError.show(e,parent,false);
 		}

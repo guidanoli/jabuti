@@ -22,9 +22,9 @@ public class Language {
 		Properties metalang = new Properties();
 		Properties lang = null;
 		try {
-			metalang.loadFromXML(new FileInputStream(LocalRessources.metalang));
+			metalang.loadFromXML(new FileInputStream(LocalResources.metalang));
 			lang = new Properties(metalang);
-			lang.loadFromXML(new FileInputStream(LocalRessources.langfolder+"/"+langname+".xml"));
+			lang.loadFromXML(new FileInputStream(LocalResources.langfolder+"/"+langname+".xml"));
 		}
 		catch (IOException e) { FatalError.show(e); }
 		return lang.getProperty(label);

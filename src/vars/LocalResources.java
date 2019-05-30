@@ -1,14 +1,14 @@
 package vars;
 
-public class LocalRessources {
+public class LocalResources {
 
 	/* *******
 	 * FOLDERS
 	 * ******* */
-	public static final String ressourcefolder = "resources";
-	public static final String configfolder = ressourcefolder+"/config";
-	public static final String langfolder = ressourcefolder+"/lang";
-	public static final String imgsfolder = ressourcefolder+"/imgs";
+	public static final String resourcefolder = "resources";
+	public static final String configfolder = resourcefolder+"/config";
+	public static final String langfolder = resourcefolder+"/lang";
+	public static final String imgsfolder = resourcefolder+"/imgs";
 	
 	/* ***
 	 * XML

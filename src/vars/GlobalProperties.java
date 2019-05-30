@@ -8,8 +8,8 @@ import svn.BranchManager;
 @SuppressWarnings("serial")
 public class GlobalProperties extends Properties {
 
-	protected static final String configFolderPath = vars.LocalRessources.configfolder;
-	protected static final String propertiesFilePath = vars.LocalRessources.properties;
+	protected static final String configFolderPath = vars.LocalResources.configfolder;
+	protected static final String propertiesFilePath = vars.LocalResources.properties;
 	protected static final String[][] defaultValues = {
 		{"path",getDefaultPath()},	
 		{"lang",vars.Language.default_lang},
