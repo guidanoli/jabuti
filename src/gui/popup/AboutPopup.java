@@ -26,7 +26,7 @@ public class AboutPopup implements MenuPopup {
 						vars.Language.format("%s %s", "name", "version"),
 						vars.Language.get("authors"),
 						getRepositoryLinkHTML("GitHub Repository"),
-						"<br>" + getIconsAuthorHTML() + "</div>" };
+						"<br><hr>" + getIconsAuthorHTML() + "</div>" };
 	
 	public AboutPopup(JFrame parent) {
 		GridBagLayout layout = new GridBagLayout();
@@ -77,10 +77,19 @@ public class AboutPopup implements MenuPopup {
 		return String.format("<a href=\"%s\">%s</a>", vars.Language.get("repository"), label);
 	}
 	private String getIconsAuthorHTML() {
-		return 	"<div>Icons made by <a href=\"https://www.flaticon.com/authors/pixel-buddha\" title=\"Pixel Buddha\">"+
-				"Pixel Buddha</a><br> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">FlatIcon</a> "+
-				"is licensed by <a href=\"http://creativecommons.org/licenses/by/3.0/\" title=\"Creative Commons BY 3.0\"+"
-				+ " target=\"_blank\">CC 3.0 BY</a></div>";
+		String [] authorsName = {"Smashicons","Double-J Design"};
+		String [] authorsURL = {"https:/www.flaticon.com/authors/smashicons/","http://www.doublejdesign.co.uk/"};
+		String [] licenseName = {"CC 3.0 BY","CC 4.0 BY"};
+		String [] licenseLink = {"http://creativecommons.org/licenses/by/3.0/","https://creativecommons.org/licenses/by/4.0/"};
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("Icons made by:");
+		for(int i = 0 ; i < authorsName.length; i++)
+		{
+			sb.append(String.format("<br><a href=\"%s\">%s</a>", authorsURL[i], authorsName[i]));
+			sb.append(String.format(" (<a href=\"%s\">%s</a>)", licenseLink[i], licenseName[i]));
+		}
+		return sb.toString();
 	}
 	
 }
