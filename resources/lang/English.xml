@@ -32,4 +32,11 @@
 <entry key="gui_popup_preferences_type_dir_dlg_title">Open a directory</entry>
 <entry key="gui_popup_preferences_type_dir_panel_btnlabel">Open...</entry>
 <entry key="meta_name">English</entry>
+<entry key="gui_errmsg_launcher_emptyjob">No setup nor make job was executed.</entry>
+<entry key="gui_lighterror_general_msg">An unexpected event occurred.</entry>
+<entry key="gui_lighterror_msg_title">Disclaimer</entry>
+<entry key="gui_branchtable_defval_lastsetup">Unknown</entry>
+<entry key="gui_errmsg_incoherentdate">Incoherent last setup timestamp</entry>
+<entry key="meta_locale">en</entry>
+<entry key="meta_dateformat">E, MMM dd, ''yy</entry>
 </properties>

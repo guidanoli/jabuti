@@ -32,4 +32,11 @@
 <entry key="gui_popup_preferences_type_dir_dlg_title">Abrir um diretório</entry>
 <entry key="gui_popup_preferences_type_dir_panel_btnlabel">Abrir...</entry>
 <entry key="meta_name">Portuguese</entry>
+<entry key="gui_errmsg_launcher_emptyjob">Nenhuma rotina de setup ou make foi realizada.</entry>
+<entry key="gui_lighterror_general_msg">Ocorreu um evento não esperado.</entry>
+<entry key="gui_lighterror_msg_title">Aviso</entry>
+<entry key="gui_branchtable_defval_lastsetup">Desconhecido</entry>
+<entry key="gui_errmsg_incoherentdate">Timestamp de último setup incoerente</entry>
+<entry key="meta_locale">pt</entry>
+<entry key="meta_dateformat">E, dd MMM yy</entry>
 </properties>
