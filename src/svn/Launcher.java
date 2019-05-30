@@ -4,18 +4,23 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 import gui.error.FatalError;
+import gui.error.LightError;
+import vars.Language;
 
 public class Launcher {
 
+	BranchManager branchManager;
 	TortoiseHandler tortoise = new TortoiseHandler();
 	LaunchProgressListener listener;
 	String [] branchNames;
 	static Semaphore threadBufferSem;
 	static Semaphore countSem = new Semaphore(1);
 	int toBeRunThreads = 0;
+	boolean emptyJob = true;
 	
 	public Launcher(BranchManager manager, LaunchProgressListener listener, int maxThreadCount ) {
 		this.listener = listener;
+		this.branchManager = manager;
 		this.branchNames = manager.getBranchNames();
 		if( maxThreadCount < 1 )
 			FatalError.show("Maximum number of threads is invalid.");
@@ -25,6 +30,8 @@ public class Launcher {
 		if( branchNames == null || setup == null || make == null || listener == null )
 			FatalError.show("Could not gather informations to launch.");
 		toBeRunThreads = branchNames.length;
+		for( boolean s : setup ) if( s ) emptyJob = false;
+		if( emptyJob ) for( boolean m : make ) if( m ) emptyJob = false;
 		listener.launchBegan();
 		for( int i = 0 ; i < branchNames.length ; i++ )
 			launch(i,setup[i],make[i]);
@@ -54,6 +61,10 @@ public class Launcher {
 					listener.progressUpdate(i, state_setup, state_make);
 				}
 				ThreadBufferIsRunning(false);
+				if( make || setup) {
+					branchManager.setLastSetupDate(branchNames[i], System.currentTimeMillis());
+					// TODO: save last setup
+				}
 				endThread();
 			}
 		}.start();
@@ -79,10 +90,17 @@ public class Launcher {
 		System.out.println(toBeRunThreads);
 		if(toBeRunThreads==0)
 		{
-			try {
-				TimeUnit.SECONDS.sleep(3);
-			} catch (InterruptedException e) {
-				FatalError.show(e);
+			if(!emptyJob)
+			{
+				try {
+					TimeUnit.SECONDS.sleep(3);
+				} catch (InterruptedException e) {
+					FatalError.show(e);
+				}
+			}
+			else
+			{
+				LightError.show(Language.get("gui_errmsg_launcher_emptyjob"));
 			}
 			listener.launchEnded();
 		}

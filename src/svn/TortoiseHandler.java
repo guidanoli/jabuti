@@ -23,7 +23,7 @@ public class TortoiseHandler {
 	
 	public TortoiseHandler()
 	{
-		this(GlobalProperties.get().getProperty("path"));
+		this(GlobalProperties.gp.getProperty("path"));
 	}
 		
 	public int getTargetLastRevisionNumber(String branchName)

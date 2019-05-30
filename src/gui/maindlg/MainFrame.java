@@ -10,13 +10,12 @@ public class MainFrame extends JFrame {
 	public static final int CLOSE = 0;
 	public static final int TRAY = 1;
 	
-	protected GlobalProperties gp;
+	protected GlobalProperties gp = GlobalProperties.gp;
 	public MainPanel panel;
 	protected int closeOperation = CLOSE;
 
 	public MainFrame(String name) {
 		super(name);
-		gp = GlobalProperties.get();
 		if( gp == null ) FatalError.show(vars.Language.get("gui_mainframe_gp_error"),this);
 		panel = new MainPanel(gp);
 		getContentPane().add(panel);

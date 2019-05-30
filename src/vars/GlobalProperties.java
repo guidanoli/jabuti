@@ -8,6 +8,8 @@ import svn.BranchManager;
 @SuppressWarnings("serial")
 public class GlobalProperties extends Properties {
 
+	public static GlobalProperties gp;
+	
 	protected static final String configFolderPath = vars.LocalResources.configfolder;
 	protected static final String propertiesFilePath = vars.LocalResources.properties;
 	protected static final String[][] defaultValues = {
@@ -23,7 +25,7 @@ public class GlobalProperties extends Properties {
 	}
 	
 	// gets global properties
-	public static GlobalProperties get() {
+	public static GlobalProperties getGP() {
 		GlobalProperties gp = getDefaults();
 		try {
 			new File(configFolderPath).mkdirs();
@@ -45,6 +47,26 @@ public class GlobalProperties extends Properties {
 
 	// get default properties
 	public static GlobalProperties getDefaults() { return new GlobalProperties(); }
+	
+	/* **************
+	 * MAIN FUNCTIONS
+	 * ************** */
+	
+	// gets property with dot separated key
+	public String get(String... dot_separated_keys ) {
+		String resulting_key = String.join(".", dot_separated_keys);
+		return getProperty(resulting_key);
+	}
+	
+	public String get(String key) { return getProperty(key); }
+	
+	// sets property with dot separated key
+	public void set(String value, String... dot_separated_keys ) {
+		String resulting_key = String.join(".", dot_separated_keys);
+		setProperty(resulting_key, value);
+	}
+	
+	public void set(String value, String key ) { setProperty(value,key); }
 	
 	// saves global properties
 	public boolean save() {
@@ -71,6 +93,10 @@ public class GlobalProperties extends Properties {
 		// save difference
 		save();
 	}
+	
+	/* *******************
+	 * AUXILIARY FUNCITONS
+	 * ******************* */
 	
 	// get default path
 	private static String getDefaultPath()

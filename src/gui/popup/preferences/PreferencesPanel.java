@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 import java.awt.event.*;
 import javax.swing.*;
 
+import gui.error.LightError;
 import gui.maindlg.MainFrame;
 import vars.GlobalProperties;
 
@@ -114,16 +115,13 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 	private void applyPreference() {
 		if( gp.save() )
 		{
-			JOptionPane.showMessageDialog(	frame, vars.Language.get("gui_popup_preferences_applymsg_ok"),
-					vars.Language.get("name"), JOptionPane.INFORMATION_MESSAGE	);
+			LightError.show(vars.Language.get("gui_popup_preferences_applymsg_ok"),frame);
 			if( (boolean) model.getSelectedItemProperty(PreferencesComboModel.RESET) )
-				JOptionPane.showMessageDialog(	frame, vars.Language.get("gui_popup_preferences_applymsg_reset"),
-						vars.Language.get("name"), JOptionPane.INFORMATION_MESSAGE	);
+				LightError.show(vars.Language.get("gui_popup_preferences_applymsg_reset"),frame);
 			parent.panel.updateTable();
 			return;
 		}
-		JOptionPane.showMessageDialog(	frame, vars.Language.get("gui_popup_preferences_applymsg_error"),
-				vars.Language.get("name"), JOptionPane.ERROR_MESSAGE	);
+		LightError.show(vars.Language.get("gui_popup_preferences_applymsg_error"),frame);
 	}
 	
 	

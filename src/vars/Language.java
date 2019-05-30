@@ -30,12 +30,12 @@ public class Language {
 		return lang.getProperty(label);
 	}
 	
-	public static String get(String label) { return get(label,GlobalProperties.get()); }
-
+	public static String get(String label) { return get(label,GlobalProperties.gp); }
+	
 	public static String format(String format, String... labels)
 	{
 		Object [] values = new String[labels.length];
-		GlobalProperties gp = GlobalProperties.get();
+		GlobalProperties gp = GlobalProperties.gp;
 		int i = 0;
 		for( String label : labels ) {
 			values[i] = get(label,gp); 
