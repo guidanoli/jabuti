@@ -40,19 +40,6 @@ public class TortoiseHandler {
 	{
 		this(GlobalProperties.gp.getProperty("path"));
 	}
-		
-	public int getTargetLastRevisionNumber(String branchName)
-	{
-		return 0;
-	}
-	
-	public int getLastRevisionNumber(String branchName)
-	{
-		Path fullPath = Paths.get(branchDir, branchName);
-		File f = new File(fullPath.toString());
-		if( !f.exists() ) return 0;
-		return -1; // TODO: Get last revision number command
-	}
 	
 	/**
 	 * {@code public boolean isTortoiseDir(String branchName)}
@@ -66,7 +53,8 @@ public class TortoiseHandler {
 	{
 		File f = openBranchFolder(branchName);
 		if(f==null) return false;
-		return !runCmd(branchName,false,"svn","info").equals("");
+		String output = runCmd(branchName,false,"svn","info");
+		return !(output == null || output.equals(""));
 	}
 	
 	/**
@@ -137,7 +125,7 @@ public class TortoiseHandler {
 	 * @return Output string given by the command or {@code null} if an error occurred
 	 * @deprecated
 	 */
-	protected String runCmd(String dir, String... cmd) { return runCmd(dir,false,cmd); }
+	protected String runCmd(String branchName, String... cmd) { return runCmd(branchName,false,cmd); }
 	
 	/**
 	 * {@code private File openBranchFolder(String branchName)}
@@ -150,12 +138,6 @@ public class TortoiseHandler {
 		File f = new File(fullPath.toString());
 		if( !f.exists() ) return null;
 		return f;
-	}
-	
-	public boolean isUpdated(String branchName)
-	{
-		return 	getTargetLastRevisionNumber(branchName) ==
-				getLastRevisionNumber(branchName);
 	}
 	
 	public void setup(String branchName)
