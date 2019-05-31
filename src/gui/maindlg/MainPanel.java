@@ -121,8 +121,8 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 		else if( status == BranchTableModel.STATUS_IDLE )
 		{
 			parent.setCloseOperation(MainFrame.CLOSE);
-			table.repaint();
 		}
+		table.repaint();
 	}
 	
 	// nothing much yet...

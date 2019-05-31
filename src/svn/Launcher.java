@@ -41,13 +41,13 @@ public class Launcher {
 		tortoise.getInfo(branchNames[i]);
 		new Thread() {
 			public void run() {
-				//TODO: hook up to vis
-				ThreadBufferIsRunning(true);
-				if( tortoise.isTortoiseDir(branchNames[i]) )
+				boolean validDir = tortoise.isTortoiseDir(branchNames[i]);
+				int state_setup = setup ? ( validDir ? LaunchProgressListener.WAITING : LaunchProgressListener.INVALID ) : LaunchProgressListener.OFF;
+				int state_make = make ? ( validDir ? LaunchProgressListener.WAITING : LaunchProgressListener.INVALID ) : LaunchProgressListener.OFF;
+				listener.progressUpdate(i, state_setup, state_make);
+				if( validDir )
 				{
-					int state_setup = setup ? LaunchProgressListener.WAITING : LaunchProgressListener.OFF;
-					int state_make = make ? LaunchProgressListener.WAITING : LaunchProgressListener.OFF;
-					listener.progressUpdate(i, state_setup, state_make);
+					ThreadBufferIsRunning(true);
 					if(setup) {
 						state_setup = LaunchProgressListener.RUNNING;
 						listener.progressUpdate(i, state_setup, state_make);
@@ -62,23 +62,11 @@ public class Launcher {
 						state_make = LaunchProgressListener.ENDED;
 						listener.progressUpdate(i, state_setup, state_make);
 					}
-					if( make || setup)
-					{
-						/* branch has either make or setup scheduled */
-						branchManager.setLastSetupDate(branchNames[i], System.currentTimeMillis());
-					}
+					if( make || setup ) branchManager.setLastSetupDate(branchNames[i], System.currentTimeMillis());
 					ThreadBufferIsRunning(false);
-					endThread();
 				}
-				else
-				{
-					int state_setup = setup ? LaunchProgressListener.INVALID : LaunchProgressListener.OFF;
-					int state_make = make ? LaunchProgressListener.INVALID : LaunchProgressListener.OFF;
-					listener.progressUpdate(i, state_setup, state_make);
-					ThreadBufferIsRunning(false);
-					endThread();
-					LightError.show(Language.format("gui_errmsg_launcher_invalidfolder", branchNames[i]));
-				}
+				endThread();
+				if( !validDir ) LightError.show(Language.format("gui_errmsg_launcher_invalidfolder", branchNames[i]));
 			}
 		}.start();
 	}
