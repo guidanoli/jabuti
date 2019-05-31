@@ -258,5 +258,21 @@ public class TortoiseHandler {
 		String output = runLua(f, true, setupLuaPath, "mlldamt");
 		if(output==null || output.equals("")) LightError.show(Language.format("gui_errmsg_failedmake", branchName));
 	}
-		
+	
+	/**
+	 * <p>{@code void cleanUp(String branchName)}
+	 * <p>Cleans up the branch. Its effect is the same of the './vis clean' batch job executed from any
+	 * branch's source folder. 
+	 * <p>If it could not clean up the branch, an error message will be prompted, not forcing the
+	 * application to be terminated.
+	 * @param branchName - the name of the branch folder
+	 */
+	public void cleanUp(String branchName)
+	{
+		File f = openBranchFolder(branchName);
+		if(f==null) LightError.show(Language.get("gui_errmsg_nobranchrootfolder"));
+		String output = runCmd(f,false,false,"svn", "cleanup .");
+		if(output==null || output.equals("")) LightError.show(Language.format("gui_errmsg_failedcleanup", branchName));
+	}
+	
 }
