@@ -9,6 +9,21 @@ import gui.error.FatalError;
 import vars.GlobalProperties;
 import vars.Language;
 
+/**
+ * <p>The {@code BranchManager} class intends to centralize any operation dealing
+ * with branches, their history and their current state on the application.
+ * <p><b>It does not directly operate them</b>. It only sets and gets local
+ * information stored as {@link vars.GlobalProperties GlobalProperties}, in a
+ * very abstract manner. 
+ * <p>Every array returned by the getter methods in this class are perfectly
+ * aligned. That is, given the same context, must have the same length, and
+ * have the same relationship for a given index.
+ * <p>Every branchName parameter by the setter methods in this class is related
+ * to the same set of strings that are provided by the {@link BranchManager#getBranchNames
+ * getBranchNames} method.
+ * @author guidanoli
+ * @see vars.GlobalProperties GlobalProperties
+ */
 public class BranchManager {
 	
 	public static final String KEY_BRANCHES = "branches";
@@ -22,10 +37,24 @@ public class BranchManager {
 	String[] branches;
 	int num_branches;
 	
+	/**
+	 * <p>Constructs a Branch Manager instance
+	 * @param gp - global properties
+	 */
 	public BranchManager(GlobalProperties gp) {
 		this.gp = gp;
 	}
 	
+	/**
+	 * <p>Gets the name of every folder on the
+	 * globally set property 'path'. It does not
+	 * test if said folder is a Tortoise SVN controlled
+	 * folder or not. This task is left to the
+	 * {@link svn.TortoiseHandler#isTortoiseDir(String)
+	 * isTortoiseDir} method.
+	 * @return array of branch names
+	 * @see svn.TortoiseHandler#isTortoiseDir(String) isTortoiseDir
+	 */
 	public String[] getBranchNames() {
 		String path = gp.get("path");
 		if( path == null ) return null;
@@ -41,6 +70,19 @@ public class BranchManager {
 		return branches;
 	}
 	
+	/**
+	 * <p>Gets the date of the last setup made on
+	 * each branch. If not a single setup in said
+	 * branch has been recorded, a dummy value set
+	 * by the {@link vars.Language Language} class
+	 * will fill the gap.
+	 * <p>The date is formatted depending on the
+	 * current language. Each language has a said
+	 * Locale value that interprets Date format
+	 * differently and is set by the language.
+	 * @return array of last branch setup dates
+	 * @see vars.Language Language
+	 */
 	public String[] getLastSetupDates() {
 		if( branches == null ) return null;
 		String[] v = new String[num_branches];
@@ -64,11 +106,22 @@ public class BranchManager {
 		return v;
 	}
 	
+	/**
+	 * <p>Sets last setup date to a specific branch
+	 * @param branchName - name of branch folder
+	 * @param timestamp - time stamp given by the
+	 * {@link System.currentTimeMillis} function
+	 */
 	public void setLastSetupDate(String branchName, long timestamp) {
 		String value_str = Long.toString(timestamp);
 		gp.set(value_str,KEY_BRANCHES,branchName,INDEX_LAST_SETUP);
 	}
 	
+	/**
+	 * <p>Gets boolean corresponding to whether a given
+	 * branch is scheduled to be set up by the Launcher.
+	 * @return array of booleans (i-th branch will be set up?)
+	 */
 	public boolean[] getBoolSetup() {
 		if( branches == null ) return null;
 		boolean[] v = new boolean[num_branches];
@@ -79,11 +132,22 @@ public class BranchManager {
 		return v;
 	}
 
+	/**
+	 * <p>Sets boolean corresponding to whether a given
+	 * branch is scheduled to be set up by the Launcher.
+	 * @param branchName - name of the branch folder
+	 * @param value - new boolean value 
+	 */
 	public void setBoolSetup(String branchName, boolean value) {
 		String value_str = value ? "true" : "false";
 		gp.set(value_str,KEY_BRANCHES,branchName,INDEX_SETUP);
 	}
 	
+	/**
+	 * <p>Gets boolean corresponding to whether a given
+	 * branch is scheduled to be compiled by the Launcher.
+	 * @return array of booleans (i-th branch will be compiled?)
+	 */
 	public boolean[] getBoolMake() {
 		if( branches == null ) return null;
 		boolean[] v = new boolean[num_branches];
@@ -95,11 +159,24 @@ public class BranchManager {
 		return v;
 	}
 	
+	/**
+	 * <p>Sets boolean corresponding to whether a given
+	 * branch is scheduled to be compiled by the Launcher.
+	 * @param branchName - name of the branch folder
+	 * @param value - new boolean value 
+	 */
 	public void setBoolMake(String branchName, boolean value) {
 		String value_str = value ? "true" : "false";
 		gp.set(value_str,KEY_BRANCHES,branchName,INDEX_MAKE);
 	}
 	
+	/**
+	 * <p>Gets the status of a given branch in relation to
+	 * its set up. The possible values are determined by the
+	 * {@link svn.LaunchProgressListener LaunchProgressListener}
+	 * public integers. 
+	 * @return array of setup status
+	 */
 	public int[] getStatusSetup() {
 		if( branches == null ) return null;
 		int[] v = new int[num_branches];
@@ -111,12 +188,27 @@ public class BranchManager {
 		return v;
 	}
 	
+	/**
+	 * <p>Sets the status of a given branch in relation to
+	 * its set up. The possible values are determined by the
+	 * {@link svn.LaunchProgressListener LaunchProgressListener}
+	 * public integers.
+	 * @param branchName - name of the branch folder
+	 * @param value - new status value
+	 */
 	public void setStatusSetup(String branchName, int value) {
 		if( value == 0 ) return;
 		String value_str = Integer.toString(value);
 		gp.set(value_str,KEY_BRANCHES,branchName,INDEX_SETUP_STATUS);
 	}
 
+	/**
+	 * <p>Gets the status of a given branch in relation to
+	 * its compilation. The possible values are determined by the
+	 * {@link svn.LaunchProgressListener LaunchProgressListener}
+	 * public integers. 
+	 * @return array of compilation status
+	 */
 	public int[] getStatusMake() {
 		if( branches == null ) return null;
 		int[] v = new int[num_branches];
@@ -128,6 +220,14 @@ public class BranchManager {
 		return v;
 	}
 	
+	/**
+	 * <p>Sets the status of a given branch in relation to
+	 * its compilation. The possible values are determined by the
+	 * {@link svn.LaunchProgressListener LaunchProgressListener}
+	 * public integers.
+	 * @param branchName - name of the branch folder
+	 * @param value - new status value
+	 */
 	public void setStatusMake(String branchName, int value) {
 		if( value == 0 ) return;
 		String value_str = Integer.toString(value);
