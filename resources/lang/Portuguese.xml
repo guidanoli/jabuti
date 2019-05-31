@@ -42,4 +42,5 @@
 <entry key="gui_errmsg_launcher_invalidfolder">%s não é um diretório SVN válido.</entry>
 <entry key="gui_errmsg_nobranchrootfolder">Não foi possível acessar pasta raíz do branch %s.</entry>
 <entry key="gui_errmsg_failedsetup">Não foi possível realizar setup no branch %s</entry>
+<entry key="gui_errmsg_failedmake">Não foi possível compilar branch %s</entry>
 </properties>

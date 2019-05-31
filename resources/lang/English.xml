@@ -42,4 +42,5 @@
 <entry key="gui_errmsg_launcher_invalidfolder">%s is not a valid SVN folder.</entry>
 <entry key="gui_errmsg_nobranchrootfolder">Could not open root folder from branch %s.</entry>
 <entry key="gui_errmsg_failedsetup">Could not setup branch %s</entry>
+<entry key="gui_errmsg_failedmake">Could not compile branch %s</entry>
 </properties>

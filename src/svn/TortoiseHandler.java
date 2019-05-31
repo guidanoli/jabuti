@@ -244,15 +244,21 @@ public class TortoiseHandler {
 		if(output==null || output.equals("")) LightError.show(Language.format("gui_errmsg_failedsetup", branchName));
 	}
 	
+	/**
+	 * <p>{@code void setup(String branchName)}
+	 * <p>Compiles the branch. Its effect is the same of the './vis mlldamt' batch job executed from any
+	 * branch's source folder.
+	 * <p>If it could not set up the branch, an error message will be prompted, not forcing the
+	 * application to be terminated.
+	 * @param branchName - the name of the branch folder
+	 */
 	public void make(String branchName)
 	{
-		// TODO: compile branch functionality
-		Random r = new Random();
-		try {
-			TimeUnit.SECONDS.sleep(r.nextInt(5));
-		} catch (InterruptedException e) {
-			FatalError.show(e);
-		}
+		File f = openBranchFolder(branchName);
+		if(f==null) FatalError.show(Language.get("gui_errmsg_nobranchrootfolder")); //exits
+		String setupLuaPath = Paths.get("bin", "vis.lua").toString(); 
+		String output = runLua(f, true, setupLuaPath, "mlldamt");
+		if(output==null || output.equals("")) LightError.show(Language.format("gui_errmsg_failedmake", branchName));
 	}
 	
 	public void getInfo(String branchName)
