@@ -39,4 +39,5 @@
 <entry key="gui_errmsg_incoherentdate">Incoherent last setup timestamp</entry>
 <entry key="meta_locale">en</entry>
 <entry key="meta_dateformat">E, MMM dd, ''yy</entry>
+<entry key="gui_errmsg_launcher_invalidfolder">'%s' is not a valid SVN folder.</entry>
 </properties>
