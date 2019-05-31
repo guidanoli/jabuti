@@ -38,7 +38,6 @@ public class Launcher {
 	}
 	
 	protected void launch(int i, boolean setup, boolean make) {
-		tortoise.getInfo(branchNames[i]);
 		new Thread() {
 			public void run() {
 				boolean validDir = tortoise.isTortoiseDir(branchNames[i]);
@@ -47,7 +46,6 @@ public class Launcher {
 				listener.progressUpdate(i, state_setup, state_make);
 				if( validDir )
 				{
-					tortoise.getInfo(branchNames[i]);
 					ThreadBufferIsRunning(true);
 					if(setup) {
 						state_setup = LaunchProgressListener.RUNNING;

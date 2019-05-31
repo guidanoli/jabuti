@@ -6,8 +6,6 @@ import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import gui.error.FatalError;
 import gui.error.LightError;
@@ -260,10 +258,5 @@ public class TortoiseHandler {
 		String output = runLua(f, true, setupLuaPath, "mlldamt");
 		if(output==null || output.equals("")) LightError.show(Language.format("gui_errmsg_failedmake", branchName));
 	}
-	
-	public void getInfo(String branchName)
-	{
-		System.out.printf("[%s] is%s a TortoiseSVN folder.\n", branchName, isTortoiseDir(branchName)?"":" NOT");
-	}
-	
+		
 }
