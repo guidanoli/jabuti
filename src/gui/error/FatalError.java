@@ -23,7 +23,7 @@ public class FatalError {
 		if( exit ) System.exit(0);
 	}
 	
-	public static void showScrollPaneMessage (String msg, JFrame parent, boolean exit) {
+	public static void showLog (String msg, JFrame parent, boolean exit) {
 		JTextArea txt = new JTextArea(msg);
 		JScrollPane sp = new JScrollPane();
 		txt.setEditable(false);
@@ -54,7 +54,7 @@ public class FatalError {
 			    									JOptionPane.ERROR_MESSAGE,
 			    									null, options, options[0]);
 	    if( choice == 1 )
-	    	showScrollPaneMessage(data,parent,false);
+	    	showLog(data,parent,false);
 	    if( exit ) System.exit(0);
 	}
 	
@@ -62,7 +62,7 @@ public class FatalError {
 	public static void show (String msg, JFrame parent) { show(msg,parent,DEFAULT_EXIT); }
 	public static void show (Exception e, JFrame parent) { show(e,parent,DEFAULT_EXIT); }
 	public static void showScrollPaneMessage (String msg, JFrame parent) {
-		showScrollPaneMessage(msg,parent,DEFAULT_EXIT);
+		showLog(msg,parent,DEFAULT_EXIT);
 	}
 	
 	// SIGNATURE OVERLOAD -- missing parent

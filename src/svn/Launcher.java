@@ -42,29 +42,43 @@ public class Launcher {
 		new Thread() {
 			public void run() {
 				//TODO: hook up to vis
-				int state_setup = setup ? LaunchProgressListener.WAITING : LaunchProgressListener.OFF;
-				int state_make = make ? LaunchProgressListener.WAITING : LaunchProgressListener.OFF;
-				listener.progressUpdate(i, state_setup, state_make);
 				ThreadBufferIsRunning(true);
-				if(setup) {
-					state_setup = LaunchProgressListener.RUNNING;
+				if( tortoise.isTortoiseDir(branchNames[i]) )
+				{
+					int state_setup = setup ? LaunchProgressListener.WAITING : LaunchProgressListener.OFF;
+					int state_make = make ? LaunchProgressListener.WAITING : LaunchProgressListener.OFF;
 					listener.progressUpdate(i, state_setup, state_make);
-					tortoise.setup(branchNames[i]);
-					state_setup = LaunchProgressListener.ENDED;
-					listener.progressUpdate(i, state_setup, state_make);
+					if(setup) {
+						state_setup = LaunchProgressListener.RUNNING;
+						listener.progressUpdate(i, state_setup, state_make);
+						tortoise.setup(branchNames[i]);
+						state_setup = LaunchProgressListener.ENDED;
+						listener.progressUpdate(i, state_setup, state_make);
+					}
+					if(make) {
+						state_make = LaunchProgressListener.RUNNING;
+						listener.progressUpdate(i, state_setup, state_make);
+						tortoise.make(branchNames[i]);
+						state_make = LaunchProgressListener.ENDED;
+						listener.progressUpdate(i, state_setup, state_make);
+					}
+					if( make || setup)
+					{
+						/* branch has either make or setup scheduled */
+						branchManager.setLastSetupDate(branchNames[i], System.currentTimeMillis());
+					}
+					ThreadBufferIsRunning(false);
+					endThread();
 				}
-				if(make) {
-					state_make = LaunchProgressListener.RUNNING;
+				else
+				{
+					int state_setup = setup ? LaunchProgressListener.INVALID : LaunchProgressListener.OFF;
+					int state_make = make ? LaunchProgressListener.INVALID : LaunchProgressListener.OFF;
 					listener.progressUpdate(i, state_setup, state_make);
-					tortoise.make(branchNames[i]);
-					state_make = LaunchProgressListener.ENDED;
-					listener.progressUpdate(i, state_setup, state_make);
+					ThreadBufferIsRunning(false);
+					endThread();
+					LightError.show(Language.format("gui_errmsg_launcher_invalidfolder", branchNames[i]));
 				}
-				ThreadBufferIsRunning(false);
-				if( make || setup) {
-					branchManager.setLastSetupDate(branchNames[i], System.currentTimeMillis());
-				}
-				endThread();
 			}
 		}.start();
 	}

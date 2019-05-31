@@ -27,7 +27,8 @@ public class Language {
 	public static String default_lang = langs[0];
 	
 	/**
-	 * Get String from the abstract label
+	 * {@code public static String get(String label, GlobalProperties gp)}
+	 * <p>Get String from the abstract label
 	 * @param label - string label, used to access label in XML
 	 * @param gp - Global Properties object, used to get current language
 	 * @return string in the current language
@@ -48,29 +49,28 @@ public class Language {
 	}
 	
 	/**
-	 * Get String from the abstract label in the current language
+	 * {@code public static String get(String label)}
+	 * <p>Get String from the abstract label in the current language
 	 * @param label - string label, used to access label in XML
 	 * @return string in the current language
 	 */
 	public static String get(String label) { return get(label,GlobalProperties.gp); }
 	
 	/**
-	 * Formats String containing many Language labels
-	 * <p>Similar to {@link java.lang.String#format(String, Object...) String.format} function
-	 * @param format - identical to {@code format} parameter
+	 * {@code public static String format(String formatkey, String... labels)}
+	 * <p>Formats String containing many Language labels, in a similar way to
+	 * {@link java.lang.String#format(String, Object...) String.format} function
+	 * <p>Makes use of formatted strings on the XML language files
+	 * <p><b>Note:</b> for a given string key, there must be the same format footprint, in the same order
+	 * @param formatkey - key of language string that represent a format
 	 * @param labels - labels to be replaced in string
-	 * @return formatted string
+	 * @return formatted string or {@code null} if formatkey is invalid
 	 */
-	public static String format(String format, String... labels)
+	public static String format(String formatkey, Object... values)
 	{
-		Object [] values = new String[labels.length];
-		GlobalProperties gp = GlobalProperties.gp;
-		int i = 0;
-		for( String label : labels ) {
-			values[i] = get(label,gp); 
-			i += 1;
-		}
-		return String.format(format, values);
+		String formatval = get(formatkey);
+		if(formatval==null) return null;
+		return String.format(formatval, values);
 	}
 	
 }

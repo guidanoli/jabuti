@@ -40,7 +40,8 @@ public class BranchTableModel extends AbstractTableModel {
 			LocalResources.pause ,
 			LocalResources.minus ,
 			LocalResources.success ,
-			LocalResources.error
+			LocalResources.error ,
+			LocalResources.warning ,
 	};
 	
 	// meta fields

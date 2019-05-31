@@ -7,6 +7,7 @@ public interface LaunchProgressListener {
 	public static final int WAITING = 2;
 	public static final int ENDED = 3;
 	public static final int FAILED = 4;
+	public static final int INVALID = 5;
 	
 	// Signal that launch will begin
 	public void launchBegan();

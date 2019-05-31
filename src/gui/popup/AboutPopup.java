@@ -23,7 +23,7 @@ public class AboutPopup implements MenuPopup {
 	private final int margin = 20;
 	private final int img_size = 50;
 	String [] lines = {	"<div align='center'>" +
-						vars.Language.format("%s %s", "name", "version"),
+						vars.Language.get("name") + " " + vars.Language.get("version"),
 						vars.Language.get("authors"),
 						getRepositoryLinkHTML("GitHub Repository"),
 						"<br><hr><br>" + getIconsAuthorHTML() + "</div>" };
