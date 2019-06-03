@@ -26,7 +26,7 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 	
 	public MainPanel(GlobalProperties gp) {
 		this.gp = gp;
-		branchManager = new BranchManager(gp);
+		branchManager = new BranchManager();
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 		buildTable();
@@ -70,8 +70,7 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 		}
 		else if( source == launchBtn )
 		{
-			int maxThreadCount = Integer.parseInt(gp.getProperty("maxthreads"));
-			new Launcher(branchManager,this,maxThreadCount);
+			new Launcher(branchManager,this);
 		}
 	}
 

@@ -32,6 +32,7 @@ public class Language {
 	 * @param label - string label, used to access label in XML
 	 * @param gp - Global Properties object, used to get current language
 	 * @return string in the current language
+	 * @see #get(String)
 	 */
 	public static String get(String label, GlobalProperties gp) {
 		String langname = gp.getProperty("lang");
@@ -54,7 +55,7 @@ public class Language {
 	 * @param label - string label, used to access label in XML
 	 * @return string in the current language
 	 */
-	public static String get(String label) { return get(label,GlobalProperties.gp); }
+	public static String get(String label) { return get(label,GlobalProperties.getInstance()); }
 	
 	/**
 	 * {@code public static String format(String formatkey, String... labels)}

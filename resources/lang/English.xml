@@ -44,4 +44,5 @@
 <entry key="gui_errmsg_failedsetup">Could not setup branch %s</entry>
 <entry key="gui_errmsg_failedmake">Could not compile branch %s</entry>
 <entry key="gui_errmsg_failedcleanup">Could not clean up branch %s</entry>
+<entry key="gui_popup_preferences_proplabel_cleanups">Pre-setup clean up cycles</entry>
 </properties>

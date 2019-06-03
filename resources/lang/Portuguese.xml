@@ -44,4 +44,5 @@
 <entry key="gui_errmsg_failedsetup">Não foi possível realizar setup no branch %s</entry>
 <entry key="gui_errmsg_failedmake">Não foi possível compilar branch %s</entry>
 <entry key="gui_errmsg_failedcleanup">Não foi possível limpar (se livrar de locks) branch %s</entry>
+<entry key="gui_popup_preferences_proplabel_cleanups">Número de limpezas pré-setup</entry>
 </properties>

@@ -1,9 +1,11 @@
-package gui.popup.preferences;
+package gui.popup.preferences.types;
 
 import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import gui.popup.preferences.PreferenceType;
 
 public class DefaultPreferenceType implements PreferenceType {
 

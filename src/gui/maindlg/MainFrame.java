@@ -29,7 +29,7 @@ public class MainFrame extends JFrame {
 	 */
 	public static final int TRAY = 1;
 	
-	protected GlobalProperties gp = GlobalProperties.gp;
+	protected GlobalProperties gp = GlobalProperties.getInstance();
 	public MainPanel panel;
 	protected int closeOperation = CLOSE;
 

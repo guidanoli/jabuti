@@ -40,10 +40,14 @@ public class BranchManager {
 	/**
 	 * <p>Constructs a Branch Manager instance
 	 * @param gp - global properties
+	 * @deprecated
+	 * @see #BranchManager()
 	 */
 	public BranchManager(GlobalProperties gp) {
 		this.gp = gp;
 	}
+	
+	public BranchManager() { this(GlobalProperties.getInstance()); }
 	
 	/**
 	 * <p>Gets the name of every folder on the

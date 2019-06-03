@@ -98,7 +98,7 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 		else if( source == default_btn )
 		{
 			String key = (String) model.getSelectedItemProperty(PreferencesComboModel.KEY);
-			String default_value = GlobalProperties.getDefaults().getProperty(key);
+			String default_value = GlobalProperties.getInstance().getProperty(key);
 			gp.setProperty(key,default_value);
 			type.setState(default_value);
 			applyPreference();

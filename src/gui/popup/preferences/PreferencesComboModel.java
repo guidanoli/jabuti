@@ -3,6 +3,11 @@ package gui.popup.preferences;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
+import gui.popup.preferences.types.ComboPreferenceType;
+import gui.popup.preferences.types.DirectoryPreferenceType;
+import gui.popup.preferences.types.NumberPreferenceType;
+import vars.Language;
+
 
 
 @SuppressWarnings("serial")
@@ -17,9 +22,10 @@ public class PreferencesComboModel extends AbstractListModel<String> implements 
 	
 	// { property label, property string on screen, preference type, asks for restart }
 	protected Object[][] list = { 
-			{ "path" , vars.Language.get("gui_popup_preferences_proplabel_path") , new DirectoryPreferenceType() , false } ,
-			{ "lang" , vars.Language.get("gui_popup_preferences_proplabel_lang") , new ComboPreferenceType(vars.Language.langs) , true } ,
-			{ "maxthreads" , vars.Language.get("gui_popup_preferences_proplabel_maxthreads") , new NumberPreferenceType(1,10) , false }
+			{ "path" , Language.get("gui_popup_preferences_proplabel_path") , new DirectoryPreferenceType() , false } ,
+			{ "lang" , Language.get("gui_popup_preferences_proplabel_lang") , new ComboPreferenceType(vars.Language.langs) , true } ,
+			{ "maxthreads" , Language.get("gui_popup_preferences_proplabel_maxthreads") , new NumberPreferenceType(1,10) , false } ,
+			{ "cleanups" , Language.get("gui_popup_preferences_proplabel_cleanups") , new NumberPreferenceType(1,10) , false }
 	};
 	
 	public String getElementAt(int i) { return (String) list[i][LABEL]; }

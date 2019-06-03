@@ -20,49 +20,42 @@ import svn.BranchManager;
 @SuppressWarnings("serial")
 public class GlobalProperties extends Properties {
 
-	public static GlobalProperties gp;
+	private static final GlobalProperties INSTANCE = new GlobalProperties();
 	
-	protected static final String configFolderPath = vars.LocalResources.configfolder;
-	protected static final String propertiesFilePath = vars.LocalResources.properties;
-	protected static final String[][] defaultValues = {
-		{"path",getDefaultPath()},	
-		{"lang",vars.Language.default_lang},
-		{"maxthreads","3"}
+	private final String configFolderPath = vars.LocalResources.configfolder;
+	private final String propertiesFilePath = vars.LocalResources.properties;
+	private final String[][] defaultValues = {
+		{"path", getDefaultPath()},	
+		{"lang", vars.Language.default_lang},
+		{"maxthreads", "3"},
+		{"cleanups", "2"}
 	};
 	
-	public GlobalProperties() {
-		for( String[] prop : defaultValues )
-			if( getProperty(prop[1]) == null )
-				setProperty(prop[0], prop[1]);
-	}
-	
 	/**
-	 * @return Global Properties object
+	 * @return Global Properties singleton
 	 */
-	public static GlobalProperties getGP() {
-		GlobalProperties gp = getDefaults();
+	public static GlobalProperties getInstance() { return INSTANCE; }
+	
+	private GlobalProperties() {
 		try {
 			new File(configFolderPath).mkdirs();
 			if (new File(propertiesFilePath).createNewFile()) {
 				// if XML file isn't found, create one
-				if( !gp.save() ) return null; // save it, if possible
+				if( !save() ) return; // save it, if possible
 			}
 			else
 			{
 				// if XML file is found, load it
-				gp.loadFromXML(new FileInputStream(propertiesFilePath));
+				loadFromXML(new FileInputStream(propertiesFilePath));
 			}
 		} catch (Exception e) {
 			FatalError.show(e);
 		}
-		gp.save();
-		return gp;
+		for( String[] prop : defaultValues )
+			if( getProperty(prop[1]) == null )
+				setProperty(prop[0], prop[1]);
+		save();
 	}
-
-	/**
-	 * @return Default global properties values
-	 */
-	public static GlobalProperties getDefaults() { return new GlobalProperties(); }
 	
 	/* **************
 	 * MAIN FUNCTIONS

@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import gui.error.FatalError;
 import gui.error.LightError;
+import vars.GlobalProperties;
 import vars.Language;
 
 /**
@@ -34,10 +35,20 @@ import vars.Language;
  */
 public class Launcher {
 
+	// managers
+	GlobalProperties gp = GlobalProperties.getInstance();
 	BranchManager branchManager;
 	TortoiseHandler tortoise = new TortoiseHandler();
 	LaunchProgressListener listener;
+	
+	// branches
 	String [] branchNames;
+	
+	// launch options
+	int maxThreadCount = Integer.parseInt(gp.get("maxthreads"));
+	int cleanUps = Integer.parseInt(gp.get("cleanups"));
+	
+	// threads
 	static Semaphore threadBufferSem;
 	static Semaphore countSem = new Semaphore(1);
 	int toBeRunThreads = 0;
@@ -51,7 +62,7 @@ public class Launcher {
 	 * @see svn.BranchManager
 	 * @see svn.LaunchProgressListener
 	 */
-	public Launcher(BranchManager manager, LaunchProgressListener listener, int maxThreadCount ) {
+	public Launcher(BranchManager manager, LaunchProgressListener listener ) {
 		this.listener = listener;
 		this.branchManager = manager;
 		this.branchNames = manager.getBranchNames();
@@ -80,6 +91,10 @@ public class Launcher {
 				if( validDir )
 				{
 					ThreadBufferIsRunning(true);
+					if( make || setup )
+					{
+						for(int i = 0 ; i < cleanUps; i++) tortoise.cleanUp(branchNames[i]);
+					}
 					if(setup) {
 						state_setup = LaunchProgressListener.RUNNING;
 						listener.progressUpdate(i, state_setup, state_make);
@@ -94,7 +109,10 @@ public class Launcher {
 						state_make = LaunchProgressListener.ENDED;
 						listener.progressUpdate(i, state_setup, state_make);
 					}
-					if( make || setup ) branchManager.setLastSetupDate(branchNames[i], System.currentTimeMillis());
+					if( make || setup )
+					{
+						branchManager.setLastSetupDate(branchNames[i], System.currentTimeMillis());
+					}
 					ThreadBufferIsRunning(false);
 				}
 				endThread();

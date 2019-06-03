@@ -39,7 +39,7 @@ public class TortoiseHandler {
 	 */
 	public TortoiseHandler()
 	{
-		this(GlobalProperties.gp.getProperty("path"));
+		this(GlobalProperties.getInstance().getProperty("path"));
 	}
 	
 	/**
