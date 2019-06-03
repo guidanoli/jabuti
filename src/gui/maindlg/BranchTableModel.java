@@ -42,10 +42,11 @@ public class BranchTableModel extends AbstractTableModel {
 	protected String[] icon_paths = {
 			LocalResources.empty ,
 			LocalResources.pause ,
-			LocalResources.minus ,
+			LocalResources.unlock ,
+			LocalResources.more ,
 			LocalResources.success ,
-			LocalResources.error ,
 			LocalResources.warning ,
+			LocalResources.error ,
 	};
 	
 	// meta fields

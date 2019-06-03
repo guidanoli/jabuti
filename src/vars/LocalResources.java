@@ -36,5 +36,7 @@ public class LocalResources {
 	public static final String stop = imgsfolder+"/stop-1.png";
 	public static final String info = imgsfolder+"/info.png";
 	public static final String empty = imgsfolder+"/empty.png";
+	public static final String more = imgsfolder+"/more.png";
+	public static final String unlock = imgsfolder+"/locked-1.png";
 	
 }

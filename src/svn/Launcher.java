@@ -91,48 +91,76 @@ public class Launcher {
 				listener.progressUpdate(i, state_setup, state_make);
 				if( validDir )
 				{
-					ThreadBufferIsRunning(true);
-					if( make || setup )
+					joinThread();
+					if( setup )
 					{
+						state_setup = LaunchProgressListener.UNLOCKING;
+						listener.progressUpdate(i, state_setup, state_make);
 						for(int i = 0 ; i < cleanUps; i++) tortoise.cleanUp(branchNames[i]);
-					}
-					if(setup) {
 						state_setup = LaunchProgressListener.RUNNING;
 						listener.progressUpdate(i, state_setup, state_make);
-						tortoise.setup(branchNames[i]);
-						state_setup = LaunchProgressListener.ENDED;
-						listener.progressUpdate(i, state_setup, state_make);
+						boolean success = tortoise.setup(branchNames[i]);
+						if(success)
+						{
+							state_setup = LaunchProgressListener.ENDED;
+							listener.progressUpdate(i, state_setup, state_make);
+						}
+						else
+						{
+							state_setup = LaunchProgressListener.FAILED;
+							listener.progressUpdate(i, state_setup, state_make);
+							exitThread();
+							return;
+						}
 					}
-					if(make) {
+					if( make ) {
 						state_make = LaunchProgressListener.RUNNING;
 						listener.progressUpdate(i, state_setup, state_make);
-						tortoise.make(branchNames[i]);
-						state_make = LaunchProgressListener.ENDED;
-						listener.progressUpdate(i, state_setup, state_make);
+						boolean success = tortoise.make(branchNames[i]);
+						if(success)
+						{
+							state_make = LaunchProgressListener.ENDED;
+							listener.progressUpdate(i, state_setup, state_make);
+						}
+						else
+						{
+							state_make = LaunchProgressListener.FAILED;
+							listener.progressUpdate(i, state_setup, state_make);
+							exitThread();
+							return;
+						}
 					}
 					if( make || setup )
 					{
 						branchManager.setLastSetupDate(branchNames[i], System.currentTimeMillis());
 					}
-					ThreadBufferIsRunning(false);
 				}
-				endThread();
+				exitThread();
 				if( !validDir ) LightError.show(lang.format("gui_errmsg_launcher_invalidfolder", branchNames[i]));
 			}
 		}.start();
 	}
 	
-	private void ThreadBufferIsRunning( boolean isRunning ) {
+	/**
+	 * <p>Safely joins the thread buffer
+	 */
+	private void joinThread()
+	{
 		try {
-			if( isRunning ) threadBufferSem.acquire();
-			else threadBufferSem.release();
+			threadBufferSem.acquire();
 		} catch (InterruptedException e) {
 			FatalError.show(e);
 		}
 	}
-		
-	private void endThread()
+			
+	/**
+	 * <p>Safely exits the thread buffer. If it is the last thread to exit
+	 * the buffer, {@link LaunchProgressListener#launchEnded() launchEnded()}
+	 * will be called.
+	 */
+	private void exitThread()
 	{
+		threadBufferSem.release();
 		try {
 			countSem.acquire();
 		} catch (InterruptedException e) {

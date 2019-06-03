@@ -17,11 +17,12 @@ package svn;
 public interface LaunchProgressListener {
 
 	public static final int OFF = 0;
-	public static final int RUNNING = 1;
-	public static final int WAITING = 2;
-	public static final int ENDED = 3;
-	public static final int FAILED = 4;
+	public static final int WAITING = 1;
+	public static final int UNLOCKING = 2;
+	public static final int RUNNING = 3;
+	public static final int ENDED = 4;
 	public static final int INVALID = 5;
+	public static final int FAILED = 6;
 
 	/**
 	 * Signals the application that the launch job has begun.

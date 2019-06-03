@@ -233,14 +233,20 @@ public class TortoiseHandler {
 	 * <p>If it could not set up the branch, an error message will be prompted, not forcing the
 	 * application to be terminated.
 	 * @param branchName - the name of the branch folder
+	 * @return {@code true} on success and {@code false} on error
 	 */
-	public void setup(String branchName)
+	public boolean setup(String branchName)
 	{
 		File f = openBranchFolder(branchName);
 		if(f==null) FatalError.show(lang.get("gui_errmsg_nobranchrootfolder")); //exits
 		String setupLuaPath = Paths.get("bin", "vis.lua").toString(); 
 		String output = runLua(f, true, setupLuaPath, "s");
-		if(output==null || output.equals("")) LightError.show(lang.format("gui_errmsg_failedsetup", branchName));
+		if(output==null || output.equals(""))
+		{
+			LightError.show(lang.format("gui_errmsg_failedsetup", branchName));
+			return false;
+		}
+		return true;
 	}
 	
 	/**
@@ -250,14 +256,20 @@ public class TortoiseHandler {
 	 * <p>If it could not set up the branch, an error message will be prompted, not forcing the
 	 * application to be terminated.
 	 * @param branchName - the name of the branch folder
+	 * @return {@code true} on success and {@code false} on error
 	 */
-	public void make(String branchName)
+	public boolean make(String branchName)
 	{
 		File f = openBranchFolder(branchName);
 		if(f==null) FatalError.show(lang.get("gui_errmsg_nobranchrootfolder")); //exits
 		String setupLuaPath = Paths.get("bin", "vis.lua").toString(); 
 		String output = runLua(f, true, setupLuaPath, "mlldamt");
-		if(output==null || output.equals("")) LightError.show(lang.format("gui_errmsg_failedmake", branchName));
+		if(output==null || output.equals(""))
+		{
+			LightError.show(lang.format("gui_errmsg_failedmake", branchName));
+			return false;
+		}
+		return true;
 	}
 	
 	/**
@@ -272,8 +284,7 @@ public class TortoiseHandler {
 	{
 		File f = openBranchFolder(branchName);
 		if(f==null) LightError.show(lang.get("gui_errmsg_nobranchrootfolder"));
-		String output = runCmd(f,false,false,"svn", "cleanup .");
-		if(output==null || output.equals("")) LightError.show(lang.format("gui_errmsg_failedcleanup", branchName));
+		runCmd(f,true,false,"svn", "cleanup"); // does not output :)
 	}
 	
 }
