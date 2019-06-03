@@ -7,9 +7,7 @@ import vars.Language;
 
 public class LightError {
 
-	protected final static Language lang = Language.getInstance();
-	public final static String LIGHT_MSG_TITLE = lang.get("gui_lighterror_msg_title");
-	public final static String LIGHT_GENERAL_MSG = lang.get("gui_lighterror_general_msg");
+	private final static Language lang = Language.getInstance();
 	
 	/* Show message */
 	public static void show(String msg, String title, JFrame parent)
@@ -20,13 +18,13 @@ public class LightError {
 	/* Show exception */
 	public static void show(Exception e, String title, JFrame parent) {
 		String msg = e.getMessage();
-		if( msg == null ) msg = LIGHT_GENERAL_MSG;
+		if( msg == null ) msg = lang.get("gui_lighterror_general_msg");
 		show(msg,title,parent);
 	}
 	
 	// SIGNATURE OVERLOAD -- missing title
-	public static void show(String msg, JFrame parent) { show(msg,LIGHT_MSG_TITLE,parent); }
-	public static void show(Exception e, JFrame parent) { show(e,LIGHT_MSG_TITLE,parent); }
+	public static void show(String msg, JFrame parent) { show(msg,lang.get("gui_lighterror_msg_title"),parent); }
+	public static void show(Exception e, JFrame parent) { show(e,lang.get("gui_lighterror_msg_title"),parent); }
 	
 	// SIGNATURE OVERLOAD -- missing parent
 	public static void show(String msg, String title) { show(msg,title,(JFrame)null); }

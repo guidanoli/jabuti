@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Properties;
 
 import gui.error.FatalError;
+import gui.error.LightError;
 
 /**
  * The {@code Language} class deals with language strings that can vary depending on
@@ -27,7 +28,7 @@ public class Language {
 		"English" , "Portuguese"	
 	};
 	
-	public String default_lang = "English";
+	public String default_lang = langs[0];
 	
 	public static Language getInstance() { return INSTANCE; }
 	
@@ -35,10 +36,15 @@ public class Language {
 	 * Constructs a Language object
 	 */
 	private Language() {
-		String langname = GlobalProperties.getInstance().getProperty("lang");
-		if( langname == null ) langname = default_lang;
+		GlobalProperties gp = GlobalProperties.getInstance();
+		String langname = gp.getProperty("lang");
 		boolean valid_langname = Arrays.stream(langs).anyMatch(langname::equals);
-		if( !valid_langname ) langname = default_lang;
+		if( !valid_langname )
+		{
+			langname = default_lang;
+			gp.set("lang", langname);
+			LightError.show("Invalid default language. Contact support.","Error",null);
+		}
 		Properties metalang = new Properties();
 		try {
 			metalang.loadFromXML(new FileInputStream(LocalResources.metalang));
