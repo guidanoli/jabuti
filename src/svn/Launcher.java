@@ -36,6 +36,7 @@ import vars.Language;
 public class Launcher {
 
 	// managers
+	Language lang = Language.getInstance();
 	GlobalProperties gp = GlobalProperties.getInstance();
 	BranchManager branchManager;
 	TortoiseHandler tortoise = new TortoiseHandler();
@@ -116,7 +117,7 @@ public class Launcher {
 					ThreadBufferIsRunning(false);
 				}
 				endThread();
-				if( !validDir ) LightError.show(Language.format("gui_errmsg_launcher_invalidfolder", branchNames[i]));
+				if( !validDir ) LightError.show(lang.format("gui_errmsg_launcher_invalidfolder", branchNames[i]));
 			}
 		}.start();
 	}
@@ -151,7 +152,7 @@ public class Launcher {
 			}
 			else
 			{
-				LightError.show(Language.get("gui_errmsg_launcher_emptyjob"));
+				LightError.show(lang.get("gui_errmsg_launcher_emptyjob"));
 			}
 			listener.launchEnded();
 		}

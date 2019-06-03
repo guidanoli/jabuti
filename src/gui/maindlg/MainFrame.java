@@ -2,6 +2,7 @@ package gui.maindlg;
 import javax.swing.JFrame;
 import gui.error.FatalError;
 import vars.GlobalProperties;
+import vars.Language;
 
 /**
  * 
@@ -29,6 +30,7 @@ public class MainFrame extends JFrame {
 	 */
 	public static final int TRAY = 1;
 	
+	private Language lang = Language.getInstance();
 	protected GlobalProperties gp = GlobalProperties.getInstance();
 	public MainPanel panel;
 	protected int closeOperation = CLOSE;
@@ -42,7 +44,7 @@ public class MainFrame extends JFrame {
 	 */
 	public MainFrame(String name) {
 		super(name);
-		if( gp == null ) FatalError.show(vars.Language.get("gui_mainframe_gp_error"),this);
+		if( gp == null ) FatalError.show(lang.get("gui_mainframe_gp_error"),this);
 		panel = new MainPanel(gp);
 		getContentPane().add(panel);
 		setJMenuBar(new MenuBar(this,gp));

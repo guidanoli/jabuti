@@ -18,14 +18,16 @@ public class PreferencesComboModel extends AbstractListModel<String> implements 
 	public final static int TYPE = 2;
 	public final static int RESET = 3;
 	
+	private Language lang = Language.getInstance();
+	
 	protected String selected;
 	
 	// { property label, property string on screen, preference type, asks for restart }
 	protected Object[][] list = { 
-			{ "path" , Language.get("gui_popup_preferences_proplabel_path") , new DirectoryPreferenceType() , false } ,
-			{ "lang" , Language.get("gui_popup_preferences_proplabel_lang") , new ComboPreferenceType(vars.Language.langs) , true } ,
-			{ "maxthreads" , Language.get("gui_popup_preferences_proplabel_maxthreads") , new NumberPreferenceType(1,10) , false } ,
-			{ "cleanups" , Language.get("gui_popup_preferences_proplabel_cleanups") , new NumberPreferenceType(1,10) , false }
+			{ "path" , lang.get("gui_popup_preferences_proplabel_path") , new DirectoryPreferenceType() , false } ,
+			{ "lang" , lang.get("gui_popup_preferences_proplabel_lang") , new ComboPreferenceType(lang.getLanguages()) , true } ,
+			{ "maxthreads" , lang.get("gui_popup_preferences_proplabel_maxthreads") , new NumberPreferenceType(1,10) , false } ,
+			{ "cleanups" , lang.get("gui_popup_preferences_proplabel_cleanups") , new NumberPreferenceType(1,10) , false }
 	};
 	
 	public String getElementAt(int i) { return (String) list[i][LABEL]; }

@@ -26,7 +26,7 @@ public class GlobalProperties extends Properties {
 	private final String propertiesFilePath = vars.LocalResources.properties;
 	private final String[][] defaultValues = {
 		{"path", getDefaultPath()},	
-		{"lang", vars.Language.default_lang},
+		{"lang", "English"},
 		{"maxthreads", "3"},
 		{"cleanups", "2"}
 	};
@@ -37,6 +37,8 @@ public class GlobalProperties extends Properties {
 	public static GlobalProperties getInstance() { return INSTANCE; }
 	
 	private GlobalProperties() {
+		for( String[] prop : defaultValues )
+			setProperty(prop[0], prop[1]);
 		try {
 			new File(configFolderPath).mkdirs();
 			if (new File(propertiesFilePath).createNewFile()) {
@@ -51,9 +53,6 @@ public class GlobalProperties extends Properties {
 		} catch (Exception e) {
 			FatalError.show(e);
 		}
-		for( String[] prop : defaultValues )
-			if( getProperty(prop[1]) == null )
-				setProperty(prop[0], prop[1]);
 		save();
 	}
 	

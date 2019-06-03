@@ -15,18 +15,20 @@ import javax.swing.event.HyperlinkEvent;
 
 import gui.error.FatalError;
 import gui.maindlg.MenuPopup;
+import vars.Language;
 
 
 public class AboutPopup implements MenuPopup {
 	
 	protected JFrame frame = new JFrame("About");
+	private Language lang = Language.getInstance();
 	private final int margin = 20;
 	private final int img_size = 50;
 	String [] lines = {	"<div align='center'>" +
-						vars.Language.get("name") + " " + vars.Language.get("version"),
-						vars.Language.get("authors"),
-						getRepositoryLinkHTML("GitHub Repository"),
-						"<br><hr><br>" + getIconsAuthorHTML() + "</div>" };
+			lang.get("name") + " " + lang.get("version"),
+			lang.get("authors"),
+			getRepositoryLinkHTML("GitHub Repository"),
+			"<br><hr><br>" + getIconsAuthorHTML() + "</div>" };
 	
 	public AboutPopup(JFrame parent) {
 		GridBagLayout layout = new GridBagLayout();
@@ -74,7 +76,7 @@ public class AboutPopup implements MenuPopup {
 	public void open(JFrame parent) { frame.setVisible(true); }
 	protected String getHyperText() { return String.join("<br>", lines); }
 	protected String getRepositoryLinkHTML(String label) {
-		return String.format("<a href=\"%s\">%s</a>", vars.Language.get("repository"), label);
+		return String.format("<a href=\"%s\">%s</a>", lang.get("repository"), label);
 	}
 	private String getIconsAuthorHTML() {
 		String [] authorsName = {"Smashicons","Double-J Design"};

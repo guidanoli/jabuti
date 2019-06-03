@@ -11,14 +11,16 @@ import svn.BranchManager;
 import svn.LaunchProgressListener;
 import svn.Launcher;
 import vars.GlobalProperties;
+import vars.Language;
 
 @SuppressWarnings("serial")
 public class MainPanel extends JPanel implements ActionListener, LaunchProgressListener {
 
+	private Language lang = Language.getInstance();
 	protected GlobalProperties gp;
 	protected JTable table;
-	protected JButton launchBtn = new JButton(vars.Language.get("gui_mainpanel_btnlabel_launch"));
-	protected JButton closeBtn = new JButton(vars.Language.get("gui_mainpanel_btnlabel_close"));
+	protected JButton launchBtn = new JButton(lang.get("gui_mainpanel_btnlabel_launch"));
+	protected JButton closeBtn = new JButton(lang.get("gui_mainpanel_btnlabel_close"));
 	protected BranchManager branchManager;
 	protected BranchTableModel tablemodel;
 	JScrollPane scrollingBox = new JScrollPane(	JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,

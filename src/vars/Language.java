@@ -20,42 +20,45 @@ import gui.error.FatalError;
  */
 public class Language {
 	
-	public static String [] langs = {
+	private static final Language INSTANCE = new Language();
+	private Properties lang; 
+	
+	private String [] langs = {
 		"English" , "Portuguese"	
 	};
 	
-	public static String default_lang = langs[0];
+	public String default_lang = "English";
+	
+	public static Language getInstance() { return INSTANCE; }
 	
 	/**
-	 * {@code public static String get(String label, GlobalProperties gp)}
-	 * <p>Get String from the abstract label
-	 * @param label - string label, used to access label in XML
-	 * @param gp - Global Properties object, used to get current language
-	 * @return string in the current language
-	 * @see #get(String)
+	 * Constructs a Language object
 	 */
-	public static String get(String label, GlobalProperties gp) {
-		String langname = gp.getProperty("lang");
+	private Language() {
+		String langname = GlobalProperties.getInstance().getProperty("lang");
+		if( langname == null ) langname = default_lang;
 		boolean valid_langname = Arrays.stream(langs).anyMatch(langname::equals);
-		if( !valid_langname ) FatalError.show("Invalid language loaded.");
+		if( !valid_langname ) langname = default_lang;
 		Properties metalang = new Properties();
-		Properties lang = null;
 		try {
 			metalang.loadFromXML(new FileInputStream(LocalResources.metalang));
 			lang = new Properties(metalang);
 			lang.loadFromXML(new FileInputStream(LocalResources.langfolder+"/"+langname+".xml"));
 		}
-		catch (IOException e) { FatalError.show(e); }
-		return lang.getProperty(label);
+		catch (IOException e) {
+			FatalError.show(e);
+		}
 	}
-	
+		
 	/**
 	 * {@code public static String get(String label)}
 	 * <p>Get String from the abstract label in the current language
 	 * @param label - string label, used to access label in XML
 	 * @return string in the current language
 	 */
-	public static String get(String label) { return get(label,GlobalProperties.getInstance()); }
+	public String get(String label) {
+		return lang.getProperty(label);
+	}
 	
 	/**
 	 * {@code public static String format(String formatkey, String... labels)}
@@ -67,11 +70,17 @@ public class Language {
 	 * @param labels - labels to be replaced in string
 	 * @return formatted string or {@code null} if formatkey is invalid
 	 */
-	public static String format(String formatkey, Object... values)
+	public String format(String formatkey, Object... values)
 	{
 		String formatval = get(formatkey);
 		if(formatval==null) return null;
 		return String.format(formatval, values);
 	}
+	
+	/**
+	 * TODO
+	 * @return
+	 */
+	public String [] getLanguages() { return langs; }
 	
 }

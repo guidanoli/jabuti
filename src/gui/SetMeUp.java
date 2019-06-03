@@ -1,6 +1,7 @@
 package gui;
 import javax.swing.SwingUtilities;
 import gui.maindlg.MainFrame;
+import vars.Language;
 
 /**
  * 
@@ -14,10 +15,11 @@ import gui.maindlg.MainFrame;
  */
 public class SetMeUp {
 	
+	private static Language lang = Language.getInstance();
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-            	new MainFrame(vars.Language.get("name")+" "+vars.Language.get("version"));
+            	new MainFrame(lang.get("name") + " " + lang.get("version"));
             }
         });
 	}

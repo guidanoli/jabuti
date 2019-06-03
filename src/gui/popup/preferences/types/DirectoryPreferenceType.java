@@ -12,14 +12,16 @@ import javax.swing.JTextField;
 
 import gui.popup.preferences.PreferenceType;
 import vars.GlobalProperties;
+import vars.Language;
 
 
 
 public class DirectoryPreferenceType implements PreferenceType {
 
+	private Language lang = Language.getInstance();
 	protected JPanel panel;
 	protected JTextField txt = new JTextField();
-	protected JButton btn = new JButton(vars.Language.get("gui_popup_preferences_type_dir_panel_btnlabel"));
+	protected JButton btn = new JButton(lang.get("gui_popup_preferences_type_dir_panel_btnlabel"));
 	public DirectoryPreferenceType() {
 		GridBagLayout layout = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints ();
@@ -44,9 +46,9 @@ public class DirectoryPreferenceType implements PreferenceType {
 			defaultDir = GlobalProperties.getInstance().getProperty("path");
 		File defdir = new File(defaultDir);
 		JFileChooser jfc = new JFileChooser(defdir);
-		jfc.setDialogTitle(vars.Language.get("gui_popup_preferences_type_dir_dlg_title"));
+		jfc.setDialogTitle(lang.get("gui_popup_preferences_type_dir_dlg_title"));
 		jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		int returnValue = jfc.showDialog(null,vars.Language.get("gui_popup_preferences_type_dir_dlg_btnlabel"));
+		int returnValue = jfc.showDialog(null,lang.get("gui_popup_preferences_type_dir_dlg_btnlabel"));
 		if (returnValue == JFileChooser.APPROVE_OPTION && jfc.getSelectedFile().isDirectory())
 			return jfc.getSelectedFile().getAbsolutePath();
 		return defaultDir;

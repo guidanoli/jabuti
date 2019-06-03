@@ -23,6 +23,7 @@ import vars.Language;
 public class TortoiseHandler {
 
 	protected String branchDir;
+	private Language lang = Language.getInstance();
 	
 	/**
 	 * Creates a Tortoise SVN Handler that operates on a certain branch directory
@@ -236,10 +237,10 @@ public class TortoiseHandler {
 	public void setup(String branchName)
 	{
 		File f = openBranchFolder(branchName);
-		if(f==null) FatalError.show(Language.get("gui_errmsg_nobranchrootfolder")); //exits
+		if(f==null) FatalError.show(lang.get("gui_errmsg_nobranchrootfolder")); //exits
 		String setupLuaPath = Paths.get("bin", "vis.lua").toString(); 
 		String output = runLua(f, true, setupLuaPath, "s");
-		if(output==null || output.equals("")) LightError.show(Language.format("gui_errmsg_failedsetup", branchName));
+		if(output==null || output.equals("")) LightError.show(lang.format("gui_errmsg_failedsetup", branchName));
 	}
 	
 	/**
@@ -253,10 +254,10 @@ public class TortoiseHandler {
 	public void make(String branchName)
 	{
 		File f = openBranchFolder(branchName);
-		if(f==null) FatalError.show(Language.get("gui_errmsg_nobranchrootfolder")); //exits
+		if(f==null) FatalError.show(lang.get("gui_errmsg_nobranchrootfolder")); //exits
 		String setupLuaPath = Paths.get("bin", "vis.lua").toString(); 
 		String output = runLua(f, true, setupLuaPath, "mlldamt");
-		if(output==null || output.equals("")) LightError.show(Language.format("gui_errmsg_failedmake", branchName));
+		if(output==null || output.equals("")) LightError.show(lang.format("gui_errmsg_failedmake", branchName));
 	}
 	
 	/**
@@ -270,9 +271,9 @@ public class TortoiseHandler {
 	public void cleanUp(String branchName)
 	{
 		File f = openBranchFolder(branchName);
-		if(f==null) LightError.show(Language.get("gui_errmsg_nobranchrootfolder"));
+		if(f==null) LightError.show(lang.get("gui_errmsg_nobranchrootfolder"));
 		String output = runCmd(f,false,false,"svn", "cleanup .");
-		if(output==null || output.equals("")) LightError.show(Language.format("gui_errmsg_failedcleanup", branchName));
+		if(output==null || output.equals("")) LightError.show(lang.format("gui_errmsg_failedcleanup", branchName));
 	}
 	
 }

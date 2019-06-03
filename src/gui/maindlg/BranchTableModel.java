@@ -4,6 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.table.*;
 
 import svn.BranchManager;
+import vars.Language;
 import vars.LocalResources;
 
 @SuppressWarnings("serial")
@@ -19,6 +20,9 @@ public class BranchTableModel extends AbstractTableModel {
 	
 	// status
 	int status = STATUS_IDLE;
+	
+	// language
+	private Language lang = Language.getInstance();
 	
 	// manager
 	protected BranchManager manager;
@@ -46,10 +50,10 @@ public class BranchTableModel extends AbstractTableModel {
 	
 	// meta fields
 	protected String[] columnNames = new String[]{
-			vars.Language.get("gui_branchtable_columns_branch") ,
-			vars.Language.get("gui_branchtable_columns_lastsetup") ,
-			vars.Language.get("gui_branchtable_columns_setup") ,
-			vars.Language.get("gui_branchtable_columns_make")
+			lang.get("gui_branchtable_columns_branch") ,
+			lang.get("gui_branchtable_columns_lastsetup") ,
+			lang.get("gui_branchtable_columns_setup") ,
+			lang.get("gui_branchtable_columns_make")
 	};
 	protected Class<?>[] idleColumnClasses = new Class[]{
 			String.class ,

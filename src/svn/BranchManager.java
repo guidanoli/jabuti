@@ -33,9 +33,10 @@ public class BranchManager {
 	public static final String INDEX_SETUP_STATUS = "setup_s";
 	public static final String INDEX_MAKE_STATUS = "make_s";
 	
-	GlobalProperties gp;
-	String[] branches;
-	int num_branches;
+	private Language lang = Language.getInstance();
+	private GlobalProperties gp;
+	private String[] branches;
+	private int num_branches;
 	
 	/**
 	 * <p>Constructs a Branch Manager instance
@@ -95,7 +96,7 @@ public class BranchManager {
 			String prop = gp.get(KEY_BRANCHES,branches[i],INDEX_LAST_SETUP);
 			if( prop == null )
 			{
-				v[i] = Language.get("gui_branchtable_defval_lastsetup",gp);
+				v[i] = lang.get("gui_branchtable_defval_lastsetup");
 				continue;
 			}
 			try {
@@ -239,8 +240,8 @@ public class BranchManager {
 	}
 	
 	private String getDateString(long timeStamp) {
-		Locale locale = new Locale(Language.get("meta_locale"));
-		String dateFormat = Language.get("meta_dateformat");
+		Locale locale = new Locale(lang.get("meta_locale"));
+		String dateFormat = lang.get("meta_dateformat");
 		Date date = new Date(timeStamp);
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat,locale);
 		return sdf.format(date);

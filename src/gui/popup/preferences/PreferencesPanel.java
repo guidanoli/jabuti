@@ -7,17 +7,21 @@ import javax.swing.*;
 import gui.error.LightError;
 import gui.maindlg.MainFrame;
 import vars.GlobalProperties;
+import vars.Language;
 
 
 @SuppressWarnings("serial")
 public class PreferencesPanel extends JPanel implements ActionListener {
 
+	// Language
+	Language lang = Language.getInstance();
+	
 	// Components
 	JComboBox<String> combo;
 	JPanel value_panel = new JPanel(new CardLayout());
-	JButton apply_btn = new JButton(vars.Language.get("gui_popup_preferences_btn_apply"));
-	JButton default_btn = new JButton(vars.Language.get("gui_popup_preferences_btn_restore"));
-	JButton cancel_btn = new JButton(vars.Language.get("gui_popup_preferences_btn_cancel"));
+	JButton apply_btn = new JButton(lang.get("gui_popup_preferences_btn_apply"));
+	JButton default_btn = new JButton(lang.get("gui_popup_preferences_btn_restore"));
+	JButton cancel_btn = new JButton(lang.get("gui_popup_preferences_btn_cancel"));
 	
 	// Current preference
 	PreferenceType type;
@@ -92,8 +96,8 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 				applyPreference();
 				return;
 			}
-			JOptionPane.showMessageDialog(	frame, vars.Language.get("gui_popup_preferences_applymsg_invalid"),
-											vars.Language.get("name"), JOptionPane.ERROR_MESSAGE	);
+			JOptionPane.showMessageDialog(	frame, lang.get("gui_popup_preferences_applymsg_invalid"),
+											lang.get("name"), JOptionPane.ERROR_MESSAGE	);
 		}
 		else if( source == default_btn )
 		{
@@ -115,13 +119,13 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 	private void applyPreference() {
 		if( gp.save() )
 		{
-			LightError.show(vars.Language.get("gui_popup_preferences_applymsg_ok"),frame);
+			LightError.show(lang.get("gui_popup_preferences_applymsg_ok"),frame);
 			if( (boolean) model.getSelectedItemProperty(PreferencesComboModel.RESET) )
-				LightError.show(vars.Language.get("gui_popup_preferences_applymsg_reset"),frame);
+				LightError.show(lang.get("gui_popup_preferences_applymsg_reset"),frame);
 			parent.panel.updateTable();
 			return;
 		}
-		LightError.show(vars.Language.get("gui_popup_preferences_applymsg_error"),frame);
+		LightError.show(lang.get("gui_popup_preferences_applymsg_error"),frame);
 	}
 	
 	

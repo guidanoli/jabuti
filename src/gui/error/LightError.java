@@ -7,8 +7,9 @@ import vars.Language;
 
 public class LightError {
 
-	public final static String LIGHT_MSG_TITLE = Language.get("gui_lighterror_msg_title");
-	public final static String LIGHT_GENERAL_MSG = Language.get("gui_lighterror_general_msg");
+	protected final static Language lang = Language.getInstance();
+	public final static String LIGHT_MSG_TITLE = lang.get("gui_lighterror_msg_title");
+	public final static String LIGHT_GENERAL_MSG = lang.get("gui_lighterror_general_msg");
 	
 	/* Show message */
 	public static void show(String msg, String title, JFrame parent)
