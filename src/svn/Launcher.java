@@ -50,9 +50,11 @@ public class Launcher {
 	int cleanUps = Integer.parseInt(gp.get("cleanups"));
 	
 	// threads
+	Thread [] threads;
 	static Semaphore threadBufferSem;
 	static Semaphore countSem = new Semaphore(1);
 	int toBeRunThreads = 0;
+	boolean interrupted = false;
 	boolean emptyJob = true;
 	
 	/**
@@ -77,55 +79,72 @@ public class Launcher {
 		toBeRunThreads = branchNames.length;
 		for( boolean s : setup ) if( s ) emptyJob = false;
 		if( emptyJob ) for( boolean m : make ) if( m ) emptyJob = false;
+		threads = new Thread[branchNames.length];
 		listener.launchBegan();
 		for( int i = 0 ; i < branchNames.length ; i++ )
-			launch(i,setup[i],make[i]);
+			threads[i] = launch(i,setup[i],make[i]);
 	}
 	
-	protected void launch(int i, boolean setup, boolean make) {
-		new Thread() {
+	public void interrupt() {
+		interrupted = true;
+		tortoise.killProcesses();
+		listener.launchEnded();
+	}
+	
+	/**
+	 * Initiates launch thread of i-th branch
+	 * @param i - index of branch in branchNames array
+	 * @param setup - if the branch will do a setup job
+	 * @param make - if the branch will be compiled
+	 * @return Thread object
+	 * @see java.lang.Thread Thread
+	 */
+	protected Thread launch(int i, boolean setup, boolean make) {
+		Thread t = new Thread() {
 			public void run() {
 				boolean validDir = tortoise.isTortoiseDir(branchNames[i]);
 				int state_setup = setup ? ( validDir ? LaunchProgressListener.WAITING : LaunchProgressListener.INVALID ) : LaunchProgressListener.OFF;
 				int state_make = make ? ( validDir ? LaunchProgressListener.WAITING : LaunchProgressListener.INVALID ) : LaunchProgressListener.OFF;
-				listener.progressUpdate(i, state_setup, state_make);
+				update(i, state_setup, state_make);
 				if( validDir )
 				{
 					joinThread();
 					if( setup )
 					{
 						state_setup = LaunchProgressListener.UNLOCKING;
-						listener.progressUpdate(i, state_setup, state_make);
+						update(i, state_setup, state_make);
 						for(int i = 0 ; i < cleanUps; i++) tortoise.cleanUp(branchNames[i]);
 						state_setup = LaunchProgressListener.RUNNING;
-						listener.progressUpdate(i, state_setup, state_make);
+						update(i, state_setup, state_make);
+						if(interrupted) return;
 						boolean success = tortoise.setup(branchNames[i]);
 						if(success)
 						{
 							state_setup = LaunchProgressListener.ENDED;
-							listener.progressUpdate(i, state_setup, state_make);
+							update(i, state_setup, state_make);
 						}
 						else
 						{
 							state_setup = LaunchProgressListener.FAILED;
-							listener.progressUpdate(i, state_setup, state_make);
+							update(i, state_setup, state_make);
 							exitThread();
 							return;
 						}
 					}
+					if(interrupted) return;
 					if( make ) {
 						state_make = LaunchProgressListener.RUNNING;
-						listener.progressUpdate(i, state_setup, state_make);
+						update(i, state_setup, state_make);
 						boolean success = tortoise.make(branchNames[i]);
 						if(success)
 						{
 							state_make = LaunchProgressListener.ENDED;
-							listener.progressUpdate(i, state_setup, state_make);
+							update(i, state_setup, state_make);
 						}
 						else
 						{
 							state_make = LaunchProgressListener.FAILED;
-							listener.progressUpdate(i, state_setup, state_make);
+							update(i, state_setup, state_make);
 							exitThread();
 							return;
 						}
@@ -138,7 +157,23 @@ public class Launcher {
 				exitThread();
 				if( !validDir ) LightError.show(lang.format("gui_errmsg_launcher_invalidfolder", branchNames[i]));
 			}
-		}.start();
+		};
+		
+		t.start();
+		return t;
+	}
+	
+	/**
+	 * Updates JTable icons with current progress
+	 * @param i - branch index
+	 * @param setup - setup state
+	 * @param make - compilation state
+	 * @see LaunchProgressListener#progressUpdate(int, int, int) progressUpdate(int, int, int)
+	 */
+	private void update(int i, int setup, int make)
+	{
+		if(interrupted) return;
+		listener.progressUpdate(i, setup, make);
 	}
 	
 	/**
@@ -146,6 +181,7 @@ public class Launcher {
 	 */
 	private void joinThread()
 	{
+		if(interrupted) return;
 		try {
 			threadBufferSem.acquire();
 		} catch (InterruptedException e) {
@@ -160,6 +196,7 @@ public class Launcher {
 	 */
 	private void exitThread()
 	{
+		if(interrupted) return;
 		threadBufferSem.release();
 		try {
 			countSem.acquire();

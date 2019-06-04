@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Map;
 
 import gui.error.FatalError;
@@ -13,7 +14,7 @@ import vars.GlobalProperties;
 import vars.Language;
 
 /**
- * The {@code TortoiseHandler} handles Tortoise SVN commands as a sort of wrapper to
+ * <p>The {@code TortoiseHandler} handles Tortoise SVN commands as a sort of wrapper to
  * the {@link svn.Launcher Launcher} class mainly, but can be used anywhere else, since
  * it is given the proper parameters.
  * 
@@ -22,11 +23,12 @@ import vars.Language;
  */
 public class TortoiseHandler {
 
+	protected ArrayList<Process> runningProcesses = new ArrayList<Process>();
 	protected String branchDir;
 	private Language lang = Language.getInstance();
 	
 	/**
-	 * Creates a Tortoise SVN Handler that operates on a certain branch directory
+	 * <p>Creates a Tortoise SVN Handler that operates on a certain branch directory
 	 * @param branchDirectory - branch directory absolute path
 	 */
 	public TortoiseHandler(String branchDirectory)
@@ -44,7 +46,7 @@ public class TortoiseHandler {
 	}
 	
 	/**
-	 * {@code public boolean isTortoiseDir(String branchName)}
+	 * <p>{@code public boolean isTortoiseDir(String branchName)}
 	 * <p>Checks if the folder of name {@code branchName} has a .svn folder - that is -
 	 * can be operated via Tortoise SVN functions.
 	 * <p><b>Observation:</b> Does not prompt errors (that is, if branchName isn't a SVN Folder)
@@ -60,7 +62,8 @@ public class TortoiseHandler {
 	}
 	
 	/**
-	 * Creates a process that executes a shell command. It serves as a wrapper
+	 * <p>{@code String runCmd(File dir, boolean error, boolean constinput, String... cmd)}
+	 * <p>Creates a process that executes a shell command. It serves as a wrapper
 	 * to many of the function of the {@link TortoiseHandler} class, dealing with
 	 * input, output and error streams in a more abstract manner.
 	 * @param dir - File object to directory where the command will be executed
@@ -82,6 +85,7 @@ public class TortoiseHandler {
 	    	ProcessBuilder pb = new ProcessBuilder(cmd);
 	    	pb.directory(dir);
 	    	Process p = pb.start();
+	    	runningProcesses.add(p);
 	    	BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 	    	while ((line = input.readLine()) != null) {
 	    		sb.append(line);
@@ -285,6 +289,18 @@ public class TortoiseHandler {
 		File f = openBranchFolder(branchName);
 		if(f==null) LightError.show(lang.get("gui_errmsg_nobranchrootfolder"));
 		runCmd(f,true,false,"svn", "cleanup"); // does not output :)
+	}
+	
+	/**
+	 * <p>{@code public static void killProcesses}
+	 * <p>Kills all currently running processes
+	 * <p>May be unsafe and leave objects in an unstable state
+	 */
+	public void killProcesses()
+	{
+		for( Process p : runningProcesses )
+			if( p.isAlive() ) p.destroy();
+		runningProcesses.clear();
 	}
 	
 }

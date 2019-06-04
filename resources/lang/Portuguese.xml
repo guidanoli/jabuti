@@ -38,11 +38,12 @@
 <entry key="gui_branchtable_defval_lastsetup">Desconhecido</entry>
 <entry key="gui_errmsg_incoherentdate">Timestamp de último setup incoerente</entry>
 <entry key="meta_locale">pt</entry>
-<entry key="meta_dateformat">E, dd MMM yy</entry>
+<entry key="meta_dateformat">dd/MM/yy</entry>
 <entry key="gui_errmsg_launcher_invalidfolder">%s não é um diretório SVN válido.</entry>
 <entry key="gui_errmsg_nobranchrootfolder">Não foi possível acessar pasta raíz do branch %s.</entry>
 <entry key="gui_errmsg_failedsetup">Não foi possível realizar setup no branch %s</entry>
 <entry key="gui_errmsg_failedmake">Não foi possível compilar branch %s</entry>
 <entry key="gui_errmsg_failedcleanup">Não foi possível limpar (se livrar de locks) branch %s</entry>
 <entry key="gui_popup_preferences_proplabel_cleanups">Número de limpezas pré-setup</entry>
+<entry key="gui_mainpanel_btnlabel_stop">Interromper</entry>
 </properties>

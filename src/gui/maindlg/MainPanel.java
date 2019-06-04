@@ -1,4 +1,6 @@
 package gui.maindlg;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,15 +18,23 @@ import vars.Language;
 @SuppressWarnings("serial")
 public class MainPanel extends JPanel implements ActionListener, LaunchProgressListener {
 
+	// managers
 	private Language lang = Language.getInstance();
+	private Launcher launcher;
 	protected GlobalProperties gp;
+	
+	// JTable
 	protected JTable table;
-	protected JButton launchBtn = new JButton(lang.get("gui_mainpanel_btnlabel_launch"));
-	protected JButton closeBtn = new JButton(lang.get("gui_mainpanel_btnlabel_close"));
-	protected BranchManager branchManager;
 	protected BranchTableModel tablemodel;
+	protected BranchManager branchManager;
 	JScrollPane scrollingBox = new JScrollPane(	JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 												JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+	
+	// buttons
+	protected JButton stopBtn = new JButton(lang.get("gui_mainpanel_btnlabel_stop"));
+	protected JButton launchBtn = new JButton(lang.get("gui_mainpanel_btnlabel_launch"));
+	protected JPanel btnPanel = new JPanel(new CardLayout());
+	protected JButton closeBtn = new JButton(lang.get("gui_mainpanel_btnlabel_close"));
 	
 	public MainPanel(GlobalProperties gp) {
 		this.gp = gp;
@@ -34,8 +44,16 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 		buildTable();
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		launchBtn.addActionListener(this);
+		stopBtn.addActionListener(this);
 		closeBtn.addActionListener(this);
-		buttons.add(launchBtn);
+		JPanel stopBtnPanel = new JPanel(new BorderLayout(0,0));
+		JPanel launchBtnPanel = new JPanel(new BorderLayout(0,0));
+		stopBtnPanel.add(stopBtn);
+		launchBtnPanel.add(launchBtn);
+		btnPanel.add(stopBtnPanel,stopBtn.getText());
+		btnPanel.add(launchBtnPanel,launchBtn.getText());
+		((CardLayout)btnPanel.getLayout()).show(btnPanel, launchBtn.getText());
+		buttons.add(btnPanel);
 		buttons.add(closeBtn);
 		add(buttons);
 	}
@@ -72,7 +90,11 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 		}
 		else if( source == launchBtn )
 		{
-			new Launcher(branchManager,this);
+			launcher = new Launcher(branchManager,this);
+		}
+		else if( source == stopBtn )
+		{
+			launcher.interrupt();
 		}
 	}
 
@@ -109,6 +131,7 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 	public void launchBegan() {
 		System.out.println("Setting up...");
 		setTableStatus(BranchTableModel.STATUS_LAUNCH);
+		updateTable();
 	}
 	
 	protected void setTableStatus(int status)
@@ -118,14 +141,16 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 		if( status == BranchTableModel.STATUS_LAUNCH )
 		{
 			parent.setCloseOperation(MainFrame.TRAY);
+			parent.getJMenuBar().setEnabled(false);
+			((CardLayout)btnPanel.getLayout()).show(btnPanel, stopBtn.getText());
 		}
 		else if( status == BranchTableModel.STATUS_IDLE )
 		{
 			parent.setCloseOperation(MainFrame.CLOSE);
+			parent.getJMenuBar().setEnabled(true);
+			((CardLayout)btnPanel.getLayout()).show(btnPanel, launchBtn.getText());
 		}
 		table.repaint();
 	}
-	
-	// nothing much yet...
-	
+		
 }

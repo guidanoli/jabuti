@@ -40,6 +40,7 @@ public interface LaunchProgressListener {
 	
 	/**
 	 * Signals the application that the launch job has ended.
+	 * Should update JTable since the last setup dates may change.
 	 */
 	public void launchEnded();
 	
