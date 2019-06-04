@@ -28,8 +28,7 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 	
 	// Meta components
 	PreferencesComboModel model;
-	
-	GlobalProperties gp;
+	GlobalProperties gp = GlobalProperties.getInstance();
 	JFrame frame;
 	MainFrame parent;
 	
@@ -38,8 +37,7 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 	int vborder = 20;
 	int vgap = 10;
 	
-	public PreferencesPanel(GlobalProperties gp, JFrame frame, MainFrame parent) {
-		this.gp = gp;
+	public PreferencesPanel(JFrame frame, MainFrame parent) {
 		this.frame = frame;
 		this.parent = parent;
 		setBorder(BorderFactory.createEmptyBorder(vborder, hborder, vborder, hborder));

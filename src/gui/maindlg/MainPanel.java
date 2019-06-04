@@ -20,13 +20,13 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 
 	// managers
 	private Language lang = Language.getInstance();
-	private Launcher launcher;
-	protected GlobalProperties gp;
+	private Launcher launcher = null; // constructor will instantly launch
+	protected GlobalProperties gp = GlobalProperties.getInstance();
 	
 	// JTable
 	protected JTable table;
 	protected BranchTableModel tablemodel;
-	protected BranchManager branchManager;
+	protected BranchManager branchManager = new BranchManager();
 	JScrollPane scrollingBox = new JScrollPane(	JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 												JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	
@@ -36,16 +36,19 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 	protected JPanel btnPanel = new JPanel(new CardLayout());
 	protected JButton closeBtn = new JButton(lang.get("gui_mainpanel_btnlabel_close"));
 	
-	public MainPanel(GlobalProperties gp) {
-		this.gp = gp;
-		branchManager = new BranchManager();
+	public MainPanel() {
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 		buildTable();
-		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		/* tool tips */
+		stopBtn.setToolTipText(lang.get("gui_mainpanel_btntip_stop"));
+		launchBtn.setToolTipText(lang.get("gui_mainpanel_btntip_launch"));
+		closeBtn.setToolTipText(lang.format("gui_mainpanel_btntip_close",lang.get("name")));
+		/* action listeners */
 		launchBtn.addActionListener(this);
 		stopBtn.addActionListener(this);
 		closeBtn.addActionListener(this);
+		/* launch/stop button panel */
 		JPanel stopBtnPanel = new JPanel(new BorderLayout(0,0));
 		JPanel launchBtnPanel = new JPanel(new BorderLayout(0,0));
 		stopBtnPanel.add(stopBtn);
@@ -53,6 +56,8 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 		btnPanel.add(stopBtnPanel,stopBtn.getText());
 		btnPanel.add(launchBtnPanel,launchBtn.getText());
 		((CardLayout)btnPanel.getLayout()).show(btnPanel, launchBtn.getText());
+		/* all buttons' panel */
+		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttons.add(btnPanel);
 		buttons.add(closeBtn);
 		add(buttons);

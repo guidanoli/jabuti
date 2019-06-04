@@ -7,7 +7,6 @@ import gui.popup.AboutPopup;
 import gui.popup.NewBranchPopup;
 import gui.popup.UpdateBranchesPopup;
 import gui.popup.preferences.PreferencesPopup;
-import vars.GlobalProperties;
 import vars.Language;
 
 @SuppressWarnings("serial")
@@ -24,15 +23,15 @@ public class MenuBar extends JMenuBar {
 	private JMenuItem about_item = new JMenuItem(lang.get("name"));
 	private JMenuItem [] items = {branches_menu, edit_menu, about_menu, new_branch_item, update_item, pref_item, about_item};	
 	
-	public MenuBar(MainFrame parent, GlobalProperties gp) {
+	public MenuBar(MainFrame parent) {
 		this.parent = parent;
-		new_branch_item.addActionListener(new MenuItemListener(this.parent, new NewBranchPopup(gp)));
-		update_item.addActionListener(new MenuItemListener(this.parent,new UpdateBranchesPopup(gp)));
+		new_branch_item.addActionListener(new MenuItemListener(this.parent, new NewBranchPopup()));
+		update_item.addActionListener(new MenuItemListener(this.parent,new UpdateBranchesPopup()));
 		branches_menu.add(new_branch_item);
 		branches_menu.add(update_item);
 		branches_menu.setEnabled(false); //TODO: Branches menu items functionalities
 		add(branches_menu);
-		pref_item.addActionListener(new MenuItemListener(this.parent,new PreferencesPopup(gp,parent)));
+		pref_item.addActionListener(new MenuItemListener(this.parent,new PreferencesPopup(parent)));
 		edit_menu.add(pref_item);
 		add(edit_menu);
 		about_item.addActionListener(new MenuItemListener(this.parent,new AboutPopup(parent)));

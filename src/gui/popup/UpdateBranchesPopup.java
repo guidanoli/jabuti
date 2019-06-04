@@ -5,11 +5,13 @@ import vars.GlobalProperties;
 
 public class UpdateBranchesPopup implements MenuPopup {
 
-	GlobalProperties gp;
+	GlobalProperties gp = GlobalProperties.getInstance();
 	
 	// TODO Update dialog
 	
-	public UpdateBranchesPopup(GlobalProperties gp) { this.gp = gp; }
+	public UpdateBranchesPopup() {
+		
+	}
 
 	@Override
 	public void open(JFrame parent) {

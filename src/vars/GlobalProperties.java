@@ -41,15 +41,8 @@ public class GlobalProperties extends Properties {
 			setProperty(prop[0], prop[1]);
 		try {
 			new File(configFolderPath).mkdirs();
-			if (new File(propertiesFilePath).createNewFile()) {
-				// if XML file isn't found, create one
-				if( !save() ) return; // save it, if possible
-			}
-			else
-			{
-				// if XML file is found, load it
-				loadFromXML(new FileInputStream(propertiesFilePath));
-			}
+			if ( !new File(propertiesFilePath).createNewFile() )
+				loadFromXML(new FileInputStream(propertiesFilePath)); // if XML file is found, load it
 		} catch (Exception e) {
 			FatalError.show(e);
 		}

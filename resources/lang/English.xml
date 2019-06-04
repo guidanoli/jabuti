@@ -46,4 +46,7 @@
 <entry key="gui_errmsg_failedcleanup">Could not clean up branch %s</entry>
 <entry key="gui_popup_preferences_proplabel_cleanups">Pre-setup clean up cycles</entry>
 <entry key="gui_mainpanel_btnlabel_stop">Stop</entry>
+<entry key="gui_mainpanel_btntip_stop">Interrupts launch job</entry>
+<entry key="gui_mainpanel_btntip_launch">Updates local branches accordingly</entry>
+<entry key="gui_mainpanel_btntip_close">Closes %s</entry>
 </properties>
