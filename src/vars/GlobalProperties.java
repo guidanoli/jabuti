@@ -22,7 +22,7 @@ public class GlobalProperties extends Properties {
 
 	private static final GlobalProperties INSTANCE = new GlobalProperties();
 	
-	private final String configFolderPath = vars.LocalResources.configfolder;
+	private final String configFolderPath = vars.LocalResources.datafolder;
 	private final String propertiesFilePath = vars.LocalResources.properties;
 	private final String[][] defaultValues = {
 		{"path", getDefaultPath()},	

@@ -14,14 +14,15 @@ public class LocalResources {
 	 * FOLDERS
 	 * ******* */
 	public static final String resourcefolder = "resources";
-	public static final String configfolder = resourcefolder+"/config";
+	public static final String datafolder = resourcefolder+"/data";
 	public static final String langfolder = resourcefolder+"/lang";
 	public static final String imgsfolder = resourcefolder+"/imgs";
 	
-	/* ***
-	 * XML
-	 * *** */
-	public static final String properties = configfolder+"/properties.xml";
+	/* *************
+	 * INTERNAL DATA
+	 * ************* */
+	public static final String launchlog = datafolder+"/launch.log";
+	public static final String properties = datafolder+"/properties.xml";
 	public static final String metalang = langfolder+"/_meta_.xml";
 	
 	/* *****

@@ -12,6 +12,8 @@
 <entry key="gui_errmsg_incoherentdate">Timestamp de último setup incoerente</entry>
 <entry key="gui_errmsg_launcher_emptyjob">Nenhuma rotina de setup ou make foi realizada.</entry>
 <entry key="gui_errmsg_launcher_invalidfolder">%s não é um diretório SVN válido.</entry>
+<entry key="gui_errmsg_launcher_log_openfailed">Não foi possível abrir arquivo de log.</entry>
+<entry key="gui_errmsg_launcher_log_registerfailed">Não foi possível adicionar registro de log.</entry>
 <entry key="gui_errmsg_nobranchrootfolder">Não foi possível acessar pasta raíz do branch %s.</entry>
 <entry key="gui_error_general_msg">Ocorreu um erro não tratado.</entry>
 <entry key="gui_error_log_title">Log de erro</entry>

@@ -100,9 +100,11 @@ public class Launcher {
 	 * @see java.lang.Thread Thread
 	 */
 	protected Thread launch(int i, boolean setup, boolean make) {
+		String name = branchNames[i];
+		LauncherLogManager logManager = new LauncherLogManager(name);
 		Thread t = new Thread() {
 			public void run() {
-				boolean validDir = tortoise.isTortoiseDir(branchNames[i]);
+				boolean validDir = tortoise.isTortoiseDir(name);
 				int state_setup = setup ? ( validDir ? LaunchProgressListener.WAITING : LaunchProgressListener.INVALID ) : LaunchProgressListener.OFF;
 				int state_make = make ? ( validDir ? LaunchProgressListener.WAITING : LaunchProgressListener.INVALID ) : LaunchProgressListener.OFF;
 				update(i, state_setup, state_make);
@@ -113,15 +115,18 @@ public class Launcher {
 					{
 						state_setup = LaunchProgressListener.UNLOCKING;
 						update(i, state_setup, state_make);
-						for(int i = 0 ; i < cleanUps; i++) tortoise.cleanUp(branchNames[i]);
+						for(int i = 0 ; i < cleanUps; i++) tortoise.cleanUp(name);
 						state_setup = LaunchProgressListener.RUNNING;
 						update(i, state_setup, state_make);
 						if(interrupted) return;
-						boolean success = tortoise.setup(branchNames[i]);
+						Long oldRevisionNumber = tortoise.getRevisionNumber(name);
+						boolean success = tortoise.setup(name);
 						if(success)
 						{
 							state_setup = LaunchProgressListener.ENDED;
 							update(i, state_setup, state_make);
+							Long newRevisionNumber = tortoise.getRevisionNumber(name);
+							logManager.logSetup(oldRevisionNumber, newRevisionNumber);
 						}
 						else
 						{
@@ -135,11 +140,12 @@ public class Launcher {
 					if( make ) {
 						state_make = LaunchProgressListener.RUNNING;
 						update(i, state_setup, state_make);
-						boolean success = tortoise.make(branchNames[i]);
+						boolean success = tortoise.make(name);
 						if(success)
 						{
 							state_make = LaunchProgressListener.ENDED;
 							update(i, state_setup, state_make);
+							logManager.logMake();
 						}
 						else
 						{
@@ -151,11 +157,11 @@ public class Launcher {
 					}
 					if( make || setup )
 					{
-						branchManager.setLastSetupDate(branchNames[i], System.currentTimeMillis());
+						branchManager.setLastSetupDate(name, System.currentTimeMillis());
 					}
 				}
 				exitThread();
-				if( !validDir ) LightError.show(lang.format("gui_errmsg_launcher_invalidfolder", branchNames[i]));
+				if( !validDir ) LightError.show(lang.format("gui_errmsg_launcher_invalidfolder", name));
 			}
 		};
 		

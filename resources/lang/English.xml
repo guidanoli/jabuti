@@ -12,6 +12,8 @@
 <entry key="gui_errmsg_incoherentdate">Incoherent last setup timestamp</entry>
 <entry key="gui_errmsg_launcher_emptyjob">No setup or compile routine was executed.</entry>
 <entry key="gui_errmsg_launcher_invalidfolder">%s is not a valid SVN folder.</entry>
+<entry key="gui_errmsg_launcher_log_openfailed">Could not open log file.</entry>
+<entry key="gui_errmsg_launcher_log_registerfailed">Could not register log entry.</entry>
 <entry key="gui_errmsg_nobranchrootfolder">Could not open root folder from branch %s.</entry>
 <entry key="gui_error_general_msg">An unhandled error occurred.</entry>
 <entry key="gui_error_log_title">Error log</entry>

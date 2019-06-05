@@ -62,6 +62,35 @@ public class TortoiseHandler {
 	}
 	
 	/**
+	 * <p>{@code public long getRevisionNumber(String branchName)}
+	 * <p>Gets last changed revision from local copy. Its effect is the same of the
+	 * 'svn info --show-item last-changed-revision' SVN command executed from any
+	 * branch's root folder.
+	 * <p>If it could not execute the command, an error message will be prompted,
+	 * not forcing the application to be terminated.
+	 * @param branchName - the name of the branch folder
+	 * @return local copy revision number or -1 if command was unsuccessful
+	 */
+	public long getRevisionNumber(String branchName)
+	{
+		File f = openBranchFolder(branchName);
+		if(f==null) LightError.show(lang.get("gui_errmsg_nobranchrootfolder"));
+		String output = runCmd(f,true,false,"svn","info","--show-item","last-changed-revision");
+		if( output == null )
+		{
+			LightError.show("Could not get revision number");
+			return -1; // unsuccessful command
+		}
+		try {
+			return Long.parseLong(output);
+		}
+		catch(NumberFormatException e)
+		{
+			return -1; // invalid output
+		}
+	}
+	
+	/**
 	 * <p>{@code String runCmd(File dir, boolean error, boolean constinput, String... cmd)}
 	 * <p>Creates a process that executes a shell command. It serves as a wrapper
 	 * to many of the function of the {@link TortoiseHandler} class, dealing with
@@ -273,6 +302,7 @@ public class TortoiseHandler {
 			LightError.show(lang.format("gui_errmsg_failedmake", branchName));
 			return false;
 		}
+		
 		return true;
 	}
 	
