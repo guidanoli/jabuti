@@ -12,7 +12,7 @@ import vars.Language;
 public class MenuBar extends JMenuBar {
 
 	private Language lang = Language.getInstance();
-	private MainFrame parent; 
+	
 	private JMenu branches_menu = new JMenu(lang.get("gui_menubar_branch_menu"));
 	private JMenu edit_menu = new JMenu(lang.get("gui_menubar_edit_menu"));
 	private JMenu about_menu = new JMenu(lang.get("gui_menubar_about_menu"));
@@ -20,11 +20,28 @@ public class MenuBar extends JMenuBar {
 	private JMenuItem update_item = new JMenuItem(lang.get("gui_menubar_branch_update"));
 	private JMenuItem pref_item = new JMenuItem(lang.get("gui_menubar_edit_preferences"));
 	private JMenuItem about_item = new JMenuItem(lang.get("name"));
-	private JMenuItem [] items = {branches_menu, edit_menu, about_menu, new_branch_item, update_item, pref_item, about_item};	
+	
+	private JMenuItem [] items = {
+		branches_menu,
+		edit_menu,
+		about_menu,
+		new_branch_item,
+		update_item,
+		pref_item,
+		about_item
+	};	
 	
 	public MenuBar(MainFrame parent) {
-		this.parent = parent;
-		new_branch_item.addActionListener(new MenuItemListener(this.parent, new NewBranchPopup()));
+		
+		/* ****************
+		 * ACTION LISTENERS
+		 * **************** */
+		new_branch_item.addActionListener(
+			new MenuItemListener(
+				parent,
+				new NewBranchPopup()
+			)
+		);
 		update_item.addActionListener(
 			new MenuItemListener(
 				new MenuAction() {
@@ -34,16 +51,33 @@ public class MenuBar extends JMenuBar {
 				}
 			)
 		);
+		pref_item.addActionListener(
+			new MenuItemListener(
+				parent,
+				new PreferencesPopup(parent)
+			)
+		);
+		about_item.addActionListener(
+			new MenuItemListener(
+				parent,
+				new AboutPopup(parent)
+			)
+		);
+		
+		/* *****************************
+		 * ADDING COMPONENTS TO JMENUBAR
+		 * ***************************** */
 		branches_menu.add(new_branch_item);
 		branches_menu.add(update_item);
-//		branches_menu.setEnabled(false); //TODO: Branches menu items functionalities
-		add(branches_menu);
-		pref_item.addActionListener(new MenuItemListener(this.parent,new PreferencesPopup(parent)));
 		edit_menu.add(pref_item);
-		add(edit_menu);
-		about_item.addActionListener(new MenuItemListener(this.parent,new AboutPopup(parent)));
 		about_menu.add(about_item);
+		add(branches_menu);
+		add(edit_menu);
 		add(about_menu);
+		
+		/* *****************
+		 * ADDING MNEUMONICS
+		 * ***************** */
 		for( JMenuItem item : items ) setCustomMneumonic(item);
 	}
 	
