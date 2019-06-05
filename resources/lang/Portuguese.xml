@@ -28,11 +28,14 @@
 <entry key="gui_mainpanel_btntip_launch">Inicializa rotina de atualização da base</entry>
 <entry key="gui_mainpanel_btntip_stop">Interrompe rotina de atualização da base</entry>
 <entry key="gui_menubar_about_menu">Sobre</entry>
+<entry key="gui_menubar_branch_log">Histórico</entry>
 <entry key="gui_menubar_branch_menu">Branches</entry>
 <entry key="gui_menubar_branch_new">Novo...</entry>
 <entry key="gui_menubar_branch_update">Atualizar</entry>
 <entry key="gui_menubar_edit_menu">Editar</entry>
 <entry key="gui_menubar_edit_preferences">Configurações...</entry>
+<entry key="gui_popup_about_title">Sobre</entry>
+<entry key="gui_popup_log_title">Histórico</entry>
 <entry key="gui_popup_preferences_applymsg_error">Não foi possível salvar configuração.</entry>
 <entry key="gui_popup_preferences_applymsg_invalid">Valor inválido de configuração.</entry>
 <entry key="gui_popup_preferences_applymsg_ok">Configuração salva com sucesso.</entry>

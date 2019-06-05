@@ -28,11 +28,14 @@
 <entry key="gui_mainpanel_btntip_launch">Updates local branches accordingly</entry>
 <entry key="gui_mainpanel_btntip_stop">Interrupts launch job</entry>
 <entry key="gui_menubar_about_menu">About</entry>
+<entry key="gui_menubar_branch_log">Log</entry>
 <entry key="gui_menubar_branch_menu">Branches</entry>
 <entry key="gui_menubar_branch_new">New...</entry>
 <entry key="gui_menubar_branch_update">Update</entry>
 <entry key="gui_menubar_edit_menu">Edit</entry>
 <entry key="gui_menubar_edit_preferences">Preferences...</entry>
+<entry key="gui_popup_about_title">About</entry>
+<entry key="gui_popup_log_title">Log</entry>
 <entry key="gui_popup_preferences_applymsg_error">Could not save preference properly.</entry>
 <entry key="gui_popup_preferences_applymsg_invalid">Invalid preference value.</entry>
 <entry key="gui_popup_preferences_applymsg_ok">Preference successfully saved.</entry>
