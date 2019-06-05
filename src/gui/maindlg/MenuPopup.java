@@ -3,6 +3,10 @@ import javax.swing.*;
 
 public interface MenuPopup {
 	
-	public void open(JFrame parent); // opens pop up
+	/**
+	 * Opens pop up
+	 * @param parent - parent dialog
+	 */
+	public void open(JFrame parent);
 
 }

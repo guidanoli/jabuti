@@ -5,7 +5,6 @@ import javax.swing.*;
 
 import gui.popup.AboutPopup;
 import gui.popup.NewBranchPopup;
-import gui.popup.UpdateBranchesPopup;
 import gui.popup.preferences.PreferencesPopup;
 import vars.Language;
 
@@ -26,10 +25,18 @@ public class MenuBar extends JMenuBar {
 	public MenuBar(MainFrame parent) {
 		this.parent = parent;
 		new_branch_item.addActionListener(new MenuItemListener(this.parent, new NewBranchPopup()));
-		update_item.addActionListener(new MenuItemListener(this.parent,new UpdateBranchesPopup()));
+		update_item.addActionListener(
+			new MenuItemListener(
+				new MenuAction() {
+					public void action() {
+						parent.panel.updateTable();
+					}
+				}
+			)
+		);
 		branches_menu.add(new_branch_item);
 		branches_menu.add(update_item);
-		branches_menu.setEnabled(false); //TODO: Branches menu items functionalities
+//		branches_menu.setEnabled(false); //TODO: Branches menu items functionalities
 		add(branches_menu);
 		pref_item.addActionListener(new MenuItemListener(this.parent,new PreferencesPopup(parent)));
 		edit_menu.add(pref_item);
