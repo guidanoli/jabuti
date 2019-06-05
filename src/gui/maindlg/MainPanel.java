@@ -131,6 +131,7 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 	public void launchEnded() {
 		System.out.println("All branches are set up!");
 		setTableStatus(BranchTableModel.STATUS_IDLE);
+		updateTable();
 	}
 
 	public void launchBegan() {

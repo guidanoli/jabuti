@@ -179,6 +179,6 @@ def sort_keys(files_list):
 success, error = new_key(files)
 while(success):
   success, error = new_key(files)
+  sort_keys(files)
 if error:
   print(error)
-sort_keys(files)
