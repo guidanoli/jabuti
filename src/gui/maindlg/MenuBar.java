@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.*;
 
 import gui.popup.AboutPopup;
+import gui.popup.LogPopup;
 import gui.popup.NewBranchPopup;
 import gui.popup.preferences.PreferencesPopup;
 import vars.Language;
@@ -16,7 +17,9 @@ public class MenuBar extends JMenuBar {
 	private JMenu branches_menu = new JMenu(lang.get("gui_menubar_branch_menu"));
 	private JMenu edit_menu = new JMenu(lang.get("gui_menubar_edit_menu"));
 	private JMenu about_menu = new JMenu(lang.get("gui_menubar_about_menu"));
+	
 	private JMenuItem new_branch_item = new JMenuItem(lang.get("gui_menubar_branch_new"));
+	private JMenuItem show_log_item = new JMenuItem(lang.get("gui_menubar_branch_log"));
 	private JMenuItem update_item = new JMenuItem(lang.get("gui_menubar_branch_update"));
 	private JMenuItem pref_item = new JMenuItem(lang.get("gui_menubar_edit_preferences"));
 	private JMenuItem about_item = new JMenuItem(lang.get("name"));
@@ -28,7 +31,8 @@ public class MenuBar extends JMenuBar {
 		new_branch_item,
 		update_item,
 		pref_item,
-		about_item
+		about_item,
+		show_log_item,
 	};	
 	
 	public MenuBar(MainFrame parent) {
@@ -63,17 +67,28 @@ public class MenuBar extends JMenuBar {
 				new AboutPopup(parent)
 			)
 		);
+		show_log_item.addActionListener(
+			new MenuItemListener(
+				parent,
+				new LogPopup(parent)
+			)
+		);
 		
 		/* *****************************
 		 * ADDING COMPONENTS TO JMENUBAR
 		 * ***************************** */
 		branches_menu.add(new_branch_item);
+		branches_menu.add(show_log_item);
 		branches_menu.add(update_item);
 		edit_menu.add(pref_item);
 		about_menu.add(about_item);
 		add(branches_menu);
 		add(edit_menu);
 		add(about_menu);
+		
+		// WIP FUNCTIONALITIES
+		new_branch_item.setEnabled(false);
+		show_log_item.setEnabled(false);
 		
 		/* *****************
 		 * ADDING MNEUMONICS

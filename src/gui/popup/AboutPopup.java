@@ -20,8 +20,8 @@ import vars.Language;
 
 public class AboutPopup implements MenuPopup {
 	
-	protected JFrame frame = new JFrame("About");
 	private Language lang = Language.getInstance();
+	private JFrame frame = new JFrame(lang.get("gui_popup_about_title"));
 	private final int margin = 20;
 	private final int img_size = 50;
 	String [] lines = {	"<div align='center'>" +
