@@ -29,7 +29,7 @@
 <entry key="gui_mainpanel_btntip_stop">Interrupts launch job</entry>
 <entry key="gui_menubar_about_menu">About</entry>
 <entry key="gui_menubar_branch_menu">Branches</entry>
-<entry key="gui_menubar_branch_new">New Branch...</entry>
+<entry key="gui_menubar_branch_new">New...</entry>
 <entry key="gui_menubar_branch_update">Update</entry>
 <entry key="gui_menubar_edit_menu">Edit</entry>
 <entry key="gui_menubar_edit_preferences">Preferences...</entry>
