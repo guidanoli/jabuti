@@ -54,4 +54,5 @@
 <entry key="meta_dateformat">dd/MM/yy</entry>
 <entry key="meta_locale">pt</entry>
 <entry key="meta_name">Portuguese</entry>
+<entry key="gui_errmsg_revnumbercmdfailed">Não foi possível obter número de revisão.</entry>
 </properties>

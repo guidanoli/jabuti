@@ -54,4 +54,5 @@
 <entry key="meta_dateformat">MM/dd/yy</entry>
 <entry key="meta_locale">en</entry>
 <entry key="meta_name">English</entry>
+<entry key="gui_errmsg_revnumbercmdfailed">Could not get revision number.</entry>
 </properties>
