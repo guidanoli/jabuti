@@ -26,6 +26,8 @@ import vars.Language;
  */
 public class BranchManager {
 	
+	private static final BranchManager INSTANCE = new BranchManager(); 
+	
 	public static final String KEY_BRANCHES = "branches";
 	public static final String INDEX_LAST_SETUP = "lastsetup";
 	public static final String INDEX_SETUP = "setup";
@@ -34,21 +36,16 @@ public class BranchManager {
 	public static final String INDEX_MAKE_STATUS = "make_s";
 	
 	private Language lang = Language.getInstance();
-	private GlobalProperties gp;
+	private GlobalProperties gp = GlobalProperties.getInstance();
 	private String[] branches;
 	private int num_branches;
 	
-	/**
-	 * <p>Constructs a Branch Manager instance
-	 * @param gp - global properties
-	 * @deprecated
-	 * @see #BranchManager()
-	 */
-	public BranchManager(GlobalProperties gp) {
-		this.gp = gp;
-	}
+	private BranchManager() {}
 	
-	public BranchManager() { this(GlobalProperties.getInstance()); }
+	/**
+	 * @return Branch Manager singleton
+	 */
+	public static BranchManager getInstance() { return INSTANCE; }
 	
 	/**
 	 * <p>Gets the name of every folder on the
@@ -239,7 +236,12 @@ public class BranchManager {
 		gp.set(value_str,KEY_BRANCHES,branchName,INDEX_MAKE_STATUS);
 	}
 	
-	private String getDateString(long timeStamp) {
+	/**
+	 * Formats time stamp to string, dealing with locale
+	 * @param timeStamp - time stamp
+	 * @return - date string
+	 */
+	public String getDateString(long timeStamp) {
 		Locale locale = new Locale(lang.get("meta_locale"));
 		String dateFormat = lang.get("meta_dateformat");
 		Date date = new Date(timeStamp);

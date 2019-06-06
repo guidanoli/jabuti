@@ -1,5 +1,7 @@
 package svn;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
@@ -152,12 +154,15 @@ public class Launcher {
 					if( make ) {
 						state_make = LaunchProgressListener.RUNNING;
 						update(i, state_setup, state_make);
+						Instant start = Instant.now();
 						success = tortoise.make(name);
 						if(success)
 						{
+							Instant end = Instant.now();
+							Duration timeElapsed = Duration.between(start, end);
 							state_make = LaunchProgressListener.ENDED;
 							update(i, state_setup, state_make);
-							logManager.logMake();
+							logManager.logMake(timeElapsed.toMillis());
 						}
 						else
 						{

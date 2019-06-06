@@ -26,7 +26,7 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 	// JTable
 	protected JTable table;
 	protected BranchTableModel tablemodel;
-	protected BranchManager branchManager = new BranchManager();
+	protected BranchManager branchManager = BranchManager.getInstance();
 	JScrollPane scrollingBox = new JScrollPane(	JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 												JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	

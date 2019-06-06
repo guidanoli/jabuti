@@ -70,7 +70,7 @@ public class MenuBar extends JMenuBar {
 		show_log_item.addActionListener(
 			new MenuItemListener(
 				parent,
-				new LogPopup(parent)
+				new LogPopup()
 			)
 		);
 		
@@ -88,7 +88,6 @@ public class MenuBar extends JMenuBar {
 		
 		// WIP FUNCTIONALITIES
 		new_branch_item.setEnabled(false);
-		show_log_item.setEnabled(false);
 		
 		/* *****************
 		 * ADDING MNEUMONICS

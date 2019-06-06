@@ -15,6 +15,7 @@
 <entry key="gui_errmsg_launcher_log_openfailed">Could not open log file.</entry>
 <entry key="gui_errmsg_launcher_log_registerfailed">Could not register log entry.</entry>
 <entry key="gui_errmsg_nobranchrootfolder">Could not open root folder from branch %s.</entry>
+<entry key="gui_errmsg_revnumbercmdfailed">Could not get revision number.</entry>
 <entry key="gui_error_general_msg">An unhandled error occurred.</entry>
 <entry key="gui_error_log_title">Error log</entry>
 <entry key="gui_error_msg_title">Error</entry>
@@ -35,6 +36,8 @@
 <entry key="gui_menubar_edit_menu">Edit</entry>
 <entry key="gui_menubar_edit_preferences">Preferences...</entry>
 <entry key="gui_popup_about_title">About</entry>
+<entry key="gui_popup_log_action_make">Make</entry>
+<entry key="gui_popup_log_action_setup">Setup</entry>
 <entry key="gui_popup_log_title">Log</entry>
 <entry key="gui_popup_preferences_applymsg_error">Could not save preference properly.</entry>
 <entry key="gui_popup_preferences_applymsg_invalid">Invalid preference value.</entry>
@@ -54,5 +57,4 @@
 <entry key="meta_dateformat">MM/dd/yy</entry>
 <entry key="meta_locale">en</entry>
 <entry key="meta_name">English</entry>
-<entry key="gui_errmsg_revnumbercmdfailed">Could not get revision number.</entry>
 </properties>

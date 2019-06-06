@@ -1,9 +1,12 @@
 package svn;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.StringJoiner;
 
 import gui.error.FatalError;
@@ -23,7 +26,7 @@ public class LauncherLogManager {
 
 	private Language lang = Language.getInstance();
 	private String branchName;
-	private String logPath = LocalResources.launchlog;
+	private static String logPath = LocalResources.launchlog;
 		
 	/**
 	 * Constructs a launcher log for a branch
@@ -31,6 +34,36 @@ public class LauncherLogManager {
 	 */
 	public LauncherLogManager(String branchName) {
 		this.branchName = branchName;
+	}
+	
+	/**
+	 * <p>Reads log file (if exists) and returns its data as an array list
+	 * with string arrays. The data is ordered as such:
+	 * <ol>
+	 * <li>branch name</li>
+	 * <li>time stamp</li>
+	 * <li>action identifier</li>
+	 * <li>additional action arguments</li>
+	 * </ol>
+	 * @return
+	 */
+	public static ArrayList<String []> readLog() {
+		ArrayList<String []> info = new ArrayList<String []>();
+		File file = new File(logPath);
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			String s;
+			while((s=br.readLine()) != null)
+			{
+				String [] values = s.split("\\s+");
+				info.add(values);
+			}
+			br.close();
+		} catch (Exception e) {
+			FatalError.show(e,null,false); // does not quit
+			return null;
+		}
+		return info;
 	}
 	
 	/**
@@ -49,12 +82,12 @@ public class LauncherLogManager {
 	
 	/**
 	 * Logs a compilation job.
-	 * 
+	 * @param timeElapsed time elapsed to compile
 	 * @see TortoiseHandler
 	 */
-	public void logMake()
+	public void logMake(long timeElapsed)
 	{
-		register("make");
+		register("make",timeElapsed);
 	}
 
 	/**
@@ -71,7 +104,7 @@ public class LauncherLogManager {
 	 * log registry.
 	 * @param action - action identifier
 	 * @param args - additional action arguments
-	 * @see LauncherLogManager#logMake() logMake()
+	 * @see LauncherLogManager#logMake(long) logMake(long)
 	 * @see LauncherLogManager#logSetup(Long, Long) logSetup(Long, Long)
 	 */
 	private void register(String action, Object... args)

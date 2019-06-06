@@ -15,6 +15,7 @@
 <entry key="gui_errmsg_launcher_log_openfailed">Não foi possível abrir arquivo de log.</entry>
 <entry key="gui_errmsg_launcher_log_registerfailed">Não foi possível adicionar registro de log.</entry>
 <entry key="gui_errmsg_nobranchrootfolder">Não foi possível acessar pasta raíz do branch %s.</entry>
+<entry key="gui_errmsg_revnumbercmdfailed">Não foi possível obter número de revisão.</entry>
 <entry key="gui_error_general_msg">Ocorreu um erro não tratado.</entry>
 <entry key="gui_error_log_title">Log de erro</entry>
 <entry key="gui_error_msg_title">Erro</entry>
@@ -35,6 +36,8 @@
 <entry key="gui_menubar_edit_menu">Editar</entry>
 <entry key="gui_menubar_edit_preferences">Configurações...</entry>
 <entry key="gui_popup_about_title">Sobre</entry>
+<entry key="gui_popup_log_action_make">Make</entry>
+<entry key="gui_popup_log_action_setup">Setup</entry>
 <entry key="gui_popup_log_title">Histórico</entry>
 <entry key="gui_popup_preferences_applymsg_error">Não foi possível salvar configuração.</entry>
 <entry key="gui_popup_preferences_applymsg_invalid">Valor inválido de configuração.</entry>
@@ -54,5 +57,4 @@
 <entry key="meta_dateformat">dd/MM/yy</entry>
 <entry key="meta_locale">pt</entry>
 <entry key="meta_name">Portuguese</entry>
-<entry key="gui_errmsg_revnumbercmdfailed">Não foi possível obter número de revisão.</entry>
 </properties>
