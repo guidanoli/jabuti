@@ -38,6 +38,14 @@
 <entry key="gui_popup_about_title">Sobre</entry>
 <entry key="gui_popup_log_action_make">Make</entry>
 <entry key="gui_popup_log_action_setup">Setup</entry>
+<entry key="gui_popup_log_allactions">Todas as ações</entry>
+<entry key="gui_popup_log_allbranches">Todas as branches</entry>
+<entry key="gui_popup_log_col_branch">Branch</entry>
+<entry key="gui_popup_log_col_date">Data</entry>
+<entry key="gui_popup_log_col_desc">Descrição</entry>
+<entry key="gui_popup_log_desc_make_hms">Compilado em %02d horas %02d min %02d s</entry>
+<entry key="gui_popup_log_desc_make_ms">Compilado em %02d min %02d s</entry>
+<entry key="gui_popup_log_desc_setup">Setup %s \u2192 %s</entry>
 <entry key="gui_popup_log_title">Histórico</entry>
 <entry key="gui_popup_preferences_applymsg_error">Não foi possível salvar configuração.</entry>
 <entry key="gui_popup_preferences_applymsg_invalid">Valor inválido de configuração.</entry>

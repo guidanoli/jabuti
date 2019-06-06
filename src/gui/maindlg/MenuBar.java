@@ -4,8 +4,8 @@ import java.awt.event.KeyEvent;
 import javax.swing.*;
 
 import gui.popup.AboutPopup;
-import gui.popup.LogPopup;
 import gui.popup.NewBranchPopup;
+import gui.popup.log.LogPopup;
 import gui.popup.preferences.PreferencesPopup;
 import vars.Language;
 
