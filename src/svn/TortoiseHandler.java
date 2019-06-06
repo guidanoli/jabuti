@@ -57,7 +57,7 @@ public class TortoiseHandler {
 	{
 		File f = openBranchFolder(branchName);
 		if(f==null) return false;
-		String output = runCmd(f,false,false,"svn", "info");
+		String output = runCmd(f,false,true,false, "svn", "info");
 		return !(output == null || output.equals(""));
 	}
 	
@@ -75,10 +75,10 @@ public class TortoiseHandler {
 	{
 		File f = openBranchFolder(branchName);
 		if(f==null) LightError.show(lang.get("gui_errmsg_nobranchrootfolder"));
-		String output = runCmd(f,true,false,"svn","info","--show-item","last-changed-revision");
+		String output = runCmd(f,true,true,false,"svn","info","--show-item", "last-changed-revision");
 		if( output == null )
 		{
-			LightError.show("Could not get revision number");
+			LightError.show(lang.get("gui_errmsg_revnumbercmdfailed"));
 			return -1; // unsuccessful command
 		}
 		try {
@@ -96,7 +96,10 @@ public class TortoiseHandler {
 	 * to many of the function of the {@link TortoiseHandler} class, dealing with
 	 * input, output and error streams in a more abstract manner.
 	 * @param dir - File object to directory where the command will be executed
-	 * @param error - true if when an error is found, it will be the returned string
+	 * @param promptError - if {@code true}, on any error output, an error dialog will
+	 * be prompted to the user with the error message along with it
+	 * @param outputError - if {@code true}, on any error output, the method will return
+	 * the error message instead of output of any other type
 	 * @param constinput - if {@code true}, constantly input data. Generally used for
 	 * Batch jobs that request keys to be pressed in order to exit. The input has no
 	 * meaningful data and serves only to this very job.
@@ -106,11 +109,11 @@ public class TortoiseHandler {
 	 * If a Java Exception is raised, but no error message has been streamed, {@code null}
 	 * is returned instead.
 	 */
-	protected String runCmd(File dir, boolean error, boolean constinput, String... cmd) { 
+	protected String runCmd(File dir, boolean promptError, boolean outputError, boolean constinput, String... cmd) { 
+    	StringBuilder sb = new StringBuilder();
 		StringBuilder errsb = new StringBuilder();
 		try {  
 	    	String line;
-	    	StringBuilder sb = new StringBuilder();
 	    	ProcessBuilder pb = new ProcessBuilder(cmd);
 	    	pb.directory(dir);
 	    	Process p = pb.start();
@@ -120,7 +123,7 @@ public class TortoiseHandler {
 	    		sb.append(line);
 	    	}
 	    	input.close();
-	    	if(error)
+	    	if(promptError || outputError)
 	    	{
 	    		BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 	    		while ((line = stdError.readLine()) != null) {
@@ -133,20 +136,20 @@ public class TortoiseHandler {
 					return logMessage;
 		    	}
 			}
-	    	return sb.toString();
 	    }  
 	    catch (Exception e) {
 	    	FatalError.show(e,null,false);
-	    	if(error)
+	    	if(promptError || outputError)
 	    	{
 		    	String logMessage = errsb.toString();
 		    	if(!logMessage.equals("")) {
 		    		FatalError.showLog(logMessage,null,false);
-					return logMessage;
+		    		if( outputError )
+		    			return logMessage;
 		    	}
 	    	}
-	    	return null;
 	    }
+    	return sb.toString();
 	}
 	
 	/**
@@ -202,7 +205,6 @@ public class TortoiseHandler {
 	    	BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 	    	while ((line = input.readLine()) != null) {
 	    		sb.append(line);
-	    		System.out.println(line);
 	    	}
 	    	input.close();
 	    	if(error)
@@ -307,18 +309,24 @@ public class TortoiseHandler {
 	}
 	
 	/**
-	 * <p>{@code void cleanUp(String branchName)}
+	 * <p>{@code public boolean cleanUp(String branchName, int persistence)}
 	 * <p>Cleans up the branch. Its effect is the same of the './vis clean' batch job executed from any
 	 * branch's source folder. 
 	 * <p>If it could not clean up the branch, an error message will be prompted, not forcing the
 	 * application to be terminated.
 	 * @param branchName - the name of the branch folder
+	 * @param persistence - maximum number of tries until clean up job runs without errors
+	 * @return {@code true} if successful, {@code false} if failed all #persistence times
 	 */
-	public void cleanUp(String branchName)
+	public boolean cleanUp(String branchName, int persistence)
 	{
 		File f = openBranchFolder(branchName);
 		if(f==null) LightError.show(lang.get("gui_errmsg_nobranchrootfolder"));
-		runCmd(f,true,false,"svn", "cleanup"); // does not output :)
+		for(int i = 0 ; i < persistence ; i++) {
+			String output = runCmd(f,false,true,false, "svn", "cleanup");
+			if( output.equals("") ) return true;
+		}
+		return false;
 	}
 	
 	/**

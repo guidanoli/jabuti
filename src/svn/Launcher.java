@@ -104,6 +104,7 @@ public class Launcher {
 		LauncherLogManager logManager = new LauncherLogManager(name);
 		Thread t = new Thread() {
 			public void run() {
+				boolean success;
 				boolean validDir = tortoise.isTortoiseDir(name);
 				int state_setup = setup ? ( validDir ? LaunchProgressListener.WAITING : LaunchProgressListener.INVALID ) : LaunchProgressListener.OFF;
 				int state_make = make ? ( validDir ? LaunchProgressListener.WAITING : LaunchProgressListener.INVALID ) : LaunchProgressListener.OFF;
@@ -115,12 +116,23 @@ public class Launcher {
 					{
 						state_setup = LaunchProgressListener.UNLOCKING;
 						update(i, state_setup, state_make);
-						for(int i = 0 ; i < cleanUps; i++) tortoise.cleanUp(name);
-						state_setup = LaunchProgressListener.RUNNING;
-						update(i, state_setup, state_make);
+						if(interrupted) return;
+						success = tortoise.cleanUp(name,cleanUps);
+						if(success)
+						{
+							state_setup = LaunchProgressListener.RUNNING;
+							update(i, state_setup, state_make);
+						}
+						else
+						{
+							state_setup = LaunchProgressListener.FAILED;
+							update(i, state_setup, state_make);
+							exitThread();
+							return;
+						}
 						if(interrupted) return;
 						Long oldRevisionNumber = tortoise.getRevisionNumber(name);
-						boolean success = tortoise.setup(name);
+						success = tortoise.setup(name);
 						if(success)
 						{
 							state_setup = LaunchProgressListener.ENDED;
@@ -140,7 +152,7 @@ public class Launcher {
 					if( make ) {
 						state_make = LaunchProgressListener.RUNNING;
 						update(i, state_setup, state_make);
-						boolean success = tortoise.make(name);
+						success = tortoise.make(name);
 						if(success)
 						{
 							state_make = LaunchProgressListener.ENDED;
