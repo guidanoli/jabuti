@@ -1,6 +1,7 @@
 package gui.popup.log;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
@@ -62,7 +63,8 @@ public class LogPopup implements MenuPopup, ItemListener {
 	public void open(JFrame parent) {
 		dlg = new JDialog(parent,lang.get("gui_popup_log_title"),true);
 		buildDialog();
-		dlg.pack();
+		dlg.setSize(new Dimension(500, 400));
+		dlg.revalidate();
 		dlg.setResizable(false);
 		dlg.setLocationRelativeTo(dlg.getOwner());
 		dlg.setVisible(true);
@@ -92,7 +94,8 @@ public class LogPopup implements MenuPopup, ItemListener {
 	    jep.setEditable(false);
 	    jep.setOpaque(false);
 	    JScrollPane scrollPane = new JScrollPane(jep);
-
+	    scrollPane.setPreferredSize(new Dimension(500,300));
+	    
 		panel.add(branchCombo, BorderLayout.LINE_START);
 		panel.add(actionCombo, BorderLayout.LINE_END);
 		panel.add(scrollPane, BorderLayout.PAGE_END);
@@ -107,7 +110,7 @@ public class LogPopup implements MenuPopup, ItemListener {
 		String [] headers = { 	lang.get("gui_popup_log_col_date") ,
 								lang.get("gui_popup_log_col_branch"),
 								lang.get("gui_popup_log_col_desc") };
-		sb.append("<table><tr>");
+		sb.append("<table width=\"100%\"><tr>");
 		for( String header : headers ) {
 			sb.append(String.format("<th>%s</th>", header));	
 		}

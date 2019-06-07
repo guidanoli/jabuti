@@ -45,7 +45,7 @@
 <entry key="gui_popup_log_col_desc">Description</entry>
 <entry key="gui_popup_log_desc_make_hms">Compiled in %02d hours %02d min %02d s</entry>
 <entry key="gui_popup_log_desc_make_ms">Compiled in %02d min %02d s</entry>
-<entry key="gui_popup_log_desc_setup">Setup %s \u2192 %s</entry>
+<entry key="gui_popup_log_desc_setup">Setup %s → %s</entry>
 <entry key="gui_popup_log_title">Log</entry>
 <entry key="gui_popup_preferences_applymsg_error">Could not save preference properly.</entry>
 <entry key="gui_popup_preferences_applymsg_invalid">Invalid preference value.</entry>
