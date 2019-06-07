@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 
+import gui.DefaultPopup;
 import gui.error.FatalError;
 import gui.maindlg.MenuPopup;
 import vars.Language;
@@ -27,7 +28,7 @@ public class AboutPopup implements MenuPopup {
 	
 	private Language lang = Language.getInstance();
 	
-	private JDialog dlg;
+	private DefaultPopup dlg;
 	private JFrame parent;
 
 	/**
@@ -46,10 +47,10 @@ public class AboutPopup implements MenuPopup {
 	 */
 	public AboutPopup(JFrame parent) {
 		this.parent = parent;
-		dlg = new JDialog(parent,lang.get("gui_popup_about_title"),true);
+		dlg = new DefaultPopup(parent,lang.get("gui_popup_about_title"));
 		JPanel panel = new JPanel(new GridBagLayout());
 		buildDialog(panel);
-		panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		dlg.getContentPane().add(panel);
 	}
 

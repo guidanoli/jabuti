@@ -29,16 +29,16 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 	// Meta components
 	PreferencesComboModel model;
 	GlobalProperties gp = GlobalProperties.getInstance();
-	JFrame frame;
+	JDialog dlg;
 	MainFrame parent;
 	
 	// Layout
-	int hborder = 40;
-	int vborder = 20;
-	int vgap = 10;
+	int hborder = 10;
+	int vborder = 10;
+	int vgap = 5;
 	
-	public PreferencesPanel(JFrame frame, MainFrame parent) {
-		this.frame = frame;
+	public PreferencesPanel(JDialog dlg, MainFrame parent) {
+		this.dlg = dlg;
 		this.parent = parent;
 		setBorder(BorderFactory.createEmptyBorder(vborder, hborder, vborder, hborder));
 		// Panels
@@ -82,7 +82,7 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 		Object source = arg0.getSource();
 		if( source == cancel_btn )
 		{
-			frame.setVisible(false);
+			dlg.setVisible(false);
 		}
 		else if( source == apply_btn )
 		{
@@ -94,7 +94,7 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 				applyPreference();
 				return;
 			}
-			JOptionPane.showMessageDialog(	frame, lang.get("gui_popup_preferences_applymsg_invalid"),
+			JOptionPane.showMessageDialog(	dlg, lang.get("gui_popup_preferences_applymsg_invalid"),
 											lang.get("name"), JOptionPane.ERROR_MESSAGE	);
 		}
 		else if( source == default_btn )
@@ -117,13 +117,13 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 	private void applyPreference() {
 		if( gp.save() )
 		{
-			LightError.show(lang.get("gui_popup_preferences_applymsg_ok"),frame);
+			LightError.show(lang.get("gui_popup_preferences_applymsg_ok"),dlg);
 			if( (boolean) model.getSelectedItemProperty(PreferencesComboModel.RESET) )
-				LightError.show(lang.get("gui_popup_preferences_applymsg_reset"),frame);
+				LightError.show(lang.get("gui_popup_preferences_applymsg_reset"),dlg);
 			parent.panel.updateTable();
 			return;
 		}
-		LightError.show(lang.get("gui_popup_preferences_applymsg_error"),frame);
+		LightError.show(lang.get("gui_popup_preferences_applymsg_error"),dlg);
 	}
 	
 	

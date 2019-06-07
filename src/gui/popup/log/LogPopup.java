@@ -9,12 +9,12 @@ import java.util.Iterator;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import gui.DefaultPopup;
 import gui.maindlg.MenuPopup;
 import svn.BranchManager;
 import svn.LauncherLogManager;
@@ -38,7 +38,7 @@ public class LogPopup implements MenuPopup, ItemListener {
 	private ArrayList<String []> data = LauncherLogManager.readLog();
 	
 	/* Components */
-	private JDialog dlg;
+	private DefaultPopup dlg;
 	JPanel panel;
 	private JComboBox<String> branchCombo, actionCombo;
 	private JEditorPane jep = new JEditorPane();
@@ -61,7 +61,7 @@ public class LogPopup implements MenuPopup, ItemListener {
 	};
 	
 	public void open(JFrame parent) {
-		dlg = new JDialog(parent,lang.get("gui_popup_log_title"),true);
+		dlg = new DefaultPopup(parent,lang.get("gui_popup_log_title"));
 		buildDialog();
 		dlg.setSize(new Dimension(500, 400));
 		dlg.revalidate();
@@ -69,7 +69,7 @@ public class LogPopup implements MenuPopup, ItemListener {
 		dlg.setLocationRelativeTo(dlg.getOwner());
 		dlg.setVisible(true);
 	}
-	
+		
 	private void buildDialog() {
 		int margin = 10;
 		panel = new JPanel(new BorderLayout(margin,margin));
@@ -85,6 +85,7 @@ public class LogPopup implements MenuPopup, ItemListener {
 		
 		String [] actions = { allActions, lang.get("gui_popup_log_action_setup"), lang.get("gui_popup_log_action_make") };
 		actionCombo = new JComboBox<String>(actions);
+		actionCombo.setPreferredSize(branchCombo.getPreferredSize());
 		actionCombo.addItemListener(this);
 		
 	    jep.setContentType("text/html");

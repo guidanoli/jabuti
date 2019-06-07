@@ -1,4 +1,5 @@
 package gui.error;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -21,12 +22,12 @@ public class FatalError {
 	protected final static JFrame DEFAULT_PARENT = null;
 	protected final static boolean DEFAULT_EXIT = true;
 	
-	public static void show (String msg, JFrame parent, boolean exit) {
+	public static void show (String msg, Component parent, boolean exit) {
 		JOptionPane.showMessageDialog(parent, msg, ERROR_MSG_TITLE, JOptionPane.ERROR_MESSAGE);
 		if( exit ) System.exit(0);
 	}
 	
-	public static void showLog (String msg, JFrame parent, boolean exit) {
+	public static void showLog (String msg, Component parent, boolean exit) {
 		JTextArea txt = new JTextArea(msg);
 		JScrollPane sp = new JScrollPane();
 		txt.setEditable(false);
@@ -38,7 +39,7 @@ public class FatalError {
 		if( exit ) System.exit(0);
 	}
 	
-	public static void show (Exception e, JFrame parent, boolean exit) {
+	public static void show (Exception e, Component parent, boolean exit) {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		String encoding = "UTF-8";
 	    try (PrintStream ps = new PrintStream(baos, true, encoding)) {
@@ -62,9 +63,9 @@ public class FatalError {
 	}
 	
 	// SIGNATURE OVERLOAD -- missing exit
-	public static void show (String msg, JFrame parent) { show(msg,parent,DEFAULT_EXIT); }
-	public static void show (Exception e, JFrame parent) { show(e,parent,DEFAULT_EXIT); }
-	public static void showScrollPaneMessage (String msg, JFrame parent) {
+	public static void show (String msg, Component parent) { show(msg,parent,DEFAULT_EXIT); }
+	public static void show (Exception e, Component parent) { show(e,parent,DEFAULT_EXIT); }
+	public static void showScrollPaneMessage (String msg, Component parent) {
 		showLog(msg,parent,DEFAULT_EXIT);
 	}
 	
