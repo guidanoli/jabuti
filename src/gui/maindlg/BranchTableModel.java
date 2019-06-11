@@ -1,4 +1,6 @@
 package gui.maindlg;
+import java.io.File;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.table.*;
@@ -39,7 +41,7 @@ public class BranchTableModel extends AbstractTableModel {
 	
 	// icons
 	protected Icon[] icons;
-	protected String[] icon_paths = {
+	protected File[] icon_files = {
 			LocalResources.empty ,
 			LocalResources.pause ,
 			LocalResources.unlock ,
@@ -71,11 +73,11 @@ public class BranchTableModel extends AbstractTableModel {
 	
 	public BranchTableModel( BranchManager manager ) {
 		this.manager = manager;
-		icons = new Icon[icon_paths.length];
+		icons = new Icon[icon_files.length];
 		int i = 0;
-		for( String path : icon_paths )
+		for( File file : icon_files )
 		{
-			icons[i] = new ImageIcon(path);
+			icons[i] = new ImageIcon(file.getAbsolutePath());
 			i++;
 		}
 		updateAllColumns();

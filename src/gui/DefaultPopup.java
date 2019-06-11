@@ -18,7 +18,7 @@ public class DefaultPopup extends JDialog {
 	 */
 	public DefaultPopup(JFrame owner, String title) {
 		super(owner,title,true);
-		setIconImage(new ImageIcon(vars.LocalResources.icon).getImage());
+		setIconImage(new ImageIcon(vars.LocalResources.icon.getAbsolutePath()).getImage());
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		} catch (Exception e) {

@@ -13,7 +13,7 @@ public class DefaultFrame {
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setMinimumSize(frame.getSize());
-		frame.setIconImage(new ImageIcon(vars.LocalResources.icon).getImage());
+		frame.setIconImage(new ImageIcon(vars.LocalResources.icon.getAbsolutePath()).getImage());
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");

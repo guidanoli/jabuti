@@ -6,7 +6,6 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -80,7 +79,7 @@ public class AboutPopup implements MenuPopup {
 	 */
 	private JLabel buildIcon() {
 		BufferedImage myPicture = null;
-		try { myPicture = ImageIO.read(new File(vars.LocalResources.icon)); }
+		try { myPicture = ImageIO.read(vars.LocalResources.icon); }
 		catch (IOException e) { FatalError.show(e,parent,false); }
 		JLabel picLabel;
 		if( myPicture != null ) picLabel = new JLabel(new ImageIcon(myPicture.getScaledInstance(50, 50, Image.SCALE_FAST)));
