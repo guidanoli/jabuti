@@ -1,10 +1,13 @@
 package gui.maindlg;
-import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
+import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.table.*;
 
+import gui.error.FatalError;
 import svn.BranchManager;
 import vars.Language;
 import vars.LocalResources;
@@ -41,7 +44,7 @@ public class BranchTableModel extends AbstractTableModel {
 	
 	// icons
 	protected Icon[] icons;
-	protected File[] icon_files = {
+	protected String[] icon_paths = {
 			LocalResources.empty ,
 			LocalResources.pause ,
 			LocalResources.unlock ,
@@ -73,11 +76,16 @@ public class BranchTableModel extends AbstractTableModel {
 	
 	public BranchTableModel( BranchManager manager ) {
 		this.manager = manager;
-		icons = new Icon[icon_files.length];
+		icons = new Icon[icon_paths.length];
 		int i = 0;
-		for( File file : icon_files )
+		for( String path : icon_paths )
 		{
-			icons[i] = new ImageIcon(file.getAbsolutePath());
+			InputStream is = LocalResources.getStream(path);
+			try {
+				icons[i] = new ImageIcon(ImageIO.read(is));
+			} catch (IOException e) {
+				FatalError.show(e);
+			}
 			i++;
 		}
 		updateAllColumns();

@@ -26,7 +26,7 @@ public class LauncherLogManager {
 
 	private Language lang = Language.getInstance();
 	private String branchName;
-	private static File logFile = LocalResources.launchlog;
+	private static String logFile = LocalResources.launchlog;
 		
 	/**
 	 * Constructs a launcher log for a branch
@@ -49,7 +49,7 @@ public class LauncherLogManager {
 	 */
 	public static ArrayList<String []> readLog() {
 		ArrayList<String []> info = new ArrayList<String []>();
-		File file = logFile;
+		File file = new File(logFile);
 		try {
 			file.createNewFile();
 			BufferedReader br = new BufferedReader(new FileReader(file));
@@ -138,9 +138,9 @@ public class LauncherLogManager {
 	 */
 	private boolean assertLogFile()
 	{
-		LocalResources.datafolder.mkdirs();
+		new File(LocalResources.datafolder).mkdirs();
 		try {
-			logFile.createNewFile();
+			new File(logFile).createNewFile();
 		} catch (IOException e) {
 			FatalError.show(lang.get("gui_errmsg_launcher_log_openfailed"),null,false); // does not exit
 			return false;

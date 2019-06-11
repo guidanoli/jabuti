@@ -1,11 +1,16 @@
 package gui;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 import gui.error.FatalError;
+import vars.LocalResources;
 
 @SuppressWarnings("serial")
 public class DefaultPopup extends JDialog {
@@ -18,7 +23,12 @@ public class DefaultPopup extends JDialog {
 	 */
 	public DefaultPopup(JFrame owner, String title) {
 		super(owner,title,true);
-		setIconImage(new ImageIcon(vars.LocalResources.icon.getAbsolutePath()).getImage());
+		try {
+			InputStream is = LocalResources.getStream(LocalResources.icon);
+			setIconImage(new ImageIcon(ImageIO.read(is)).getImage());
+		} catch (IOException e) {
+			FatalError.show(e);
+		}
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		} catch (Exception e) {

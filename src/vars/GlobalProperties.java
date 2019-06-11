@@ -22,8 +22,8 @@ public class GlobalProperties extends Properties {
 
 	private static final GlobalProperties INSTANCE = new GlobalProperties();
 	
-	private final File configFolder = vars.LocalResources.datafolder;
-	private final File propertiesFile = vars.LocalResources.properties;
+	private final String configFolder = vars.LocalResources.datafolder;
+	private final String propertiesFile = vars.LocalResources.properties;
 	private final String[][] defaultValues = {
 		{"path", getDefaultPath()},	
 		{"lang", "English"},
@@ -40,8 +40,8 @@ public class GlobalProperties extends Properties {
 		for( String[] prop : defaultValues )
 			setProperty(prop[0], prop[1]);
 		try {
-			configFolder.mkdirs();
-			if ( !propertiesFile.createNewFile() )
+			new File(configFolder).mkdirs();
+			if ( !new File(propertiesFile).createNewFile() )
 				loadFromXML(new FileInputStream(propertiesFile)); // if XML file is found, load it
 		} catch (Exception e) {
 			FatalError.show(e);

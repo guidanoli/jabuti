@@ -1,6 +1,5 @@
 package vars;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Properties;
@@ -47,9 +46,9 @@ public class Language {
 		}
 		Properties metalang = new Properties();
 		try {
-			metalang.loadFromXML(new FileInputStream(LocalResources.metalang));
+			metalang.loadFromXML(LocalResources.getStream(LocalResources.metalang));
 			lang = new Properties(metalang);
-			lang.loadFromXML(new FileInputStream(LocalResources.langfolder+"/"+langname+".xml"));
+			lang.loadFromXML(LocalResources.getStream(LocalResources.langfolder+"/"+langname+".xml"));
 		}
 		catch (IOException e) {
 			FatalError.show(e);

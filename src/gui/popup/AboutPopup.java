@@ -16,6 +16,7 @@ import gui.DefaultPopup;
 import gui.error.FatalError;
 import gui.maindlg.MenuPopup;
 import vars.Language;
+import vars.LocalResources;
 
 /**
  * The 'About' dialog shows information about software itself and
@@ -79,7 +80,7 @@ public class AboutPopup implements MenuPopup {
 	 */
 	private JLabel buildIcon() {
 		BufferedImage myPicture = null;
-		try { myPicture = ImageIO.read(vars.LocalResources.icon); }
+		try { myPicture = ImageIO.read(LocalResources.getStream(LocalResources.icon)); }
 		catch (IOException e) { FatalError.show(e,parent,false); }
 		JLabel picLabel;
 		if( myPicture != null ) picLabel = new JLabel(new ImageIcon(myPicture.getScaledInstance(50, 50, Image.SCALE_FAST)));

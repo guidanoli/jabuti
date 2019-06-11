@@ -1,11 +1,14 @@
 package gui;
 
 import java.awt.event.WindowEvent;
+
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 import gui.error.FatalError;
+import vars.LocalResources;
 
 public class DefaultFrame {
 
@@ -13,7 +16,11 @@ public class DefaultFrame {
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setMinimumSize(frame.getSize());
-		frame.setIconImage(new ImageIcon(vars.LocalResources.icon.getAbsolutePath()).getImage());
+		try {
+			frame.setIconImage(new ImageIcon(ImageIO.read(LocalResources.getStream(LocalResources.icon))).getImage());
+		} catch (Exception e) {
+			FatalError.show(e);
+		}
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
