@@ -147,16 +147,23 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 		if( status == BranchTableModel.STATUS_LAUNCH )
 		{
 			parent.setCloseOperation(MainFrame.TRAY);
-			parent.getJMenuBar().setEnabled(false);
+			parent.setMenuEnabled(false);
 			((CardLayout)btnPanel.getLayout()).show(btnPanel, stopBtn.getText());
 		}
 		else if( status == BranchTableModel.STATUS_IDLE )
 		{
 			parent.setCloseOperation(MainFrame.CLOSE);
-			parent.getJMenuBar().setEnabled(true);
+			parent.setMenuEnabled(true);
 			((CardLayout)btnPanel.getLayout()).show(btnPanel, launchBtn.getText());
 		}
 		table.repaint();
 	}
 		
+	public void setValueToAllBranches(int column, Object value)
+	{
+		for(int i = 0 ; i < tablemodel.getRowCount(); i++)
+			tablemodel.setValueAt(value, i, column);
+		table.repaint();
+	}
+	
 }

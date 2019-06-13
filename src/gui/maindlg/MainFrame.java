@@ -1,5 +1,7 @@
 package gui.maindlg;
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+
 import vars.GlobalProperties;
 
 /**
@@ -29,7 +31,7 @@ public class MainFrame extends JFrame {
 	public static final int TRAY = 1;
 	
 	protected GlobalProperties gp = GlobalProperties.getInstance();
-	public MainPanel panel;
+	public MainPanel panel = new MainPanel();
 	protected int closeOperation = CLOSE;
 
 	/**
@@ -41,7 +43,6 @@ public class MainFrame extends JFrame {
 	 */
 	public MainFrame(String name) {
 		super(name);
-		panel = new MainPanel();
 		getContentPane().add(panel);
 		setJMenuBar(new MenuBar(this));
 		MainFrame aux = this;
@@ -73,6 +74,13 @@ public class MainFrame extends JFrame {
 	{
 		if( op != CLOSE && op != TRAY ) return;
 		closeOperation = op;
+	}
+	
+	public void setMenuEnabled(boolean isEnabled)
+	{
+		JMenuBar menuBar = getJMenuBar();
+		for(int i = 0 ; i < menuBar.getMenuCount(); i++)
+			menuBar.getMenu(i).setEnabled(isEnabled);
 	}
 	
 }

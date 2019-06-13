@@ -21,6 +21,10 @@ public class MenuBar extends JMenuBar {
 	private JMenuItem new_branch_item = new JMenuItem(lang.get("gui_menubar_branch_new"));
 	private JMenuItem show_log_item = new JMenuItem(lang.get("gui_menubar_branch_log"));
 	private JMenuItem update_item = new JMenuItem(lang.get("gui_menubar_branch_update"));
+	private JMenuItem setup_all_item = new JMenuItem(lang.get("gui_menubar_edit_setup_all"));
+	private JMenuItem make_all_item = new JMenuItem(lang.get("gui_menubar_edit_make_all"));
+	private JMenuItem setup_none_item = new JMenuItem(lang.get("gui_menubar_edit_setup_none"));
+	private JMenuItem make_none_item = new JMenuItem(lang.get("gui_menubar_edit_make_none"));
 	private JMenuItem pref_item = new JMenuItem(lang.get("gui_menubar_edit_preferences"));
 	private JMenuItem about_item = new JMenuItem(lang.get("name"));
 	
@@ -31,12 +35,16 @@ public class MenuBar extends JMenuBar {
 		new_branch_item,
 		update_item,
 		pref_item,
+		setup_all_item,
+		make_all_item,
+		setup_none_item,
+		make_none_item,
 		about_item,
 		show_log_item,
 	};	
 	
 	public MenuBar(MainFrame parent) {
-		
+				
 		/* ****************
 		 * ACTION LISTENERS
 		 * **************** */
@@ -51,6 +59,42 @@ public class MenuBar extends JMenuBar {
 				new MenuAction() {
 					public void action() {
 						parent.panel.updateTable();
+					}
+				}
+			)
+		);
+		setup_all_item.addActionListener(
+			new MenuItemListener(
+				new MenuAction() {
+					public void action() {
+						setupAllBranches(parent.panel);
+					}
+				}
+			)
+		);
+		make_all_item.addActionListener(
+			new MenuItemListener(
+				new MenuAction() {
+					public void action() {
+						makeAllBranches(parent.panel);
+					}
+				}
+			)
+		);
+		setup_none_item.addActionListener(
+			new MenuItemListener(
+				new MenuAction() {
+					public void action() {
+						setupNoneBranches(parent.panel);
+					}
+				}
+			)
+		);
+		make_none_item.addActionListener(
+			new MenuItemListener(
+				new MenuAction() {
+					public void action() {
+						makeNoneBranches(parent.panel);
 					}
 				}
 			)
@@ -80,6 +124,10 @@ public class MenuBar extends JMenuBar {
 		branches_menu.add(new_branch_item);
 		branches_menu.add(show_log_item);
 		branches_menu.add(update_item);
+		edit_menu.add(setup_all_item);
+		edit_menu.add(setup_none_item);
+		edit_menu.add(make_all_item);
+		edit_menu.add(make_none_item);
 		edit_menu.add(pref_item);
 		about_menu.add(about_item);
 		add(branches_menu);
@@ -106,6 +154,22 @@ public class MenuBar extends JMenuBar {
 	private int getKeyId(char c) {
 		if( c < 'a' || c > 'z' ) return 0;
 		return KeyEvent.VK_A + (c - 'a');
+	}
+	
+	private void setupAllBranches(MainPanel panel) {
+		panel.setValueToAllBranches(BranchTableModel.SETUP,true);
+	}
+	
+	private void makeAllBranches(MainPanel panel) {
+		panel.setValueToAllBranches(BranchTableModel.MAKE,true);
+	}
+	
+	private void setupNoneBranches(MainPanel panel) {
+		panel.setValueToAllBranches(BranchTableModel.SETUP,false);
+	}
+	
+	private void makeNoneBranches(MainPanel panel) {
+		panel.setValueToAllBranches(BranchTableModel.MAKE,false);
 	}
 	
 }
