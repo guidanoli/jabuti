@@ -123,11 +123,13 @@ public class MenuBar extends JMenuBar {
 		 * ***************************** */
 		branches_menu.add(new_branch_item);
 		branches_menu.add(show_log_item);
+		branches_menu.addSeparator();
 		branches_menu.add(update_item);
 		edit_menu.add(setup_all_item);
 		edit_menu.add(setup_none_item);
 		edit_menu.add(make_all_item);
 		edit_menu.add(make_none_item);
+		edit_menu.addSeparator();
 		edit_menu.add(pref_item);
 		about_menu.add(about_item);
 		add(branches_menu);
