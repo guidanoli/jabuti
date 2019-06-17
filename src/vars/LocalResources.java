@@ -15,7 +15,7 @@ public class LocalResources {
 	/* *******
 	 * FOLDERS
 	 * ******* */
-	public static final String datafolder = "data";
+	public static final String datafolder = System.getenv("userprofile") + "/.jabuti";
 	public static final String langfolder = "lang";
 	public static final String imgsfolder = "imgs";
 	
