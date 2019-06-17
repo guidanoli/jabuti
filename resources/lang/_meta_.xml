@@ -3,6 +3,7 @@
 <properties>
 <entry key="version">1.0</entry>
 <entry key="name">Jabuti</entry>
+<entry key="email">guidanoli@tecgraf.puc-rio.br</entry>
 <entry key="authors">Guilherme Dantas</entry>
 <entry key="repository">https://github.com/guidanoli/jabuti</entry>
 </properties>

@@ -116,14 +116,16 @@ public class AboutPopup implements MenuPopup {
 	 */
 	private String getHyperText() {
 		
-		String header = String.format("%s v.%s", lang.get("name"), lang.get("version"));
+		String header = String.format("<b>%s v.%s</b>", lang.get("name"), lang.get("version"));
 		String authors = lang.get("authors");
-		String repolink = getRepositoryLinkHTML("GitHub Repository");
+		String email = String.format("<i>%s</i>", lang.get("email"));
+		String repolink = String.format("<a href=\"%s\">%s</a>", lang.get("repository"), "GitHub Repository");
 		String iconscredits = getIconsAuthorHTML(); 
 		
 		String [] lines = {
 			header,
 			authors,
+			email,
 			repolink,
 			"",
 			iconscredits
@@ -133,15 +135,7 @@ public class AboutPopup implements MenuPopup {
 		
 		return String.format("<div align='center'>%s</div>", joinedLines);
 	}
-	
-	/**
-	 * @param label - name of repository link label
-	 * @return HTML of hyperlink to repository
-	 */
-	private String getRepositoryLinkHTML(String label) {
-		return String.format("<a href=\"%s\">%s</a>", lang.get("repository"), label);
-	}
-	
+		
 	/**
 	 * @return HTML of credits to icons authors
 	 */
