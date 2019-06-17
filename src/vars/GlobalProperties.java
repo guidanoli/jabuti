@@ -28,7 +28,8 @@ public class GlobalProperties extends Properties {
 		{"path", getDefaultPath()},	
 		{"lang", "English"},
 		{"maxthreads", "3"},
-		{"cleanups", "2"}
+		{"cleanups", "2"},
+		{"makecmd","mlldamt"},
 	};
 	
 	/**

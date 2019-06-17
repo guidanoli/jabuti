@@ -23,6 +23,15 @@ import vars.Language;
  */
 public class TortoiseHandler {
 
+	public static final String [] makeCommands = {
+			"mlld",
+			"mlldmt",
+			"mllda",
+			"mlldamt",
+			"mlldad",
+			"mlldadmt"
+	};
+	
 	protected ArrayList<Process> runningProcesses = new ArrayList<Process>();
 	protected String branchDir;
 	private Language lang = Language.getInstance();
@@ -292,7 +301,8 @@ public class TortoiseHandler {
 		File f = openBranchFolder(branchName);
 		if(f==null) FatalError.show(lang.get("gui_errmsg_nobranchrootfolder")); //exits
 		String setupLuaPath = Paths.get("bin", "vis.lua").toString();
-		return runLua(f, true, setupLuaPath, "mlldamt");
+		String command = GlobalProperties.getInstance().get("makecmd");
+		return runLua(f, true, setupLuaPath, command);
 	}
 	
 	/**

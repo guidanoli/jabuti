@@ -6,6 +6,7 @@ import javax.swing.ComboBoxModel;
 import gui.popup.preferences.types.ComboPreferenceType;
 import gui.popup.preferences.types.DirectoryPreferenceType;
 import gui.popup.preferences.types.NumberPreferenceType;
+import svn.TortoiseHandler;
 import vars.Language;
 
 
@@ -22,12 +23,16 @@ public class PreferencesComboModel extends AbstractListModel<String> implements 
 	
 	protected String selected;
 	
+	protected String [] makeCmds = TortoiseHandler.makeCommands;
+	protected String [] makeCmdsTips = getMakeCmdsTips(makeCmds);
+	
 	// { property label, property string on screen, preference type, asks for restart }
 	protected Object[][] list = { 
 			{ "path" , lang.get("gui_popup_preferences_proplabel_path") , new DirectoryPreferenceType() , false } ,
 			{ "lang" , lang.get("gui_popup_preferences_proplabel_lang") , new ComboPreferenceType(lang.getLanguages()) , true } ,
 			{ "maxthreads" , lang.get("gui_popup_preferences_proplabel_maxthreads") , new NumberPreferenceType(1,10) , false } ,
-			{ "cleanups" , lang.get("gui_popup_preferences_proplabel_cleanups") , new NumberPreferenceType(1,10) , false }
+			{ "cleanups" , lang.get("gui_popup_preferences_proplabel_cleanups") , new NumberPreferenceType(1,10) , false } ,
+			{ "makecmd" , lang.get("gui_popup_preferences_proplabel_makecmd") , new ComboPreferenceType(makeCmds,makeCmdsTips,false) , false } ,
 	};
 	
 	public String getElementAt(int i) { return (String) list[i][LABEL]; }
@@ -44,4 +49,11 @@ public class PreferencesComboModel extends AbstractListModel<String> implements 
 		return null;
 	}
 
+	private String[] getMakeCmdsTips(String[] cmds) {
+		String [] tips = new String[cmds.length];
+		for(int i = 0 ; i < tips.length; i++)
+			tips[i] = lang.get("gui_popup_preferences_propoption_makecmd_"+cmds[i]);
+		return tips;
+	}
+	
 }

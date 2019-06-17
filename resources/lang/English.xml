@@ -60,8 +60,15 @@
 <entry key="gui_popup_preferences_btn_restore">Restore Default</entry>
 <entry key="gui_popup_preferences_proplabel_cleanups">Pre-setup clean up cycles</entry>
 <entry key="gui_popup_preferences_proplabel_lang">Language</entry>
+<entry key="gui_popup_preferences_proplabel_makecmd">Compilation command</entry>
 <entry key="gui_popup_preferences_proplabel_maxthreads">Maximum thread count</entry>
 <entry key="gui_popup_preferences_proplabel_path">Branches directory</entry>
+<entry key="gui_popup_preferences_propoption_makecmd_mlld">Make Library Debug</entry>
+<entry key="gui_popup_preferences_propoption_makecmd_mllda">Make Library Debug App</entry>
+<entry key="gui_popup_preferences_propoption_makecmd_mlldad">Make Library Debug App Debug</entry>
+<entry key="gui_popup_preferences_propoption_makecmd_mlldadmt">Make Library Debug App Debug Multi-Threaded</entry>
+<entry key="gui_popup_preferences_propoption_makecmd_mlldamt">Make Library Debug App Multi-Threaded</entry>
+<entry key="gui_popup_preferences_propoption_makecmd_mlldmt">Make Library Debug Multi-Threaded</entry>
 <entry key="gui_popup_preferences_title">Preferences</entry>
 <entry key="gui_popup_preferences_type_dir_dlg_btnlabel">Open</entry>
 <entry key="gui_popup_preferences_type_dir_dlg_title">Open a directory</entry>

@@ -76,6 +76,12 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 			value_panel.add(type.getPanel(), key); //key as unique identifier
 		((CardLayout) value_panel.getLayout()).show(value_panel, key);
 		type.setState(value);
+		updateDialog();
+	}
+	
+	public void updateDialog() {
+		dlg.pack();
+		dlg.setLocationRelativeTo(parent);
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {
