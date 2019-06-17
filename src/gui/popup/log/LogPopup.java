@@ -35,7 +35,7 @@ public class LogPopup implements MenuPopup, ItemListener {
 	/* Managers */
 	private BranchManager branchManager = BranchManager.getInstance();
 	private Language lang = Language.getInstance();
-	private ArrayList<String []> data = LauncherLogManager.readLog();
+	private ArrayList<String []> data;
 	
 	/* Components */
 	private DefaultPopup dlg;
@@ -62,9 +62,9 @@ public class LogPopup implements MenuPopup, ItemListener {
 	
 	public void open(JFrame parent) {
 		dlg = new DefaultPopup(parent,lang.get("gui_popup_log_title"));
+		data = LauncherLogManager.readLog(); // updates data
 		buildDialog();
-		dlg.setSize(new Dimension(500, 400));
-		dlg.revalidate();
+		dlg.pack();
 		dlg.setResizable(false);
 		dlg.setLocationRelativeTo(dlg.getOwner());
 		dlg.setVisible(true);
@@ -136,7 +136,8 @@ public class LogPopup implements MenuPopup, ItemListener {
 		String actionStr = "";
 		switch(data[2]) {
 		case "setup":
-			actionStr = lang.format("gui_popup_log_desc_setup", data[3], data[4]);
+			int diff = Integer.parseInt(data[4]) - Integer.parseInt(data[3]);
+			actionStr = lang.format("gui_popup_log_desc_setup", data[3], data[4], diff);
 			break;
 		case "make":
 			int seconds = Integer.parseInt(data[3]) / 1000;
@@ -163,5 +164,7 @@ public class LogPopup implements MenuPopup, ItemListener {
 	public void itemStateChanged(ItemEvent ie) {
 		updateLogTable(rowFilter);
 	}
+	
+	
 	
 }

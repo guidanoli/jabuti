@@ -111,76 +111,79 @@ public class Launcher {
 				int state_setup = setup ? ( validDir ? LaunchProgressListener.WAITING : LaunchProgressListener.INVALID ) : LaunchProgressListener.OFF;
 				int state_make = make ? ( validDir ? LaunchProgressListener.WAITING : LaunchProgressListener.INVALID ) : LaunchProgressListener.OFF;
 				update(i, state_setup, state_make);
-				if( validDir )
+				if( setup || make )
 				{
-					joinThread();
-					if( setup )
+					if( validDir )
 					{
-						state_setup = LaunchProgressListener.UNLOCKING;
-						update(i, state_setup, state_make);
+						joinThread();
+						if( setup )
+						{
+							state_setup = LaunchProgressListener.UNLOCKING;
+							update(i, state_setup, state_make);
+							if(interrupted) return;
+							success = tortoise.cleanUp(name,cleanUps);
+							if(success)
+							{
+								state_setup = LaunchProgressListener.RUNNING;
+								update(i, state_setup, state_make);
+							}
+							else
+							{
+								state_setup = LaunchProgressListener.FAILED;
+								if( make ) state_make = LaunchProgressListener.FAILED;
+								update(i, state_setup, state_make);
+								exitThread();
+								return;
+							}
+							if(interrupted) return;
+							Long oldRevisionNumber = tortoise.getRevisionNumber(name);
+							success = tortoise.setup(name);
+							if(success)
+							{
+								state_setup = LaunchProgressListener.ENDED;
+								update(i, state_setup, state_make);
+								Long newRevisionNumber = tortoise.getRevisionNumber(name);
+								logManager.logSetup(oldRevisionNumber, newRevisionNumber);
+							}
+							else
+							{
+								state_setup = LaunchProgressListener.FAILED;
+								if( make ) state_make = LaunchProgressListener.FAILED;
+								update(i, state_setup, state_make);
+								exitThread();
+								return;
+							}
+						}
 						if(interrupted) return;
-						success = tortoise.cleanUp(name,cleanUps);
-						System.out.printf("cleanup = %s\n",success?"true":"false");
-						if(success)
-						{
-							state_setup = LaunchProgressListener.RUNNING;
+						if( make ) {
+							state_make = LaunchProgressListener.RUNNING;
 							update(i, state_setup, state_make);
+							Instant start = Instant.now();
+							success = tortoise.make(name);
+							if(success)
+							{
+								Instant end = Instant.now();
+								Duration timeElapsed = Duration.between(start, end);
+								state_make = LaunchProgressListener.ENDED;
+								update(i, state_setup, state_make);
+								logManager.logMake(timeElapsed.toMillis());
+							}
+							else
+							{
+								state_make = LaunchProgressListener.FAILED;
+								update(i, state_setup, state_make);
+								exitThread();
+								return;
+							}
 						}
-						else
+						if( make || setup )
 						{
-							state_setup = LaunchProgressListener.FAILED;
-							update(i, state_setup, state_make);
-							exitThread();
-							return;
-						}
-						if(interrupted) return;
-						Long oldRevisionNumber = tortoise.getRevisionNumber(name);
-						success = tortoise.setup(name);
-						System.out.printf("setup = %s\n",success?"true":"false");
-						if(success)
-						{
-							state_setup = LaunchProgressListener.ENDED;
-							update(i, state_setup, state_make);
-							Long newRevisionNumber = tortoise.getRevisionNumber(name);
-							logManager.logSetup(oldRevisionNumber, newRevisionNumber);
-						}
-						else
-						{
-							state_setup = LaunchProgressListener.FAILED;
-							update(i, state_setup, state_make);
-							exitThread();
-							return;
+							branchManager.setLastSetupDate(name, System.currentTimeMillis());
 						}
 					}
-					if(interrupted) return;
-					if( make ) {
-						state_make = LaunchProgressListener.RUNNING;
-						update(i, state_setup, state_make);
-						Instant start = Instant.now();
-						success = tortoise.make(name);
-						if(success)
-						{
-							Instant end = Instant.now();
-							Duration timeElapsed = Duration.between(start, end);
-							state_make = LaunchProgressListener.ENDED;
-							update(i, state_setup, state_make);
-							logManager.logMake(timeElapsed.toMillis());
-						}
-						else
-						{
-							state_make = LaunchProgressListener.FAILED;
-							update(i, state_setup, state_make);
-							exitThread();
-							return;
-						}
-					}
-					if( make || setup )
-					{
-						branchManager.setLastSetupDate(name, System.currentTimeMillis());
-					}
+					exitThread();
+					if( !validDir ) LightError.show(lang.format("gui_errmsg_launcher_invalidfolder", name));
 				}
-				exitThread();
-				if( !validDir ) LightError.show(lang.format("gui_errmsg_launcher_invalidfolder", name));
 			}
 		};
 		

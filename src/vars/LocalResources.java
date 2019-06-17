@@ -29,7 +29,8 @@ public class LocalResources {
 	/* *****
 	 * ICONS
 	 * ***** */
-	public static final String icon = imgsfolder+"/setmeup.png";
+	public static final String icon = imgsfolder+"/turtle.png";
+	public static final String icon_bw = imgsfolder+"/turtle-bw.png";
 	public static final String success = imgsfolder+"/success.png";
 	public static final String error = imgsfolder+"/error.png";
 	public static final String warning = imgsfolder+"/warning.png";

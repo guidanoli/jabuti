@@ -49,7 +49,7 @@
 <entry key="gui_popup_log_col_desc">Descrição</entry>
 <entry key="gui_popup_log_desc_make_hms">Compilado em %02d horas %02d min %02d s</entry>
 <entry key="gui_popup_log_desc_make_ms">Compilado em %02d min %02d s</entry>
-<entry key="gui_popup_log_desc_setup">Setup %s → %s</entry>
+<entry key="gui_popup_log_desc_setup">Setup %s → %s (+%d)</entry>
 <entry key="gui_popup_log_title">Histórico</entry>
 <entry key="gui_popup_preferences_applymsg_error">Não foi possível salvar configuração.</entry>
 <entry key="gui_popup_preferences_applymsg_invalid">Valor inválido de configuração.</entry>

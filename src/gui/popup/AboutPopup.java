@@ -80,10 +80,10 @@ public class AboutPopup implements MenuPopup {
 	 */
 	private JLabel buildIcon() {
 		BufferedImage myPicture = null;
-		try { myPicture = ImageIO.read(LocalResources.getStream(LocalResources.icon)); }
+		try { myPicture = ImageIO.read(LocalResources.getStream(LocalResources.icon_bw)); }
 		catch (IOException e) { FatalError.show(e,parent,false); }
 		JLabel picLabel;
-		if( myPicture != null ) picLabel = new JLabel(new ImageIcon(myPicture.getScaledInstance(50, 50, Image.SCALE_FAST)));
+		if( myPicture != null ) picLabel = new JLabel(new ImageIcon(myPicture.getScaledInstance(64, 64, Image.SCALE_FAST)));
 		else picLabel = new JLabel("<Missing image>");
 		return picLabel;
 	}
@@ -116,7 +116,7 @@ public class AboutPopup implements MenuPopup {
 	 */
 	private String getHyperText() {
 		
-		String header = String.format("%s %s", lang.get("name"), lang.get("version"));
+		String header = String.format("%s v.%s", lang.get("name"), lang.get("version"));
 		String authors = lang.get("authors");
 		String repolink = getRepositoryLinkHTML("GitHub Repository");
 		String iconscredits = getIconsAuthorHTML(); 
@@ -146,10 +146,10 @@ public class AboutPopup implements MenuPopup {
 	 * @return HTML of credits to icons authors
 	 */
 	private String getIconsAuthorHTML() {
-		String [] authorsName = {"Smashicons","Double-J Design"};
-		String [] authorsURL = {"https:/www.flaticon.com/authors/smashicons/","http://www.doublejdesign.co.uk/"};
-		String [] licenseName = {"CC 3.0 BY","CC 4.0 BY"};
-		String [] licenseLink = {"http://creativecommons.org/licenses/by/3.0/","https://creativecommons.org/licenses/by/4.0/"};
+		String [] authorsName = {"Smashicons","Freepik"};
+		String [] authorsURL = {"https:/www.flaticon.com/authors/smashicons/","https://www.freepik.com/"};
+		String [] licenseName = {"CC 3.0 BY","CC 3.0 BY"};
+		String [] licenseLink = {"http://creativecommons.org/licenses/by/3.0/","http://creativecommons.org/licenses/by/3.0/"};
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("Icons made by:");
