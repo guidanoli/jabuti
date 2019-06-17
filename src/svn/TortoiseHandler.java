@@ -153,7 +153,7 @@ public class TortoiseHandler {
 	}
 	
 	/**
-	 * <p>{@code String runLua(File dir, boolean error, String luaFilePath, String... args)}
+	 * <p>{@code boolean runLua(File dir, boolean error, String luaFilePath, String... args)}
 	 * <p>Runs Lua scripts making use of the lua5posix executable that should be on the
 	 * binaries folder of every SVN branch folder.
 	 * <p><b>Observations:</b>
@@ -175,11 +175,11 @@ public class TortoiseHandler {
 	 * there is any error caught from the standard error stream.
 	 * @param luaFilePath - lua script relative path from branch directory path
 	 * @param args - list of all arguments provided to the lua script
-	 * @return output or error string (see <b>error</b> parameter)
+	 * @return {@code true} if no errors occurred
 	 * @see TortoiseHandler#openBranchFolder(String)
 	 * @see Paths.get
 	 */
-	protected String runLua(File dir, boolean error, String luaFilePath, String... args) {
+	protected boolean runLua(File dir, boolean error, String luaFilePath, String... args) {
 		StringBuilder errsb = new StringBuilder();
 		try {  
 	    	String line;
@@ -217,10 +217,10 @@ public class TortoiseHandler {
 	    		String logMessage = errsb.toString();
     	  		if(!logMessage.equals("")) {
 		    		FatalError.showLog(logMessage,null,false);
-					return logMessage;
+		    		return false;
 		    	}
 			}
-	    	return sb.toString();
+	    	return true;
 	    }  
 	    catch (Exception e) {
 	    	FatalError.show(e,null,false);
@@ -229,10 +229,10 @@ public class TortoiseHandler {
 		    	String logMessage = errsb.toString();
 		    	if(!logMessage.equals("")) {
 		    		FatalError.showLog(logMessage,null,false);
-					return logMessage;
+					return false;
 		    	}
 	    	}
-	    	return null;
+	    	return true;
 	    }
 	}
 	
@@ -274,14 +274,8 @@ public class TortoiseHandler {
 	{
 		File f = openBranchFolder(branchName);
 		if(f==null) FatalError.show(lang.get("gui_errmsg_nobranchrootfolder")); //exits
-		String setupLuaPath = Paths.get("bin", "vis.lua").toString(); 
-		String output = runLua(f, true, setupLuaPath, "s");
-		if(output==null || output.equals(""))
-		{
-			LightError.show(lang.format("gui_errmsg_failedsetup", branchName));
-			return false;
-		}
-		return true;
+		String setupLuaPath = Paths.get("bin", "vis.lua").toString();
+		return runLua(f, true, setupLuaPath, "s");
 	}
 	
 	/**
@@ -297,15 +291,8 @@ public class TortoiseHandler {
 	{
 		File f = openBranchFolder(branchName);
 		if(f==null) FatalError.show(lang.get("gui_errmsg_nobranchrootfolder")); //exits
-		String setupLuaPath = Paths.get("bin", "vis.lua").toString(); 
-		String output = runLua(f, true, setupLuaPath, "mlldamt");
-		if(output==null || output.equals(""))
-		{
-			LightError.show(lang.format("gui_errmsg_failedmake", branchName));
-			return false;
-		}
-		
-		return true;
+		String setupLuaPath = Paths.get("bin", "vis.lua").toString();
+		return runLua(f, true, setupLuaPath, "mlldamt");
 	}
 	
 	/**

@@ -120,6 +120,7 @@ public class Launcher {
 						update(i, state_setup, state_make);
 						if(interrupted) return;
 						success = tortoise.cleanUp(name,cleanUps);
+						System.out.printf("cleanup = %s\n",success?"true":"false");
 						if(success)
 						{
 							state_setup = LaunchProgressListener.RUNNING;
@@ -135,6 +136,7 @@ public class Launcher {
 						if(interrupted) return;
 						Long oldRevisionNumber = tortoise.getRevisionNumber(name);
 						success = tortoise.setup(name);
+						System.out.printf("setup = %s\n",success?"true":"false");
 						if(success)
 						{
 							state_setup = LaunchProgressListener.ENDED;
