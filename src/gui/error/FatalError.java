@@ -28,7 +28,8 @@ public class FatalError {
 	}
 	
 	public static void showLog (String msg, Component parent, boolean exit) {
-		JTextArea txt = new JTextArea(msg);
+		String helper = ErrorHelper.getHelp(msg);
+		JTextArea txt = new JTextArea(msg+helper);
 		JScrollPane sp = new JScrollPane();
 		txt.setEditable(false);
 		txt.setLineWrap(true);
