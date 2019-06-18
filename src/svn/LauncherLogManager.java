@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.StringJoiner;
 
 import gui.error.FatalError;
+import gui.error.LightError;
 import vars.Language;
 import vars.LocalResources;
 
@@ -34,6 +35,36 @@ public class LauncherLogManager {
 	 */
 	public LauncherLogManager(String branchName) {
 		this.branchName = branchName;
+	}
+	
+	/**
+	 * Get most recent time stamp attached to branch registered
+	 * in log, for any action.
+	 * @return time stamp
+	 */
+	public long getLastSetupMillis() {
+		ArrayList<String []> logInfo = readLog();
+		long timeStamp = 0;
+		for( String[] entry : logInfo )
+		{
+			if( entry.length < 3 )
+			{
+				LightError.show(lang.get("gui_errmsg_launcher_log_badformat"));
+				break;
+			}
+			String branch = entry[0];
+			if( branch != branchName ) continue;
+			try {
+				long ts = Long.parseLong(entry[1]);
+				if( ts > timeStamp ) timeStamp = ts;
+			}
+			catch( Exception e )
+			{
+				LightError.show(e);
+				break;
+			}
+		}
+		return timeStamp;
 	}
 	
 	/**

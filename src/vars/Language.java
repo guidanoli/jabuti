@@ -83,8 +83,7 @@ public class Language {
 	}
 	
 	/**
-	 * TODO
-	 * @return
+	 * @return all accepted languages
 	 */
 	public String [] getLanguages() { return langs; }
 	

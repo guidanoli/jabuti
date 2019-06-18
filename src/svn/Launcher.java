@@ -176,10 +176,6 @@ public class Launcher {
 								return;
 							}
 						}
-						if( make || setup )
-						{
-							branchManager.setLastSetupDate(name, System.currentTimeMillis());
-						}
 					}
 					exitThread();
 					if( !validDir ) LightError.show(lang.format("gui_errmsg_launcher_invalidfolder", name));

@@ -6,12 +6,14 @@
 <entry key="gui_branchtable_columns_make">Make</entry>
 <entry key="gui_branchtable_columns_setup">Setup</entry>
 <entry key="gui_branchtable_defval_lastsetup">Desconhecido</entry>
+<entry key="gui_errhelper_155004">Na raíz da sua base, faça um SVN Cleanup para quebrar locks, um vissetup e, se requisitado, insira sua senha de usuário.</entry>
 <entry key="gui_errmsg_failedcleanup">Não foi possível limpar (se livrar de locks) branch %s</entry>
 <entry key="gui_errmsg_failedmake">Não foi possível compilar branch %s</entry>
 <entry key="gui_errmsg_failedsetup">Não foi possível realizar setup no branch %s</entry>
 <entry key="gui_errmsg_incoherentdate">Timestamp de último setup incoerente</entry>
 <entry key="gui_errmsg_launcher_emptyjob">Nenhuma rotina de setup ou make foi realizada.</entry>
 <entry key="gui_errmsg_launcher_invalidfolder">%s não é um diretório SVN válido.</entry>
+<entry key="gui_errmsg_launcher_log_badformat">Histórico com má formação: muito poucos argumentos na linha</entry>
 <entry key="gui_errmsg_launcher_log_openfailed">Não foi possível abrir arquivo de log.</entry>
 <entry key="gui_errmsg_launcher_log_registerfailed">Não foi possível adicionar registro de log.</entry>
 <entry key="gui_errmsg_nobranchrootfolder">Não foi possível acessar pasta raíz do branch %s.</entry>

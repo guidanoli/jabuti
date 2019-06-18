@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import gui.error.FatalError;
 import vars.GlobalProperties;
 import vars.Language;
 
@@ -90,35 +89,14 @@ public class BranchManager {
 		String[] v = new String[num_branches];
 		for( int i = 0 ; i < v.length; i++ )
 		{
-			String prop = gp.get(KEY_BRANCHES,branches[i],INDEX_LAST_SETUP);
-			if( prop == null )
-			{
-				v[i] = lang.get("gui_branchtable_defval_lastsetup");
-				continue;
-			}
-			try {
-				long timestamp = Long.parseLong(prop);
-				v[i] = getDateString(timestamp);
-			}
-			catch( Exception e )
-			{
-				FatalError.show(e); // error while parsing bad format "Long"
-			}
+			LauncherLogManager logManager = new LauncherLogManager(branches[i]);
+			long timestamp = logManager.getLastSetupMillis();
+			if( timestamp == 0 ) v[i] = lang.get("gui_branchtable_defval_lastsetup");
+			else v[i] = getDateString(timestamp);
 		}
 		return v;
 	}
-	
-	/**
-	 * <p>Sets last setup date to a specific branch
-	 * @param branchName - name of branch folder
-	 * @param timestamp - time stamp given by the
-	 * {@link System.currentTimeMillis} function
-	 */
-	public void setLastSetupDate(String branchName, long timestamp) {
-		String value_str = Long.toString(timestamp);
-		gp.set(value_str,KEY_BRANCHES,branchName,INDEX_LAST_SETUP);
-	}
-	
+		
 	/**
 	 * <p>Gets boolean corresponding to whether a given
 	 * branch is scheduled to be set up by the Launcher.

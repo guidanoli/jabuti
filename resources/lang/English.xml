@@ -6,12 +6,14 @@
 <entry key="gui_branchtable_columns_make">Make</entry>
 <entry key="gui_branchtable_columns_setup">Setup</entry>
 <entry key="gui_branchtable_defval_lastsetup">Unknown</entry>
+<entry key="gui_errhelper_155004">On the branch root, do a SVN Cleanup to break locks, a vissetup and, if requested, enter your user password.</entry>
 <entry key="gui_errmsg_failedcleanup">Could not clean up branch %s</entry>
 <entry key="gui_errmsg_failedmake">Could not compile branch %s</entry>
 <entry key="gui_errmsg_failedsetup">Could not setup branch %s</entry>
 <entry key="gui_errmsg_incoherentdate">Incoherent last setup timestamp</entry>
 <entry key="gui_errmsg_launcher_emptyjob">No setup or compile routine was executed.</entry>
 <entry key="gui_errmsg_launcher_invalidfolder">%s is not a valid SVN folder.</entry>
+<entry key="gui_errmsg_launcher_log_badformat">Log with bad formatting: few arguments in line</entry>
 <entry key="gui_errmsg_launcher_log_openfailed">Could not open log file.</entry>
 <entry key="gui_errmsg_launcher_log_registerfailed">Could not register log entry.</entry>
 <entry key="gui_errmsg_nobranchrootfolder">Could not open root folder from branch %s.</entry>
