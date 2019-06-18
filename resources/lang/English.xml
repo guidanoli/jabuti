@@ -41,6 +41,7 @@
 <entry key="gui_menubar_edit_preferences">Preferences...</entry>
 <entry key="gui_menubar_edit_setup_all">Setup all branches</entry>
 <entry key="gui_menubar_edit_setup_none">Setup no branches</entry>
+<entry key="gui_notification_title">Jabuti</entry>
 <entry key="gui_popup_about_title">About</entry>
 <entry key="gui_popup_log_action_make">Make</entry>
 <entry key="gui_popup_log_action_setup">Setup</entry>

@@ -41,6 +41,7 @@
 <entry key="gui_menubar_edit_preferences">Configurações...</entry>
 <entry key="gui_menubar_edit_setup_all">Atualizar todas as bases</entry>
 <entry key="gui_menubar_edit_setup_none">Atualizar nenhuma base</entry>
+<entry key="gui_notification_title">Jabuti</entry>
 <entry key="gui_popup_about_title">Sobre</entry>
 <entry key="gui_popup_log_action_make">Make</entry>
 <entry key="gui_popup_log_action_setup">Setup</entry>
