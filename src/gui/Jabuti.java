@@ -13,7 +13,7 @@ import vars.Language;
  * @see gui.maindlg.MainFrame MainFrame
  *
  */
-public class SetMeUp {
+public class Jabuti {
 	
 	private static Language lang = Language.getInstance();
 	public static void main(String[] args) {
