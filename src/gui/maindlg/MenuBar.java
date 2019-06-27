@@ -14,47 +14,89 @@ public class MenuBar extends JMenuBar {
 
 	private Language lang = Language.getInstance();
 	
-	private JMenu branches_menu = new JMenu(lang.get("gui_menubar_branch_menu"));
-	private JMenu edit_menu = new JMenu(lang.get("gui_menubar_edit_menu"));
-	private JMenu about_menu = new JMenu(lang.get("gui_menubar_about_menu"));
+	private JMenu branchesMenu = new JMenu(lang.get("gui_menubar_branch_menu"));
+	private JMenu editMenu = new JMenu(lang.get("gui_menubar_edit_menu"));
+	private JMenu setupMenu = new JMenu(lang.get("gui_menubar_setup_menu"));
+	private JMenu makeMenu = new JMenu(lang.get("gui_menubar_make_menu"));
+	private JMenu aboutMenu = new JMenu(lang.get("gui_menubar_about_menu"));
 	
-	private JMenuItem new_branch_item = new JMenuItem(lang.get("gui_menubar_branch_new"));
-	private JMenuItem show_log_item = new JMenuItem(lang.get("gui_menubar_branch_log"));
-	private JMenuItem update_item = new JMenuItem(lang.get("gui_menubar_branch_update"));
-	private JMenuItem setup_all_item = new JMenuItem(lang.get("gui_menubar_edit_setup_all"));
-	private JMenuItem make_all_item = new JMenuItem(lang.get("gui_menubar_edit_make_all"));
-	private JMenuItem setup_none_item = new JMenuItem(lang.get("gui_menubar_edit_setup_none"));
-	private JMenuItem make_none_item = new JMenuItem(lang.get("gui_menubar_edit_make_none"));
-	private JMenuItem pref_item = new JMenuItem(lang.get("gui_menubar_edit_preferences"));
-	private JMenuItem about_item = new JMenuItem(lang.get("name"));
+	private JMenuItem newBranchItem = new JMenuItem(lang.get("gui_menubar_branch_new"));
+	private JMenuItem showLogItem = new JMenuItem(lang.get("gui_menubar_branch_log"));
+	private JMenuItem updateItem = new JMenuItem(lang.get("gui_menubar_branch_update"));
+	private JMenuItem setupAllItem = new JMenuItem(lang.get("gui_menubar_setup_all"));
+	private JMenuItem setupNoneItem = new JMenuItem(lang.get("gui_menubar_setup_none"));
+	private JMenuItem makeAllItem = new JMenuItem(lang.get("gui_menubar_make_all"));
+	private JMenuItem makeNoneItem = new JMenuItem(lang.get("gui_menubar_make_none"));
+	private JMenuItem prefItem = new JMenuItem(lang.get("gui_menubar_edit_preferences"));
+	private JMenuItem aboutItem = new JMenuItem(lang.get("name"));
 	
-	private JMenuItem [] items = {
-		branches_menu,
-		edit_menu,
-		about_menu,
-		new_branch_item,
-		update_item,
-		pref_item,
-		setup_all_item,
-		make_all_item,
-		setup_none_item,
-		make_none_item,
-		about_item,
-		show_log_item,
-	};	
+	private JMenuItem SEPARATOR;
+	
+	private JMenuItem [] allItemsArray = {
+			branchesMenu,
+			setupMenu,
+			makeMenu,
+			editMenu,
+			aboutMenu,
+			newBranchItem,
+			updateItem,
+			prefItem,
+			setupAllItem,
+			makeAllItem,
+			setupNoneItem,
+			makeNoneItem,
+			aboutItem,
+			showLogItem,
+	};
+	
+	private JMenu [] menusArray = {
+			branchesMenu,
+			editMenu,
+			setupMenu,
+			makeMenu,
+			aboutMenu,
+	};
+	
+	private JMenuItem [][] itemsArray = {
+			{
+				// BRANCHES MENU
+				newBranchItem,
+				showLogItem,
+				SEPARATOR,
+				updateItem,
+			},
+			{
+				// EDIT MENU
+				prefItem,
+			},
+			{
+				// SETUP MENU
+				setupAllItem,
+				setupNoneItem,
+			},
+			{
+				// MAKE MENU
+				makeAllItem,
+				makeNoneItem,
+			},
+			{
+				// ABOUT MENU
+				aboutItem,
+			},
+	};
 	
 	public MenuBar(MainFrame parent) {
 				
 		/* ****************
 		 * ACTION LISTENERS
 		 * **************** */
-		new_branch_item.addActionListener(
+		newBranchItem.addActionListener(
 			new MenuItemListener(
 				parent,
 				new NewBranchPopup()
 			)
 		);
-		update_item.addActionListener(
+		updateItem.addActionListener(
 			new MenuItemListener(
 				new MenuAction() {
 					public void action() {
@@ -63,7 +105,7 @@ public class MenuBar extends JMenuBar {
 				}
 			)
 		);
-		setup_all_item.addActionListener(
+		setupAllItem.addActionListener(
 			new MenuItemListener(
 				new MenuAction() {
 					public void action() {
@@ -72,7 +114,7 @@ public class MenuBar extends JMenuBar {
 				}
 			)
 		);
-		make_all_item.addActionListener(
+		makeAllItem.addActionListener(
 			new MenuItemListener(
 				new MenuAction() {
 					public void action() {
@@ -81,7 +123,7 @@ public class MenuBar extends JMenuBar {
 				}
 			)
 		);
-		setup_none_item.addActionListener(
+		setupNoneItem.addActionListener(
 			new MenuItemListener(
 				new MenuAction() {
 					public void action() {
@@ -90,7 +132,7 @@ public class MenuBar extends JMenuBar {
 				}
 			)
 		);
-		make_none_item.addActionListener(
+		makeNoneItem.addActionListener(
 			new MenuItemListener(
 				new MenuAction() {
 					public void action() {
@@ -99,19 +141,19 @@ public class MenuBar extends JMenuBar {
 				}
 			)
 		);
-		pref_item.addActionListener(
+		prefItem.addActionListener(
 			new MenuItemListener(
 				parent,
 				new PreferencesPopup(parent)
 			)
 		);
-		about_item.addActionListener(
+		aboutItem.addActionListener(
 			new MenuItemListener(
 				parent,
 				new AboutPopup(parent)
 			)
 		);
-		show_log_item.addActionListener(
+		showLogItem.addActionListener(
 			new MenuItemListener(
 				parent,
 				new LogPopup()
@@ -121,30 +163,35 @@ public class MenuBar extends JMenuBar {
 		/* *****************************
 		 * ADDING COMPONENTS TO JMENUBAR
 		 * ***************************** */
-		branches_menu.add(new_branch_item);
-		branches_menu.add(show_log_item);
-		branches_menu.addSeparator();
-		branches_menu.add(update_item);
-		edit_menu.add(setup_all_item);
-		edit_menu.add(setup_none_item);
-		edit_menu.add(make_all_item);
-		edit_menu.add(make_none_item);
-		edit_menu.addSeparator();
-		edit_menu.add(pref_item);
-		about_menu.add(about_item);
-		add(branches_menu);
-		add(edit_menu);
-		add(about_menu);
+		addItemsToBar();
 		
 		// WIP FUNCTIONALITIES
-		new_branch_item.setEnabled(false);
+		newBranchItem.setEnabled(false);
 		
 		/* *****************
 		 * ADDING MNEUMONICS
 		 * ***************** */
-		for( JMenuItem item : items ) setCustomMneumonic(item);
+		for( JMenuItem item : allItemsArray ) setCustomMneumonic(item);
 	}
 	
+	/**
+	 * Adds all the menus {@link #menusArray} to the menu bar, plus
+	 * all its children to it, from {@link #itemsArray}.
+	 * If a {@link #SEPARATOR} is found, a separator is added. 
+	 */
+	private void addItemsToBar() {
+		for( int i = 0 ; i < menusArray.length; i++ )
+		{
+			JMenu menu = menusArray[i];
+			for( JMenuItem menuItem : itemsArray[i] )
+			{
+				if( menuItem == SEPARATOR ) menu.addSeparator();
+				else menu.add(menuItem);
+			}
+			add(menu);
+		}
+	}
+
 	private void setCustomMneumonic(JMenuItem menu) {
 		for( char c : menu.getText().toLowerCase().toCharArray() )
 		{
