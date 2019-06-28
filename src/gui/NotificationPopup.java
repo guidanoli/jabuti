@@ -31,7 +31,7 @@ import vars.LocalResources;
 
 public class NotificationPopup implements ActionListener, MouseListener {
 
-	private final int openTimeout = 3;
+	private final int openTimeout = 5;
 	private final int closeTimeout = 1;
 	private final float killedTimeout = 0.5f;
 	private final String fontFace = "Verdana";

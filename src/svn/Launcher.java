@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
+import gui.NotificationPopup;
 import gui.error.FatalError;
 import gui.error.LightError;
 import vars.GlobalProperties;
@@ -63,7 +64,6 @@ public class Launcher {
 	 * Launches every branch setup and/or compile job as set on the Main Panel JTable.
 	 * @param manager - an instance of the Branch Manager class
 	 * @param listener - an implementation of the LaunchProgressListener interface
-	 * @param maxThreadCount - the maximum number of threads running
 	 * @see svn.BranchManager
 	 * @see svn.LaunchProgressListener
 	 */
@@ -111,24 +111,27 @@ public class Launcher {
 				int state_setup = setup ? ( validDir ? LaunchProgressListener.WAITING : LaunchProgressListener.INVALID ) : LaunchProgressListener.OFF;
 				int state_make = make ? ( validDir ? LaunchProgressListener.WAITING : LaunchProgressListener.INVALID ) : LaunchProgressListener.OFF;
 				update(i, state_setup, state_make);
+				joinThread();
 				if( setup || make )
 				{
 					if( validDir )
 					{
-						joinThread();
 						if( setup )
 						{
 							state_setup = LaunchProgressListener.UNLOCKING;
 							update(i, state_setup, state_make);
 							if(interrupted) return;
 							success = tortoise.cleanUp(name,cleanUps);
+							if(interrupted) return;
 							if(success)
 							{
+								new NotificationPopup(lang.format("gui_notification_launcher_clean_success", name));
 								state_setup = LaunchProgressListener.RUNNING;
 								update(i, state_setup, state_make);
 							}
 							else
 							{
+								new NotificationPopup(lang.format("gui_notification_launcher_clean_fail", name));
 								state_setup = LaunchProgressListener.FAILED;
 								if( make ) state_make = LaunchProgressListener.FAILED;
 								update(i, state_setup, state_make);
@@ -138,8 +141,10 @@ public class Launcher {
 							if(interrupted) return;
 							Long oldRevisionNumber = tortoise.getRevisionNumber(name);
 							success = tortoise.setup(name);
+							if(interrupted) return;
 							if(success)
 							{
+								new NotificationPopup(lang.format("gui_notification_launcher_setup_success", name));
 								state_setup = LaunchProgressListener.ENDED;
 								update(i, state_setup, state_make);
 								Long newRevisionNumber = tortoise.getRevisionNumber(name);
@@ -147,6 +152,7 @@ public class Launcher {
 							}
 							else
 							{
+								new NotificationPopup(lang.format("gui_notification_launcher_setup_fail", name));
 								state_setup = LaunchProgressListener.FAILED;
 								if( make ) state_make = LaunchProgressListener.FAILED;
 								update(i, state_setup, state_make);
@@ -160,9 +166,11 @@ public class Launcher {
 							update(i, state_setup, state_make);
 							Instant start = Instant.now();
 							success = tortoise.make(name);
+							if(interrupted) return;
 							if(success)
 							{
 								Instant end = Instant.now();
+								new NotificationPopup(lang.format("gui_notification_launcher_make_success", name));
 								Duration timeElapsed = Duration.between(start, end);
 								state_make = LaunchProgressListener.ENDED;
 								update(i, state_setup, state_make);
@@ -170,6 +178,7 @@ public class Launcher {
 							}
 							else
 							{
+								new NotificationPopup(lang.format("gui_notification_launcher_make_fail", name));
 								state_make = LaunchProgressListener.FAILED;
 								update(i, state_setup, state_make);
 								exitThread();
@@ -177,9 +186,12 @@ public class Launcher {
 							}
 						}
 					}
-					exitThread();
-					if( !validDir ) LightError.show(lang.format("gui_errmsg_launcher_invalidfolder", name));
+					else
+					{
+						LightError.show(lang.format("gui_errmsg_launcher_invalidfolder", name));
+					}
 				}
+				exitThread();
 			}
 		};
 		
@@ -233,6 +245,7 @@ public class Launcher {
 		{
 			if(!emptyJob)
 			{
+				new NotificationPopup(lang.get("gui_notification_launcher_done"));
 				try {
 					TimeUnit.SECONDS.sleep(3);
 				} catch (InterruptedException e) {

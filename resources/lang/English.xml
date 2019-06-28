@@ -7,6 +7,7 @@
 <entry key="gui_branchtable_columns_setup">Setup</entry>
 <entry key="gui_branchtable_defval_lastsetup">Unknown</entry>
 <entry key="gui_errhelper_155004">On the branch root, do a SVN Cleanup to break locks, a vissetup and, if requested, enter your user password.</entry>
+<entry key="gui_errmsg_accesskeylabelstringfailed">Could not access string %s.</entry>
 <entry key="gui_errmsg_failedcleanup">Could not clean up branch %s</entry>
 <entry key="gui_errmsg_failedmake">Could not compile branch %s</entry>
 <entry key="gui_errmsg_failedsetup">Could not setup branch %s</entry>
@@ -43,6 +44,13 @@
 <entry key="gui_menubar_setup_all">Setup all branches</entry>
 <entry key="gui_menubar_setup_menu">Setup</entry>
 <entry key="gui_menubar_setup_none">Setup no branches</entry>
+<entry key="gui_notification_launcher_clean_fail">Branch %s failed cleanup.</entry>
+<entry key="gui_notification_launcher_clean_success">Branch %s is now cleaned up.</entry>
+<entry key="gui_notification_launcher_done">All branches are up to date.</entry>
+<entry key="gui_notification_launcher_make_fail">Branch %s failed compilation.</entry>
+<entry key="gui_notification_launcher_make_success">Branch %s is now compiled.</entry>
+<entry key="gui_notification_launcher_setup_fail">Branch %s failed setup.</entry>
+<entry key="gui_notification_launcher_setup_success">Branch %s is now set up.</entry>
 <entry key="gui_notification_title">Jabuti</entry>
 <entry key="gui_popup_about_title">About</entry>
 <entry key="gui_popup_log_action_make">Make</entry>
@@ -79,6 +87,9 @@
 <entry key="gui_popup_preferences_type_dir_dlg_title">Open a directory</entry>
 <entry key="gui_popup_preferences_type_dir_panel_btnlabel">Open...</entry>
 <entry key="meta_dateformat">MM/dd/yy</entry>
+<entry key="meta_keylabel_notify_cleanup">Cleanup</entry>
+<entry key="meta_keylabel_notify_make">Make</entry>
+<entry key="meta_keylabel_notify_setup">Setup</entry>
 <entry key="meta_locale">en</entry>
 <entry key="meta_name">English</entry>
 </properties>

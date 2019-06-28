@@ -7,6 +7,7 @@
 <entry key="gui_branchtable_columns_setup">Setup</entry>
 <entry key="gui_branchtable_defval_lastsetup">Desconhecido</entry>
 <entry key="gui_errhelper_155004">Na raíz da sua base, faça um SVN Cleanup para quebrar locks, um vissetup e, se requisitado, insira sua senha de usuário.</entry>
+<entry key="gui_errmsg_accesskeylabelstringfailed">Não foi possível acessar string %s.</entry>
 <entry key="gui_errmsg_failedcleanup">Não foi possível limpar (se livrar de locks) branch %s</entry>
 <entry key="gui_errmsg_failedmake">Não foi possível compilar branch %s</entry>
 <entry key="gui_errmsg_failedsetup">Não foi possível realizar setup no branch %s</entry>
@@ -43,6 +44,13 @@
 <entry key="gui_menubar_setup_all">Atualizar todas as bases</entry>
 <entry key="gui_menubar_setup_menu">Setup</entry>
 <entry key="gui_menubar_setup_none">Atualizar nenhuma base</entry>
+<entry key="gui_notification_launcher_clean_fail">Branch %s não conseguiu se livrar de locks.</entry>
+<entry key="gui_notification_launcher_clean_success">Branch %s está limpa de locks.</entry>
+<entry key="gui_notification_launcher_done">Todas as bases estão atualizadas.</entry>
+<entry key="gui_notification_launcher_make_fail">Branch %s não pôde ser compilada.</entry>
+<entry key="gui_notification_launcher_make_success">Branch %s está compilada.</entry>
+<entry key="gui_notification_launcher_setup_fail">Branch %s não pôde ser atualizada.</entry>
+<entry key="gui_notification_launcher_setup_success">Branch %s está atualizada.</entry>
 <entry key="gui_notification_title">Jabuti</entry>
 <entry key="gui_popup_about_title">Sobre</entry>
 <entry key="gui_popup_log_action_make">Make</entry>
@@ -79,6 +87,9 @@
 <entry key="gui_popup_preferences_type_dir_dlg_title">Abrir um diretório</entry>
 <entry key="gui_popup_preferences_type_dir_panel_btnlabel">Abrir...</entry>
 <entry key="meta_dateformat">dd/MM/yy</entry>
+<entry key="meta_keylabel_notify_cleanup">Limpeza de locks</entry>
+<entry key="meta_keylabel_notify_make">Compilação</entry>
+<entry key="meta_keylabel_notify_setup">Atualização</entry>
 <entry key="meta_locale">pt</entry>
 <entry key="meta_name">Portuguese</entry>
 </properties>
