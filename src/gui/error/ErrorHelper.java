@@ -18,7 +18,14 @@ public class ErrorHelper {
 		{
 			String error = matcher.group(1);
 			String solution = lang.get("gui_errhelper_"+error);
-			if( solution != null ) sj.add(solution);
+			if( solution == null )
+			{
+				sj.add(String.format("Error %s is not known. Report this issue!",error));
+			}
+			else
+			{
+				sj.add(solution);
+			}
 		}
 		return sj.toString();
 	}
