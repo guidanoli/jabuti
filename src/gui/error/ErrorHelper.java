@@ -1,5 +1,6 @@
 package gui.error;
 
+import java.util.StringJoiner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,15 +11,16 @@ public class ErrorHelper {
 	public static String getHelp(String errorContent)
 	{
 		Language lang = Language.getInstance();
-		StringBuilder sb = new StringBuilder();
-		Pattern pattern = Pattern.compile("E(\\d*)"); // SVN errors
+		StringJoiner sj = new StringJoiner("\n");
+		Pattern pattern = Pattern.compile("E(\\d+)"); // SVN errors
 		Matcher matcher = pattern.matcher(errorContent);
 		while(matcher.find())
 		{
 			String error = matcher.group(1);
-			sb.append("\n"+lang.get("gui_errhelper_"+error));
+			String solution = lang.get("gui_errhelper_"+error);
+			if( solution != null ) sj.add(solution);
 		}
-		return sb.toString();
+		return sj.toString();
 	}
 
 }
