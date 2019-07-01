@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import gui.error.FatalError;
 import gui.error.LightError;
+import vars.properties.GlobalProperties;
 
 /**
  * The {@code Language} class deals with language strings that can vary depending on
@@ -36,7 +37,7 @@ public class Language {
 	 */
 	private Language() {
 		GlobalProperties gp = GlobalProperties.getInstance();
-		String langname = gp.getProperty("lang");
+		String langname = gp.get("lang");
 		boolean valid_langname = Arrays.stream(langs).anyMatch(langname::equals);
 		if( !valid_langname )
 		{
@@ -62,7 +63,14 @@ public class Language {
 	 * @return string in the current language
 	 */
 	public String get(String label) {
-		return lang.getProperty(label);
+		String value = lang.getProperty(label);
+		while( value != null && value.contains("#") )
+		{
+			label = label.replaceAll("#", ""); // remove # on the front
+			value = lang.getProperty(label);
+			label = value;
+		}
+		return value;
 	}
 	
 	/**

@@ -3,10 +3,10 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 
-import gui.popup.AboutPopup;
-import gui.popup.NewBranchPopup;
-import gui.popup.log.LogPopup;
-import gui.popup.preferences.PreferencesPopup;
+import gui.about.AboutPopup;
+import gui.branch.NewBranchPopup;
+import gui.log.LogPopup;
+import gui.preferences.PreferencesPopup;
 import vars.Language;
 
 @SuppressWarnings("serial")

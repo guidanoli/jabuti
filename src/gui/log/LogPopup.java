@@ -1,4 +1,4 @@
-package gui.popup.log;
+package gui.log;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

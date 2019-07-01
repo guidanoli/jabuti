@@ -1,4 +1,4 @@
-package gui.popup.log;
+package gui.log;
 
 public interface LogRowFilter {
 

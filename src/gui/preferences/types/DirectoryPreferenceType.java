@@ -1,4 +1,4 @@
-package gui.popup.preferences.types;
+package gui.preferences.types;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,9 +10,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import gui.popup.preferences.PreferenceType;
-import vars.GlobalProperties;
+import gui.preferences.PreferenceType;
 import vars.Language;
+import vars.properties.GlobalProperties;
 
 
 
@@ -43,7 +43,7 @@ public class DirectoryPreferenceType implements PreferenceType {
 	}
 	protected String openDialog(String defaultDir) {
 		if( defaultDir == null )
-			defaultDir = GlobalProperties.getInstance().getProperty("path");
+			defaultDir = GlobalProperties.getInstance().get("path");
 		File defdir = new File(defaultDir);
 		JFileChooser jfc = new JFileChooser(defdir);
 		jfc.setDialogTitle(lang.get("gui_popup_preferences_type_dir_dlg_title"));

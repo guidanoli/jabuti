@@ -1,4 +1,4 @@
-package gui.popup.preferences;
+package gui.preferences;
 import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.event.*;
@@ -6,8 +6,8 @@ import javax.swing.*;
 
 import gui.error.LightError;
 import gui.maindlg.MainFrame;
-import vars.GlobalProperties;
 import vars.Language;
+import vars.properties.GlobalProperties;
 
 
 @SuppressWarnings("serial")
@@ -70,7 +70,7 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 
 	public void updateTextBox() {
 		String key = (String) model.getSelectedItemProperty(PreferencesComboModel.KEY);
-		String value = gp.getProperty(key);
+		String value = gp.get(key);
 		type = (PreferenceType) model.getSelectedItemProperty(PreferencesComboModel.TYPE);
 		if( type.getPanel().getParent() != value_panel ) //if not added
 			value_panel.add(type.getPanel(), key); //key as unique identifier
@@ -106,7 +106,7 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 		else if( source == default_btn )
 		{
 			String key = (String) model.getSelectedItemProperty(PreferencesComboModel.KEY);
-			String default_value = GlobalProperties.getInstance().getProperty(key);
+			String default_value = GlobalProperties.getInstance().get(key);
 			gp.setProperty(key,default_value);
 			type.setState(default_value);
 			applyPreference();

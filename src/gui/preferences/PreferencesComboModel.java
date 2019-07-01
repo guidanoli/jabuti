@@ -1,11 +1,11 @@
-package gui.popup.preferences;
+package gui.preferences;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
-import gui.popup.preferences.types.ComboPreferenceType;
-import gui.popup.preferences.types.DirectoryPreferenceType;
-import gui.popup.preferences.types.NumberPreferenceType;
+import gui.preferences.types.ComboPreferenceType;
+import gui.preferences.types.DirectoryPreferenceType;
+import gui.preferences.types.NumberPreferenceType;
 import svn.TortoiseHandler;
 import vars.Language;
 

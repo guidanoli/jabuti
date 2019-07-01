@@ -5,14 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import vars.GlobalProperties;
 import vars.Language;
+import vars.properties.GlobalProperties;
 
 /**
  * <p>The {@code BranchManager} class intends to centralize any operation dealing
  * with branches, their history and their current state on the application.
  * <p><b>It does not directly operate them</b>. It only sets and gets local
- * information stored as {@link vars.GlobalProperties GlobalProperties}, in a
+ * information stored as {@link vars.properties.GlobalProperties GlobalProperties}, in a
  * very abstract manner. 
  * <p>Every array returned by the getter methods in this class are perfectly
  * aligned. That is, given the same context, must have the same length, and
@@ -21,7 +21,7 @@ import vars.Language;
  * to the same set of strings that are provided by the {@link BranchManager#getBranchNames
  * getBranchNames} method.
  * @author guidanoli
- * @see vars.GlobalProperties GlobalProperties
+ * @see vars.properties.GlobalProperties GlobalProperties
  */
 public class BranchManager {
 	

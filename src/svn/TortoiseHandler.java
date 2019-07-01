@@ -10,8 +10,8 @@ import java.util.Map;
 
 import gui.error.FatalError;
 import gui.error.LightError;
-import vars.GlobalProperties;
 import vars.Language;
+import vars.properties.GlobalProperties;
 
 /**
  * <p>The {@code TortoiseHandler} handles Tortoise SVN commands as a sort of wrapper to
@@ -32,6 +32,8 @@ public class TortoiseHandler {
 			"mlldadmt"
 	};
 	
+	private static final boolean SKIP = false; 
+	
 	protected ArrayList<Process> runningProcesses = new ArrayList<Process>();
 	protected String branchDir;
 	private Language lang = Language.getInstance();
@@ -51,7 +53,7 @@ public class TortoiseHandler {
 	 */
 	public TortoiseHandler()
 	{
-		this(GlobalProperties.getInstance().getProperty("path"));
+		this(GlobalProperties.getInstance().get("path"));
 	}
 	
 	/**
@@ -284,6 +286,7 @@ public class TortoiseHandler {
 		File f = openBranchFolder(branchName);
 		if(f==null) FatalError.show(lang.get("gui_errmsg_nobranchrootfolder")); //exits
 		String setupLuaPath = Paths.get("bin", "vis.lua").toString();
+		if( SKIP ) return true;
 		return runLua(f, true, setupLuaPath, "s");
 	}
 	
@@ -302,6 +305,7 @@ public class TortoiseHandler {
 		if(f==null) FatalError.show(lang.get("gui_errmsg_nobranchrootfolder")); //exits
 		String setupLuaPath = Paths.get("bin", "vis.lua").toString();
 		String command = GlobalProperties.getInstance().get("makecmd");
+		if( SKIP ) return true;
 		return runLua(f, true, setupLuaPath, command);
 	}
 	
@@ -319,6 +323,7 @@ public class TortoiseHandler {
 	{
 		File f = openBranchFolder(branchName);
 		if(f==null) LightError.show(lang.get("gui_errmsg_nobranchrootfolder"));
+		if( SKIP ) return true;
 		for(int i = 0 ; i < persistence ; i++) {
 			String output = runCmd(f,false,true,false, "svn", "cleanup");
 			if( output.equals("") ) return true;

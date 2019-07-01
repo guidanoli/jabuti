@@ -1,10 +1,12 @@
-package vars;
+package vars.properties.types;
+
+import vars.properties.GlobalProperties;
 
 /**
  * <p>This facade is intended to be used whenever working with
  * a complex property string that represents a set of boolean
  * values. It was first created for the {@link
- * gui.popup.preferences.types.TogglePreferenceType TogglePreferenceType}
+ * gui.preferences.types.TogglePreferenceType TogglePreferenceType}
  * class, in order to maintain a stable property value state, delegating
  * it this class, but still, manipulating it in a more abstract way,
  * with operations on a boolean array.
@@ -16,7 +18,7 @@ package vars;
  * @author guidanoli
  *
  */
-public interface BooleanPropertyFacade {
+public interface BooleanProperty {
 
 	/**
 	 * Transforms the property String as-is from the GlobalProperties
@@ -58,5 +60,12 @@ public interface BooleanPropertyFacade {
 	 * have null values.
 	 */
 	public String [] getPropertyLabels();
+	
+	/**
+	 * @return default value of property, formatted as it would be set
+	 * in GlobalProperties.
+	 * @see {@link GlobalProperties}
+	 */
+	public String getDefaultPropertyValue();
 	
 }

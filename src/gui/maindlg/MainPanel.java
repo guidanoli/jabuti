@@ -12,8 +12,8 @@ import gui.DefaultFrame;
 import svn.BranchManager;
 import svn.LaunchProgressListener;
 import svn.Launcher;
-import vars.GlobalProperties;
 import vars.Language;
+import vars.properties.GlobalProperties;
 
 @SuppressWarnings("serial")
 public class MainPanel extends JPanel implements ActionListener, LaunchProgressListener {

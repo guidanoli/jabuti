@@ -1,9 +1,9 @@
-package gui.popup;
+package gui.branch;
 
 import javax.swing.JFrame;
 
 import gui.maindlg.MenuPopup;
-import vars.GlobalProperties;
+import vars.properties.GlobalProperties;
 
 public class NewBranchPopup implements MenuPopup {
 

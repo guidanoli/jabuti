@@ -1,4 +1,4 @@
-package gui.popup.preferences.types;
+package gui.preferences.types;
 
 import java.awt.GridLayout;
 
@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
-import gui.popup.preferences.PreferenceType;
+import gui.preferences.PreferenceType;
 
 public class NumberPreferenceType implements PreferenceType {
 

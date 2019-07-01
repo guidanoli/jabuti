@@ -31,6 +31,21 @@ import vars.LocalResources;
 
 public class NotificationPopup implements ActionListener, MouseListener {
 
+	public static enum Type {
+		GENERAL(0),
+		CLEANUP(1),
+		SETUP(2),
+		MAKE(3);
+		
+		private final int value;
+	    private Type(int value) { this.value = value; }
+	    public int getValue() { return value; }
+	}
+	
+	public static final int NOTIFICATION_TYPES_COUNT = Type.values().length;
+	
+	private Language lang = Language.getInstance();
+	
 	private final int openTimeout = 5;
 	private final int closeTimeout = 1;
 	private final float killedTimeout = 0.5f;
@@ -43,7 +58,7 @@ public class NotificationPopup implements ActionListener, MouseListener {
 	static Semaphore buffer = new Semaphore(1);
 	private final JDialog dlg = new JDialog();
 	
-	public NotificationPopup(String header, String message) {
+	public NotificationPopup(Type notificationType, String message) {
 		NotificationPopup self = this;
 		new Thread() {
 			public void run() { 
@@ -64,7 +79,8 @@ public class NotificationPopup implements ActionListener, MouseListener {
 				c.weighty = 0f;
 				c.insets = new Insets(5,5,5,5);
 				c.fill = GridBagConstraints.BOTH;
-				JLabel headerLabel = new JLabel(header);
+				String headerString = lang.get(String.format("meta_keylabel_notify_%d",notificationType.getValue()));
+				JLabel headerLabel = new JLabel(headerString);
 				headerLabel.setFont(new Font(fontFace,Font.BOLD,fontSize));
 				headerLabel.setOpaque(false);
 				dlg.add(headerLabel,c);
@@ -117,11 +133,7 @@ public class NotificationPopup implements ActionListener, MouseListener {
 			}
 		}.start();
 	}	
-	
-	public NotificationPopup(String message) {
-		this(Language.getInstance().get("gui_notification_title"),message);
-	}
-	
+		
 	private ImageIcon getIcon() {
 		BufferedImage myPicture = null;
 		try { myPicture = ImageIO.read(LocalResources.getStream(LocalResources.icon_bw)); }

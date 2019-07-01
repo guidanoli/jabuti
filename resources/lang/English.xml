@@ -87,9 +87,10 @@
 <entry key="gui_popup_preferences_type_dir_dlg_title">Open a directory</entry>
 <entry key="gui_popup_preferences_type_dir_panel_btnlabel">Open...</entry>
 <entry key="meta_dateformat">MM/dd/yy</entry>
-<entry key="meta_keylabel_notify_cleanup">Cleanup</entry>
-<entry key="meta_keylabel_notify_make">Make</entry>
-<entry key="meta_keylabel_notify_setup">Setup</entry>
+<entry key="meta_keylabel_notify_0">#name</entry>
+<entry key="meta_keylabel_notify_1">Cleanup</entry>
+<entry key="meta_keylabel_notify_2">Make</entry>
+<entry key="meta_keylabel_notify_3">Setup</entry>
 <entry key="meta_locale">en</entry>
 <entry key="meta_name">English</entry>
 </properties>

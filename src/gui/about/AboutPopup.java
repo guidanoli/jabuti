@@ -1,4 +1,4 @@
-package gui.popup;
+package gui.about;
 
 import java.awt.Desktop;
 import java.awt.GridBagConstraints;

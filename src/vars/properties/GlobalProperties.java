@@ -1,9 +1,11 @@
-package vars;
+package vars.properties;
 import java.io.*;
 import java.util.Properties;
 
+import gui.NotificationPopup;
 import gui.error.FatalError;
 import svn.BranchManager;
+import vars.properties.types.LongBooleanProperty;
 
 /**
  * <h1>Global Properties</h1>
@@ -22,14 +24,17 @@ public class GlobalProperties extends Properties {
 
 	private static final GlobalProperties INSTANCE = new GlobalProperties();
 	
+	public static LongBooleanProperty notificationProperty;
+	
 	private final String configFolder = vars.LocalResources.datafolder;
 	private final String propertiesFile = vars.LocalResources.properties;
 	private final String[][] defaultValues = {
-		{"path", getDefaultPath()},	
-		{"lang", "English"},
-		{"maxthreads", "3"},
-		{"cleanups", "2"},
-		{"makecmd","mlldamt"},
+			{"path", getDefaultPath()},	
+			{"lang", "English"},
+			{"maxthreads", "3"},
+			{"cleanups", "2"},
+			{"makecmd","mlldamt"},
+			{"notify", getDefaultNotifications()}
 	};
 	
 	/**
@@ -61,9 +66,9 @@ public class GlobalProperties extends Properties {
 	 * @param dot_separated_keys - strings separated by '.' in key
 	 * @return property value for said key
 	 */
-	public String get(String... dot_separated_keys ) {
+	public String get(String... dot_separated_keys) {
 		String resulting_key = String.join(".", dot_separated_keys);
-		return getProperty(resulting_key);
+		return get(resulting_key);
 	}
 	
 	/**
@@ -89,7 +94,7 @@ public class GlobalProperties extends Properties {
 	 * @param value - the value to be attributed to key
 	 * @param key - the property key
 	 */
-	public void set(String value, String key ) { setProperty(value,key); }
+	public void set(String value, String key) { setProperty(value,key); }
 	
 	/**
 	 * Saves all changes to property object to a XML file in UTF-8 encoding
@@ -114,7 +119,7 @@ public class GlobalProperties extends Properties {
 			boolean removable = false;
 			if( key.startsWith(BranchManager.KEY_BRANCHES) )
 			{
-				removable |= getProperty(key).equals("false"); // removes "false" keys of check boxes from main dialog JTable
+				removable |= get(key).equals("false"); // removes "false" keys of check boxes from main dialog JTable
 			}
 			if( removable ) remove(key);
 		}
@@ -135,6 +140,15 @@ public class GlobalProperties extends Properties {
 		};
 		for( String c : candidates ) if(new File(c).exists()) return c;
 		return null;
+	}
+	
+	private static String getDefaultNotifications()
+	{
+		notificationProperty = new LongBooleanProperty(
+				NotificationPopup.NOTIFICATION_TYPES_COUNT,
+				true,
+				"notify");
+		return notificationProperty.getDefaultPropertyValue();
 	}
 	
 }

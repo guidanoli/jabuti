@@ -2,7 +2,7 @@ package gui.maindlg;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 
-import vars.GlobalProperties;
+import vars.properties.GlobalProperties;
 
 /**
  * 
