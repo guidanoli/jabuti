@@ -1,6 +1,6 @@
 package gui.defaults;
 
-public interface CloseFrameCallback {
+public interface DefaultClosingCallback {
 
 	// called when window is closed
 	public void close();

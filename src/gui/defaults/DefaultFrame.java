@@ -12,7 +12,7 @@ import vars.LocalResources;
 
 public class DefaultFrame {
 
-	public static void set(JFrame frame, CloseFrameCallback close_cb) {
+	public static void set(JFrame frame, DefaultClosingCallback close_cb) {
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setMinimumSize(frame.getSize());
@@ -35,7 +35,7 @@ public class DefaultFrame {
 	}
 	
 	public static void set(JFrame frame) {
-		set(frame, new CloseFrameCallback() { public void close() { frame.setVisible(false); } });
+		set(frame, new DefaultClosingCallback() { public void close() { frame.setVisible(false); } });
 	}
 	
 	public static void forceClosing(JFrame frame) {
