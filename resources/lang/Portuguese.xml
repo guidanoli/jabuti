@@ -11,6 +11,7 @@
 <entry key="gui_errmsg_failedcleanup">Não foi possível limpar (se livrar de locks) branch %s</entry>
 <entry key="gui_errmsg_failedmake">Não foi possível compilar branch %s</entry>
 <entry key="gui_errmsg_failedsetup">Não foi possível realizar setup no branch %s</entry>
+<entry key="gui_errmsg_gp_default_resetfailed">Não foi possível reverter preferência para valor padrão.</entry>
 <entry key="gui_errmsg_incoherentdate">Timestamp de último setup incoerente</entry>
 <entry key="gui_errmsg_launcher_emptyjob">Nenhuma rotina de setup ou make foi realizada.</entry>
 <entry key="gui_errmsg_launcher_invalidfolder">%s não é um diretório SVN válido.</entry>
@@ -19,11 +20,11 @@
 <entry key="gui_errmsg_launcher_log_registerfailed">Não foi possível adicionar registro de log.</entry>
 <entry key="gui_errmsg_nobranchrootfolder">Não foi possível acessar pasta raíz do branch %s.</entry>
 <entry key="gui_errmsg_revnumbercmdfailed">Não foi possível obter número de revisão.</entry>
-<entry key="gui_error_general_msg">Ocorreu um erro não tratado.</entry>
-<entry key="gui_error_log_title">Log de erro</entry>
-<entry key="gui_error_msg_title">Erro</entry>
-<entry key="gui_lighterror_general_msg">Ocorreu um evento não esperado.</entry>
-<entry key="gui_lighterror_msg_title">Aviso</entry>
+<entry key="gui_error_fatal_general_msg">Ocorreu um erro não tratado.</entry>
+<entry key="gui_error_fatal_log_title">Log de erro</entry>
+<entry key="gui_error_fatal_msg_title">Erro</entry>
+<entry key="gui_error_light_general_msg">Ocorreu um evento não esperado.</entry>
+<entry key="gui_error_light_msg_title">Aviso</entry>
 <entry key="gui_mainframe_gp_error">Não foi possível gerenciar as preferências</entry>
 <entry key="gui_mainpanel_btnlabel_close">Fechar</entry>
 <entry key="gui_mainpanel_btnlabel_launch">Inicializar</entry>

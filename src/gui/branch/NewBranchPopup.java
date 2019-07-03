@@ -7,8 +7,6 @@ import vars.properties.GlobalProperties;
 
 public class NewBranchPopup implements MenuPopup {
 
-	//TODO: New Branch dialog
-	
 	GlobalProperties gp = GlobalProperties.getInstance();
 	
 	public NewBranchPopup() {

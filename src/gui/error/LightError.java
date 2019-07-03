@@ -20,13 +20,13 @@ public class LightError {
 	/* Show exception */
 	public static void show(Exception e, String title, Component parent) {
 		String msg = e.getMessage();
-		if( msg == null ) msg = lang.get("gui_lighterror_general_msg");
+		if( msg == null ) msg = lang.get("gui_error_light_general_msg");
 		show(msg,title,parent);
 	}
 	
 	// SIGNATURE OVERLOAD -- missing title
-	public static void show(String msg, Component parent) { show(msg,lang.get("gui_lighterror_msg_title"),parent); }
-	public static void show(Exception e, Component parent) { show(e,lang.get("gui_lighterror_msg_title"),parent); }
+	public static void show(String msg, Component parent) { show(msg,lang.get("gui_error_light_msg_title"),parent); }
+	public static void show(Exception e, Component parent) { show(e,lang.get("gui_error_light_msg_title"),parent); }
 	
 	// SIGNATURE OVERLOAD -- missing parent
 	public static void show(String msg, String title) { show(msg,title,(JFrame)null); }

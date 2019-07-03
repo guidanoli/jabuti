@@ -24,6 +24,7 @@ public class PreferencesPopup implements MenuPopup {
 
 	public void open(JFrame parent) {
 		panel.updateTextBox();
+		dlg.setResizable(false);
 		dlg.setVisible(true);
 	}
 

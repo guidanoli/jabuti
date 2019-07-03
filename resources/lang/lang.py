@@ -230,16 +230,22 @@ def show_key_tree(files_list):
   node_msg = "\nnode: "
   leaf_node_msg = "\nnode ("+terminator+" to end): "
   new_node = input(node_msg).lower()
+  while new_node == "":
+    new_node = input(node_msg).lower()
   key_parts = [ new_node ]
   while new_node in tree:
     tree = tree[new_node]
     print("==================================")
     print_tree_root(tree, depth)
     new_node = input(node_msg).lower()
+    while new_node == "":
+      new_node = input(node_msg).lower()
     if new_node != terminator:
       key_parts.append(new_node)
   while new_node != terminator:
     new_node = input(leaf_node_msg).lower()
+    while new_node == "":
+      new_node = input(leaf_node_msg).lower()
     if new_node != terminator:
       key_parts.append(new_node)
   key = "_".join(key_parts)

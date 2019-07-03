@@ -81,7 +81,6 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 	}
 
 	public void updateDialog() {
-		dlg.setResizable(false);
 		dlg.pack();
 		dlg.setLocationRelativeTo(parent);
 	}
@@ -102,9 +101,9 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 											lang.get("name"), JOptionPane.ERROR_MESSAGE	);
 		} else if (source == default_btn) {
 			String key = (String) model.getSelectedItemProperty(PreferencesComboModel.KEY);
-			String default_value = GlobalProperties.getInstance().get(key);
-			gp.setProperty(key, default_value);
-			type.setState(default_value);
+			String default_value = gp.resetPropertyToDefault(key);
+			if( default_value == null ) LightError.show(lang.get("gui_errmsg_gp_default_resetfailed"), dlg);
+			else type.setState(default_value);
 			applyPreference();
 		} else if (source == combo) {
 			if (event.getActionCommand() == "comboBoxChanged") {

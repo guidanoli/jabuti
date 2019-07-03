@@ -29,7 +29,8 @@ public class LongBooleanProperty implements BooleanProperty {
 
 	public boolean[] toBooleanArray(String propertyString) {
 		Long number = Long.parseLong(propertyString);
-		String binStr = Long.toBinaryString(number);
+		String mask = String.format("%%%ds", count);
+		String binStr = String.format(mask, Long.toBinaryString(number)).replace(' ', '0');
 		boolean [] booleanArray = new boolean[count];
 		for(int i = 0; i < count; i++) booleanArray[i] = binStr.charAt(i) == '1';
 		return booleanArray;

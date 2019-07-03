@@ -127,6 +127,26 @@ public class GlobalProperties extends Properties {
 		save();
 	}
 	
+	/**
+	 * Resets property value to default value
+	 * @param key - property key
+	 * @return the property default and current value or
+	 * {@code null} if property key does not exist
+	 * 
+	 */
+	public String resetPropertyToDefault(String key)
+	{
+		for( String[] prop : defaultValues )
+		{
+			if( prop[0].equals(key) )
+			{
+				setProperty(key, prop[1]);
+				return get(key);
+			}
+		}
+		return null;
+	}
+	
 	/* *******************
 	 * AUXILIARY FUNCITONS
 	 * ******************* */

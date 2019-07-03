@@ -11,6 +11,7 @@
 <entry key="gui_errmsg_failedcleanup">Could not clean up branch %s</entry>
 <entry key="gui_errmsg_failedmake">Could not compile branch %s</entry>
 <entry key="gui_errmsg_failedsetup">Could not setup branch %s</entry>
+<entry key="gui_errmsg_gp_default_resetfailed">An error occurred while trying to reset property value.</entry>
 <entry key="gui_errmsg_incoherentdate">Incoherent last setup timestamp</entry>
 <entry key="gui_errmsg_launcher_emptyjob">No setup or compile routine was executed.</entry>
 <entry key="gui_errmsg_launcher_invalidfolder">%s is not a valid SVN folder.</entry>
@@ -19,11 +20,11 @@
 <entry key="gui_errmsg_launcher_log_registerfailed">Could not register log entry.</entry>
 <entry key="gui_errmsg_nobranchrootfolder">Could not open root folder from branch %s.</entry>
 <entry key="gui_errmsg_revnumbercmdfailed">Could not get revision number.</entry>
-<entry key="gui_error_general_msg">An unhandled error occurred.</entry>
-<entry key="gui_error_log_title">Error log</entry>
-<entry key="gui_error_msg_title">Error</entry>
-<entry key="gui_lighterror_general_msg">An unexpected event occurred.</entry>
-<entry key="gui_lighterror_msg_title">Disclaimer</entry>
+<entry key="gui_error_fatal_general_msg">An unhandled error occurred.</entry>
+<entry key="gui_error_fatal_log_title">Error log</entry>
+<entry key="gui_error_fatal_msg_title">Error</entry>
+<entry key="gui_error_light_general_msg">An unexpected event occurred.</entry>
+<entry key="gui_error_light_msg_title">Disclaimer</entry>
 <entry key="gui_mainframe_gp_error">Could not manage preferences</entry>
 <entry key="gui_mainpanel_btnlabel_close">Close</entry>
 <entry key="gui_mainpanel_btnlabel_launch">Launch</entry>
