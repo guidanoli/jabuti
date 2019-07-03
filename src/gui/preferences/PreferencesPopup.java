@@ -1,7 +1,7 @@
 package gui.preferences;
 import javax.swing.*;
 
-import gui.DefaultPopup;
+import gui.defaults.DefaultPopup;
 import gui.maindlg.MainFrame;
 import gui.maindlg.MenuPopup;
 import vars.Language;
@@ -24,8 +24,6 @@ public class PreferencesPopup implements MenuPopup {
 
 	public void open(JFrame parent) {
 		panel.updateTextBox();
-		dlg.pack();
-		dlg.setLocationRelativeTo(parent);
 		dlg.setVisible(true);
 	}
 

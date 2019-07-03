@@ -1,4 +1,4 @@
-package gui;
+package gui.defaults;
 
 import java.awt.event.WindowEvent;
 

@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 
-import gui.DefaultPopup;
+import gui.defaults.DefaultPopup;
 import gui.error.FatalError;
 import gui.maindlg.MenuPopup;
 import vars.Language;

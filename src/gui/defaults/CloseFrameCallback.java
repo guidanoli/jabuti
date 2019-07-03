@@ -1,4 +1,4 @@
-package gui;
+package gui.defaults;
 
 public interface CloseFrameCallback {
 

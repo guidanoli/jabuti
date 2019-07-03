@@ -6,8 +6,10 @@ import javax.swing.ComboBoxModel;
 import gui.preferences.types.ComboPreferenceType;
 import gui.preferences.types.DirectoryPreferenceType;
 import gui.preferences.types.NumberPreferenceType;
+import gui.preferences.types.TogglePreferenceType;
 import svn.TortoiseHandler;
 import vars.Language;
+import vars.properties.GlobalProperties;
 
 
 
@@ -33,6 +35,7 @@ public class PreferencesComboModel extends AbstractListModel<String> implements 
 			{ "maxthreads" , lang.get("gui_popup_preferences_proplabel_maxthreads") , new NumberPreferenceType(1,10) , false } ,
 			{ "cleanups" , lang.get("gui_popup_preferences_proplabel_cleanups") , new NumberPreferenceType(1,10) , false } ,
 			{ "makecmd" , lang.get("gui_popup_preferences_proplabel_makecmd") , new ComboPreferenceType(makeCmds,makeCmdsTips,false) , false } ,
+			{ "notify" , lang.get("gui_popup_preferences_proplabel_notify") , new TogglePreferenceType(GlobalProperties.notificationProperty), false} ,
 	};
 	
 	public String getElementAt(int i) { return (String) list[i][LABEL]; }

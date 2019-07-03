@@ -9,12 +9,12 @@ import vars.properties.types.BooleanProperty;
 
 public class TogglePreferenceType implements PreferenceType {
 
-	private JPanel panel;
+	private JPanel panel = new JPanel();
 	private JCheckBox [] checkBoxes;
 	private BooleanProperty booleanProperty;
 	
 	public TogglePreferenceType(BooleanProperty booleanProperty) {
-		panel = new JPanel(new BoxLayout(panel,BoxLayout.Y_AXIS));
+		panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
 		this.booleanProperty = booleanProperty;
 		buildPanel();
 	}
@@ -26,9 +26,8 @@ public class TogglePreferenceType implements PreferenceType {
 		{
 			String propertyLabel = propertyLabels[i];
 			checkBoxes[i] = new JCheckBox(propertyLabel);
-			i++;
 		}
-		for( JCheckBox checkBox : checkBoxes ) panel.add(checkBox);
+		for( JCheckBox checkBox : checkBoxes ) { panel.add(checkBox); }
 	}
 	
 	public JPanel getPanel() { return panel; }

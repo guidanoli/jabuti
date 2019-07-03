@@ -5,7 +5,7 @@ import java.time.Instant;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-import gui.NotificationPopup;
+import gui.defaults.DefaultNotificationPopup;
 import gui.error.FatalError;
 import gui.error.LightError;
 import vars.Language;
@@ -125,16 +125,16 @@ public class Launcher {
 							if(interrupted) return;
 							if(success)
 							{
-								new NotificationPopup(
-										NotificationPopup.Type.CLEANUP,
+								new DefaultNotificationPopup(
+										DefaultNotificationPopup.Type.CLEANUP,
 										lang.format("gui_notification_launcher_clean_success", name));
 								state_setup = LaunchProgressListener.RUNNING;
 								update(i, state_setup, state_make);
 							}
 							else
 							{
-								new NotificationPopup(
-										NotificationPopup.Type.CLEANUP,
+								new DefaultNotificationPopup(
+										DefaultNotificationPopup.Type.CLEANUP,
 										lang.format("gui_notification_launcher_clean_fail", name));
 								state_setup = LaunchProgressListener.FAILED;
 								if( make ) state_make = LaunchProgressListener.FAILED;
@@ -148,8 +148,8 @@ public class Launcher {
 							if(interrupted) return;
 							if(success)
 							{
-								new NotificationPopup(
-										NotificationPopup.Type.SETUP,
+								new DefaultNotificationPopup(
+										DefaultNotificationPopup.Type.SETUP,
 										lang.format("gui_notification_launcher_setup_success", name));
 								state_setup = LaunchProgressListener.ENDED;
 								update(i, state_setup, state_make);
@@ -158,8 +158,8 @@ public class Launcher {
 							}
 							else
 							{
-								new NotificationPopup(
-										NotificationPopup.Type.SETUP,
+								new DefaultNotificationPopup(
+										DefaultNotificationPopup.Type.SETUP,
 										lang.format("gui_notification_launcher_setup_fail", name));
 								state_setup = LaunchProgressListener.FAILED;
 								if( make ) state_make = LaunchProgressListener.FAILED;
@@ -178,8 +178,8 @@ public class Launcher {
 							if(success)
 							{
 								Instant end = Instant.now();
-								new NotificationPopup(
-										NotificationPopup.Type.MAKE,
+								new DefaultNotificationPopup(
+										DefaultNotificationPopup.Type.MAKE,
 										lang.format("gui_notification_launcher_make_success", name));
 								Duration timeElapsed = Duration.between(start, end);
 								state_make = LaunchProgressListener.ENDED;
@@ -188,8 +188,8 @@ public class Launcher {
 							}
 							else
 							{
-								new NotificationPopup(
-										NotificationPopup.Type.MAKE,
+								new DefaultNotificationPopup(
+										DefaultNotificationPopup.Type.MAKE,
 										lang.format("gui_notification_launcher_make_fail", name));
 								state_make = LaunchProgressListener.FAILED;
 								update(i, state_setup, state_make);
@@ -257,8 +257,8 @@ public class Launcher {
 		{
 			if(!emptyJob)
 			{
-				new NotificationPopup(
-						NotificationPopup.Type.GENERAL,
+				new DefaultNotificationPopup(
+						DefaultNotificationPopup.Type.GENERAL,
 						lang.get("gui_notification_launcher_done"));
 				try {
 					TimeUnit.SECONDS.sleep(3);

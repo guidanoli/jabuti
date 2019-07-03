@@ -75,6 +75,7 @@
 <entry key="gui_popup_preferences_proplabel_lang">Language</entry>
 <entry key="gui_popup_preferences_proplabel_makecmd">Compilation command</entry>
 <entry key="gui_popup_preferences_proplabel_maxthreads">Maximum thread count</entry>
+<entry key="gui_popup_preferences_proplabel_notify">Notifications</entry>
 <entry key="gui_popup_preferences_proplabel_path">Branches directory</entry>
 <entry key="gui_popup_preferences_propoption_makecmd_mlld">Make Library Debug</entry>
 <entry key="gui_popup_preferences_propoption_makecmd_mllda">Make Library Debug App</entry>

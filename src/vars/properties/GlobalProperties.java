@@ -2,7 +2,7 @@ package vars.properties;
 import java.io.*;
 import java.util.Properties;
 
-import gui.NotificationPopup;
+import gui.defaults.DefaultNotificationPopup;
 import gui.error.FatalError;
 import svn.BranchManager;
 import vars.properties.types.LongBooleanProperty;
@@ -145,7 +145,7 @@ public class GlobalProperties extends Properties {
 	private static String getDefaultNotifications()
 	{
 		notificationProperty = new LongBooleanProperty(
-				NotificationPopup.NOTIFICATION_TYPES_COUNT,
+				DefaultNotificationPopup.NOTIFICATION_TYPES_COUNT,
 				true,
 				"notify");
 		return notificationProperty.getDefaultPropertyValue();

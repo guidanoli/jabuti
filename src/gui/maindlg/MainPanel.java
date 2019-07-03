@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.table.*;
 
-import gui.DefaultFrame;
+import gui.defaults.DefaultFrame;
 import svn.BranchManager;
 import svn.LaunchProgressListener;
 import svn.Launcher;

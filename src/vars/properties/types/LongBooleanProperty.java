@@ -12,7 +12,6 @@ public class LongBooleanProperty implements BooleanProperty {
 	private int count;
 	private boolean [] defaultValues;
 	private String labelsKeyPreffix;
-	private Language lang = Language.getInstance();
 	
 	public LongBooleanProperty(int count, boolean defaultValue, String propertyLabelsKey) {
 		this.count = count;
@@ -46,11 +45,13 @@ public class LongBooleanProperty implements BooleanProperty {
 	public boolean validateProperty(boolean[] booleanArray) { return true; }
 
 	public String[] getPropertyLabels() {
+		Language lang = Language.getInstance();
 		String [] propertyLabels = new String[count];
 		for(int i = 0; i < count; i++)
 		{
 			String langKey = String.format("meta_keylabel_%s_%d", labelsKeyPreffix, i);
 			propertyLabels[i] = lang.get(langKey);
+			if( propertyLabels[i] == null ) propertyLabels[i] = String.format("<%s>", langKey);
 		}
 		return propertyLabels;
 	}

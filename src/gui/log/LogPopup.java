@@ -14,7 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import gui.DefaultPopup;
+import gui.defaults.DefaultPopup;
 import gui.maindlg.MenuPopup;
 import svn.BranchManager;
 import svn.LauncherLogManager;

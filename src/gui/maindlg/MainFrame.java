@@ -2,6 +2,8 @@ package gui.maindlg;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 
+import gui.defaults.CloseFrameCallback;
+import gui.defaults.DefaultFrame;
 import vars.properties.GlobalProperties;
 
 /**
@@ -46,7 +48,7 @@ public class MainFrame extends JFrame {
 		getContentPane().add(panel);
 		setJMenuBar(new MenuBar(this));
 		MainFrame aux = this;
-		gui.DefaultFrame.set(this, new gui.CloseFrameCallback() {
+		DefaultFrame.set(this, new CloseFrameCallback() {
 			public void close() {
 				switch(closeOperation)
 				{

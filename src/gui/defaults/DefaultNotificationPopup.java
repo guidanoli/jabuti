@@ -1,4 +1,4 @@
-package gui;
+package gui.defaults;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -29,7 +29,7 @@ import gui.error.LightError;
 import vars.Language;
 import vars.LocalResources;
 
-public class NotificationPopup implements ActionListener, MouseListener {
+public class DefaultNotificationPopup implements ActionListener, MouseListener {
 
 	public static enum Type {
 		GENERAL(0),
@@ -42,7 +42,7 @@ public class NotificationPopup implements ActionListener, MouseListener {
 	    public int getValue() { return value; }
 	}
 	
-	public static final int NOTIFICATION_TYPES_COUNT = Type.values().length;
+	public static int NOTIFICATION_TYPES_COUNT = Type.values().length;
 	
 	private Language lang = Language.getInstance();
 	
@@ -58,8 +58,8 @@ public class NotificationPopup implements ActionListener, MouseListener {
 	static Semaphore buffer = new Semaphore(1);
 	private final JDialog dlg = new JDialog();
 	
-	public NotificationPopup(Type notificationType, String message) {
-		NotificationPopup self = this;
+	public DefaultNotificationPopup(Type notificationType, String message) {
+		DefaultNotificationPopup self = this;
 		new Thread() {
 			public void run() { 
 				try {
