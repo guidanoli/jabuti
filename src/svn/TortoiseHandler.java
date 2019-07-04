@@ -142,7 +142,7 @@ public class TortoiseHandler {
 	    		}
 	    		stdError.close();
 	    		String logMessage = errsb.toString();
-    	  		if(!logMessage.equals("")) {
+    	  		if(!logMessage.equals("") && promptError) {
 		    		FatalError.showLog(logMessage,null,false);
 					return logMessage;
 		    	}
@@ -153,7 +153,7 @@ public class TortoiseHandler {
 	    	if(promptError || outputError)
 	    	{
 		    	String logMessage = errsb.toString();
-		    	if(!logMessage.equals("")) {
+		    	if(!logMessage.equals("") && promptError) {
 		    		FatalError.showLog(logMessage,null,false);
 		    		if( outputError )
 		    			return logMessage;
@@ -325,7 +325,8 @@ public class TortoiseHandler {
 		if(f==null) LightError.show(lang.get("gui_errmsg_nobranchrootfolder"));
 		if( SKIP ) return true;
 		for(int i = 0 ; i < persistence ; i++) {
-			String output = runCmd(f,false,true,false, "svn", "cleanup");
+			boolean lastCleanUp = i == persistence - 1;
+			String output = runCmd(f,lastCleanUp,true,false, "svn", "cleanup");
 			if( output.equals("") ) return true;
 		}
 		return false;
