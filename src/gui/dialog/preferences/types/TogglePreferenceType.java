@@ -1,10 +1,10 @@
-package gui.preferences.types;
+package gui.dialog.preferences.types;
 
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
-import gui.preferences.PreferenceType;
+import gui.dialog.preferences.PreferenceType;
 import vars.properties.types.BooleanProperty;
 
 public class TogglePreferenceType implements PreferenceType {

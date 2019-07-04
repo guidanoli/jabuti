@@ -1,4 +1,4 @@
-package gui.preferences;
+package gui.dialog.preferences;
 import javax.swing.JPanel;
 
 public interface PreferenceType {

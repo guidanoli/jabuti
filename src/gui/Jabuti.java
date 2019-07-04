@@ -1,6 +1,7 @@
 package gui;
 import javax.swing.SwingUtilities;
-import gui.maindlg.MainFrame;
+
+import gui.dialog.main.MainFrame;
 import vars.Language;
 
 /**
@@ -10,7 +11,7 @@ import vars.Language;
  * {@link javax.swing.SwingUtilities#invokeLater(Runnable) invokeLater} function.
  * 
  * @author guidanoli
- * @see gui.maindlg.MainFrame MainFrame
+ * @see gui.dialog.main.MainFrame MainFrame
  *
  */
 public class Jabuti {

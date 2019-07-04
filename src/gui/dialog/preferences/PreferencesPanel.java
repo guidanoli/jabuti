@@ -1,4 +1,4 @@
-package gui.preferences;
+package gui.dialog.preferences;
 
 import java.awt.CardLayout;
 import java.awt.FlowLayout;
@@ -6,8 +6,8 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import gui.defaults.DefaultCardLayout;
+import gui.dialog.main.MainFrame;
 import gui.error.LightError;
-import gui.maindlg.MainFrame;
 import vars.Language;
 import vars.properties.GlobalProperties;
 

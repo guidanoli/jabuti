@@ -1,4 +1,4 @@
-package gui.about;
+package gui.dialog.about;
 
 import java.awt.Desktop;
 import java.awt.GridBagConstraints;
@@ -13,8 +13,8 @@ import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 
 import gui.defaults.DefaultPopup;
+import gui.dialog.MenuPopup;
 import gui.error.FatalError;
-import gui.maindlg.MenuPopup;
 import vars.Language;
 import vars.LocalResources;
 

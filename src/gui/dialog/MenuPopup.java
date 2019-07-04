@@ -1,4 +1,4 @@
-package gui.maindlg;
+package gui.dialog;
 import javax.swing.*;
 
 public interface MenuPopup {

@@ -18,7 +18,7 @@ import vars.properties.GlobalProperties;
  * {@link svn.TortoiseHandler TortoiseHandler} wrapper class.
  * <p>Every progress update triggered by a branch calls the
  * {@link svn.LaunchProgressListener#progressUpdate(int, int, int) LaunchProgressListener.progressUpdate}
- * method, that updates the JTable from the {@link gui.maindlg.MainPanel} with the corresponding status
+ * method, that updates the JTable from the {@link gui.dialog.main.MainPanel} with the corresponding status
  * for each branch (if there is any activity at all).
  * It operates the following way:
  * <ol>

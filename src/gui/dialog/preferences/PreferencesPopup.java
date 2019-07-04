@@ -1,9 +1,9 @@
-package gui.preferences;
+package gui.dialog.preferences;
 import javax.swing.*;
 
 import gui.defaults.DefaultPopup;
-import gui.maindlg.MainFrame;
-import gui.maindlg.MenuPopup;
+import gui.dialog.MenuPopup;
+import gui.dialog.main.MainFrame;
 import vars.Language;
 
 public class PreferencesPopup implements MenuPopup {

@@ -1,12 +1,12 @@
-package gui.maindlg;
+package gui.dialog.main;
 import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 
-import gui.about.AboutPopup;
-import gui.branch.NewBranchPopup;
-import gui.log.LogPopup;
-import gui.preferences.PreferencesPopup;
+import gui.dialog.about.AboutPopup;
+import gui.dialog.branch.NewBranchPopup;
+import gui.dialog.log.LogPopup;
+import gui.dialog.preferences.PreferencesPopup;
 import vars.Language;
 
 @SuppressWarnings("serial")

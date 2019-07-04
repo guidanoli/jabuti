@@ -1,4 +1,4 @@
-package gui.maindlg;
+package gui.dialog.main;
 import java.io.IOException;
 import java.io.InputStream;
 

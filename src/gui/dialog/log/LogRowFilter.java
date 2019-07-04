@@ -1,4 +1,4 @@
-package gui.log;
+package gui.dialog.log;
 
 public interface LogRowFilter {
 

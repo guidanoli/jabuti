@@ -1,4 +1,4 @@
-package gui.maindlg;
+package gui.dialog.main;
 
 public interface MenuAction {
 

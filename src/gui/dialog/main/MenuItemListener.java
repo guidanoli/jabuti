@@ -1,5 +1,7 @@
-package gui.maindlg;
+package gui.dialog.main;
 import java.awt.event.*;
+
+import gui.dialog.MenuPopup;
 
 public class MenuItemListener implements ActionListener {
 

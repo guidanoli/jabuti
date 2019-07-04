@@ -1,4 +1,4 @@
-package gui.log;
+package gui.dialog.log;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import gui.defaults.DefaultPopup;
-import gui.maindlg.MenuPopup;
+import gui.dialog.MenuPopup;
 import svn.BranchManager;
 import svn.LauncherLogManager;
 import vars.Language;

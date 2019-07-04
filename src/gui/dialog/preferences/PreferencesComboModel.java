@@ -1,12 +1,12 @@
-package gui.preferences;
+package gui.dialog.preferences;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
-import gui.preferences.types.ComboPreferenceType;
-import gui.preferences.types.DirectoryPreferenceType;
-import gui.preferences.types.NumberPreferenceType;
-import gui.preferences.types.TogglePreferenceType;
+import gui.dialog.preferences.types.ComboPreferenceType;
+import gui.dialog.preferences.types.DirectoryPreferenceType;
+import gui.dialog.preferences.types.NumberPreferenceType;
+import gui.dialog.preferences.types.TogglePreferenceType;
 import svn.TortoiseHandler;
 import vars.Language;
 import vars.properties.GlobalProperties;

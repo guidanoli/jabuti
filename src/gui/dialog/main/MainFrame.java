@@ -1,4 +1,4 @@
-package gui.maindlg;
+package gui.dialog.main;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 

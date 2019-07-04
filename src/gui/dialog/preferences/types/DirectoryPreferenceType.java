@@ -1,4 +1,4 @@
-package gui.preferences.types;
+package gui.dialog.preferences.types;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,7 +10,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import gui.preferences.PreferenceType;
+import gui.dialog.preferences.PreferenceType;
 import vars.Language;
 import vars.properties.GlobalProperties;
 
