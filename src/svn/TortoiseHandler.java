@@ -68,7 +68,7 @@ public class TortoiseHandler {
 	{
 		File f = openBranchFolder(branchName);
 		if(f==null) return false;
-		String output = runCmd(f,false,true,false, "svn", "info");
+		String output = runCmd(f,false,true,"svn", "info");
 		return !(output == null || output.equals(""));
 	}
 	
@@ -86,7 +86,7 @@ public class TortoiseHandler {
 	{
 		File f = openBranchFolder(branchName);
 		if(f==null) LightError.show(lang.get("gui_errmsg_nobranchrootfolder"));
-		String output = runCmd(f,true,true,false,"svn","info","--show-item", "last-changed-revision");
+		String output = runCmd(f,true,true,"svn","info","--show-item","last-changed-revision");
 		if( output == null )
 		{
 			LightError.show(lang.get("gui_errmsg_revnumbercmdfailed"));
@@ -102,25 +102,21 @@ public class TortoiseHandler {
 	}
 	
 	/**
-	 * <p>{@code String runCmd(File dir, boolean error, boolean constinput, String... cmd)}
-	 * <p>Creates a process that executes a shell command. It serves as a wrapper
+	 * <p>Creates a process that executes a shell command. It serves as a facade
 	 * to many of the function of the {@link TortoiseHandler} class, dealing with
-	 * input, output and error streams in a more abstract manner.
+	 * input, output and error streams.
 	 * @param dir - File object to directory where the command will be executed
 	 * @param promptError - if {@code true}, on any error output, an error dialog will
 	 * be prompted to the user with the error message along with it
 	 * @param outputError - if {@code true}, on any error output, the method will return
 	 * the error message instead of output of any other type
-	 * @param constinput - if {@code true}, constantly input data. Generally used for
-	 * Batch jobs that request keys to be pressed in order to exit. The input has no
-	 * meaningful data and serves only to this very job.
 	 * @param cmd - Command arguments
 	 * @return Output stream of the command. If {@code error} is true, and an error
-	 * has been encountered, the {@code return} value will be the error string itself.
+	 * has been encountered, the {@code return} value will also contain the error output string.
 	 * If a Java Exception is raised, but no error message has been streamed, {@code null}
 	 * is returned instead.
 	 */
-	protected String runCmd(File dir, boolean promptError, boolean outputError, boolean constinput, String... cmd) { 
+	protected String runCmd(File dir, boolean promptError, boolean outputError, String... cmd) { 
     	StringBuilder sb = new StringBuilder();
 		StringBuilder errsb = new StringBuilder();
 		try {  
@@ -141,7 +137,7 @@ public class TortoiseHandler {
 	    			errsb.append(line);
 	    		}
 	    		stdError.close();
-	    		String logMessage = errsb.toString();
+	    		String logMessage = formatLogMessage(sb.toString(), errsb.toString());
     	  		if(!logMessage.equals("") && promptError) {
 		    		FatalError.showLog(logMessage,null,false);
 					return logMessage;
@@ -152,7 +148,7 @@ public class TortoiseHandler {
 	    	FatalError.show(e,null,false);
 	    	if(promptError || outputError)
 	    	{
-		    	String logMessage = errsb.toString();
+		    	String logMessage = formatLogMessage(sb.toString(), errsb.toString());
 		    	if(!logMessage.equals("") && promptError) {
 		    		FatalError.showLog(logMessage,null,false);
 		    		if( outputError )
@@ -191,10 +187,10 @@ public class TortoiseHandler {
 	 * @see Paths.get
 	 */
 	protected boolean runLua(File dir, boolean error, String luaFilePath, String... args) {
+    	StringBuilder sb = new StringBuilder();
 		StringBuilder errsb = new StringBuilder();
 		try {  
 	    	String line;
-	    	StringBuilder sb = new StringBuilder();
 	    	
 	    	/* source directory, lua file and lua5posix executable path */
 	    	File srcDir = new File(Paths.get(dir.getAbsolutePath(),"src").toString());
@@ -225,7 +221,7 @@ public class TortoiseHandler {
 	    			errsb.append(line);
 	    		}
 	    		stdError.close();
-	    		String logMessage = errsb.toString();
+	    		String logMessage = formatLogMessage(sb.toString(), errsb.toString());
     	  		if(!logMessage.equals("")) {
 		    		FatalError.showLog(logMessage,null,false);
 		    		return false;
@@ -234,10 +230,12 @@ public class TortoiseHandler {
 	    	return true;
 	    }  
 	    catch (Exception e) {
+	    	// Show Java error
 	    	FatalError.show(e,null,false);
+	    	// but don't forget to show Lua error too
 	    	if(error)
 	    	{
-		    	String logMessage = errsb.toString();
+		    	String logMessage = formatLogMessage(sb.toString(), errsb.toString());
 		    	if(!logMessage.equals("")) {
 		    		FatalError.showLog(logMessage,null,false);
 					return false;
@@ -245,6 +243,10 @@ public class TortoiseHandler {
 	    	}
 	    	return true;
 	    }
+	}
+	
+	private String formatLogMessage(String stdout, String stderr) {
+		return String.format("Error messages:\n%s\nFull output:\n%s", stderr, stdout);
 	}
 	
 	/**
@@ -274,9 +276,9 @@ public class TortoiseHandler {
 	
 	/**
 	 * <p>{@code void setup(String branchName)}
-	 * <p>Sets up the branch. Its effect is the same of the './vis s' batch job executed from any
-	 * branch's source folder.
-	 * <p>If it could not set up the branch, an error message will be prompted, not forcing the
+	 * <p>Sets up the branch. Its effect is the same of the './vis s' batch job executed from
+	 * the branch source folder.
+	 * <p>If it could not set up the branch, an error message will be prompted, but not forcing the
 	 * application to be terminated.
 	 * @param branchName - the name of the branch folder
 	 * @return {@code true} on success and {@code false} on error
@@ -291,10 +293,10 @@ public class TortoiseHandler {
 	}
 	
 	/**
-	 * <p>{@code void setup(String branchName)}
-	 * <p>Compiles the branch. Its effect is the same of the './vis mlldamt' batch job executed from any
-	 * branch's source folder.
-	 * <p>If it could not set up the branch, an error message will be prompted, not forcing the
+	 * <p>{@code void make(String branchName)}
+	 * <p>Compiles the branch. Its effect is the same of the './vis <make command>' batch job executed from
+	 * the branch source folder.
+	 * <p>If it could not set up the branch, an error message will be prompted, but not forcing the
 	 * application to be terminated.
 	 * @param branchName - the name of the branch folder
 	 * @return {@code true} on success and {@code false} on error
@@ -311,10 +313,10 @@ public class TortoiseHandler {
 	
 	/**
 	 * <p>{@code public boolean cleanUp(String branchName, int persistence)}
-	 * <p>Cleans up the branch. Its effect is the same of the './vis clean' batch job executed from any
-	 * branch's source folder. 
-	 * <p>If it could not clean up the branch, an error message will be prompted, not forcing the
-	 * application to be terminated.
+	 * <p>Cleans up the branch. Its effect is the same of the './vis clean' batch job executed from the
+	 * branch source folder. 
+	 * <p>If it could not clean up the branch after all the tried, an error message will be prompted,
+	 * but not forcing the application to be terminated.
 	 * @param branchName - the name of the branch folder
 	 * @param persistence - maximum number of tries until clean up job runs without errors
 	 * @return {@code true} if successful, {@code false} if failed all #persistence times
@@ -326,14 +328,14 @@ public class TortoiseHandler {
 		if( SKIP ) return true;
 		for(int i = 0 ; i < persistence ; i++) {
 			boolean lastCleanUp = i == persistence - 1;
-			String output = runCmd(f,lastCleanUp,true,false, "svn", "cleanup");
+			String output = runCmd(f,lastCleanUp,true,"svn", "cleanup");
 			if( output.equals("") ) return true;
 		}
 		return false;
 	}
 	
 	/**
-	 * <p>{@code public static void killProcesses}
+	 * <p>{@code public static void killProcesses()}
 	 * <p>Kills all currently running processes
 	 * <p>May be unsafe and leave objects in an unstable state
 	 */
