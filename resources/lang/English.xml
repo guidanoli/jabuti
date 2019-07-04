@@ -7,7 +7,8 @@
 <entry key="gui_branchtable_columns_setup">Setup</entry>
 <entry key="gui_branchtable_defval_lastsetup">Unknown</entry>
 <entry key="gui_errhelper_155004">On the branch root, do a SVN Cleanup to break locks, a vissetup and, if requested, enter your user password.</entry>
-<entry key="gui_errhelper_20033">Some other program might be operating on your branch. Use software like LockHunter in order to identify them and to break file locks.</entry>
+<entry key="gui_errhelper_200033">Some other program might be operating on your branch. Use software like LockHunter in order to identify them and to break file locks.</entry>
+<entry key="gui_errhelper_215004">#gui_errhelper_155004</entry>
 <entry key="gui_errmsg_accesskeylabelstringfailed">Could not access string %s.</entry>
 <entry key="gui_errmsg_failedcleanup">Could not clean up branch %s</entry>
 <entry key="gui_errmsg_failedmake">Could not compile branch %s</entry>
