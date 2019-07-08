@@ -12,6 +12,14 @@ import svn.BranchManager;
 import vars.Language;
 import vars.LocalResources;
 
+/**
+ * @author guidanoli
+ *
+ */
+/**
+ * @author guidanoli
+ *
+ */
 @SuppressWarnings("serial")
 public class BranchTableModel extends AbstractTableModel {
 
@@ -23,26 +31,28 @@ public class BranchTableModel extends AbstractTableModel {
 	public static final int STATUS_IDLE = 0;
 	public static final int STATUS_LAUNCH = 1;
 	
-	// status
+	/* Table Status */
 	int status = STATUS_IDLE;
 	
-	// language
+	/* Language */
 	private Language lang = Language.getInstance();
 	
-	// manager
+	/* Branch Manager */
 	protected BranchManager manager;
 	
-	// fields
+	/* Column fields */
 	protected String[] branchNames;
 	protected String[] lastSetupDate;
+	
+	// Setup and Make fields when status = STATUS_IDLE
 	protected boolean[] setupToggle;
 	protected boolean[] makeToggle;
 	
-	// launch fields
+	// Setup and Make fields when status = STATUS_LAUNCH
 	protected int[] setupStatus;
 	protected int[] makeStatus;
 	
-	// icons
+	/* Launch Progress Icons */
 	protected Icon[] icons;
 	protected String[] icon_paths = {
 			LocalResources.empty ,
@@ -54,7 +64,7 @@ public class BranchTableModel extends AbstractTableModel {
 			LocalResources.error ,
 	};
 	
-	// meta fields
+	/* Meta fields */
 	protected String[] columnNames = new String[]{
 			lang.get("gui_branchtable_columns_branch") ,
 			lang.get("gui_branchtable_columns_lastsetup") ,
@@ -74,6 +84,10 @@ public class BranchTableModel extends AbstractTableModel {
 			Icon.class
 	};
 	
+	/**
+	 * Constructs the branch table model
+	 * @param manager - branch manager
+	 */
 	public BranchTableModel( BranchManager manager ) {
 		this.manager = manager;
 		icons = new Icon[icon_paths.length];
@@ -91,6 +105,15 @@ public class BranchTableModel extends AbstractTableModel {
 		updateAllColumns();
 	}
 	
+	/**
+	 * Updates specific table columns
+	 * @param names - update Branch Name column
+	 * @param dates - update Last Setup Date column
+	 * @param setup - update Setup column (idle)
+	 * @param make - update Make column (idle)
+	 * @param setup_s - update Setup column (launch)
+	 * @param make_s - update Make column (launch)
+	 */
 	public void updateColumns(boolean names, boolean dates, boolean setup, boolean make, boolean setup_s, boolean make_s)
 	{
 		if(names) branchNames = manager.getBranchNames();
@@ -101,7 +124,34 @@ public class BranchTableModel extends AbstractTableModel {
 		if(make_s) makeStatus = manager.getStatusMake();
 	}
 	
+	/**
+	 * Updates all columns
+	 * @see #updateColumns(boolean, boolean, boolean, boolean, boolean, boolean)
+	 */
 	public void updateAllColumns() { updateColumns(true,true,true,true,true,true); }
+
+	/**
+	 * Updates status with a valid identifier, either:
+	 * <ul><li>{@link #STATUS_IDLE}</li>
+	 * <li>{@link #STATUS_LAUNCH}</li></ul>
+	 * @param status - new status
+	 */
+	public void setStatus(int status) {
+		if( status != STATUS_LAUNCH && status != STATUS_IDLE ) return;
+		this.status = status;
+	}
+	
+	/**
+	 * @return table status, which is either:
+	 * <ul><li>{@link #STATUS_IDLE}</li>
+	 * <li>{@link #STATUS_LAUNCH}</li></ul>
+	 */
+	public int getStatus() {
+		return status;
+	}
+	
+	/* Overwritten methods */
+	
 	public String getColumnName(int col) { return columnNames[col]; }
 	public Class<?> getColumnClass(int col) {
 		if( status == STATUS_IDLE )
@@ -179,12 +229,5 @@ public class BranchTableModel extends AbstractTableModel {
 			break;
 		}
 	}
-	public void setStatus(int status) {
-		if( status != STATUS_LAUNCH && status != STATUS_IDLE ) return;
-		this.status = status;
-	}
-	public int getStatus() {
-		return status;
-	}
-	
+		
 }

@@ -78,6 +78,10 @@ public class MainFrame extends JFrame {
 		closeOperation = op;
 	}
 	
+	/**
+	 * Sets all menu tabs either enabled or disabled
+	 * @param isEnabled - whether to enable or not
+	 */
 	public void setMenuEnabled(boolean isEnabled)
 	{
 		JMenuBar menuBar = getJMenuBar();
