@@ -1,6 +1,7 @@
 package gui.dialog.main;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -69,23 +70,39 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 		table = new JTable(tablemodel);
 		// Disable column dragging
 		table.getTableHeader().setReorderingAllowed(false);
-		// Set toggle's width
-		int weighted_widths[] = getWeightedWidths();
-		for( int i = 0 ; i < table.getColumnCount() ; i++ )
-			table.getColumnModel().getColumn(i).setPreferredWidth(weighted_widths[i]);
+		// Set columns width
+		updateTableColumnsWidth();
 		// Centralizes all string values in table
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
 		table.setDefaultRenderer(String.class, centerRenderer);
 		scrollingBox.setViewportView(table);
-		scrollingBox.addComponentListener(new ScrollingTableListener(table, scrollingBox));
+		scrollingBox.setPreferredSize(new Dimension(600,300));
 		add(scrollingBox);
 	}
-	
+		
+	/**
+	 * <p>Updates the table columns' width according to their weights, which are determined by
+	 * the {@link #getWeightedWidths()} method.
+	 */
+	private void updateTableColumnsWidth() {
+		int weighted_widths[] = getWeightedWidths();
+		for( int i = 0 ; i < table.getColumnCount() ; i++ )
+			table.getColumnModel().getColumn(i).setPreferredWidth(weighted_widths[i]);
+	}
+
+	/**
+	 * <p>Calculates each column's weight proportional to the length of the largest string
+	 * contained in a given column (including the column name). This gives an extra degree
+	 * of freedom for different idioms to have larger column names but also for larger
+	 * folder names, avoiding string ellipsis at all costs.
+	 * @return array of weighted widths with size equal to the number of columns in the table
+	 */
 	private int[] getWeightedWidths() {
 		int numCol = table.getColumnCount();
 		int numRow = table.getRowCount();
 		int [] weights = new int[numCol];
+		int sum = 0;
 		for( int i = 0 ; i < numCol ; i++ )
 		{
 			int maxWidth = table.getColumnName(i).length();
@@ -99,14 +116,19 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 					if( cellStrLen > maxWidth ) maxWidth = cellStrLen;
 				}
 			}
-			weights[i] = maxWidth * 5;
-			System.out.println(weights[i]);
+			sum += maxWidth;
+			weights[i] = maxWidth;
+		}
+		for( int i = 0 ; i < numCol ; i++ )
+		{
+			weights[i] *= 600.0f/((float)sum);
 		}
 		return weights;
 	}
 
 	public void updateTable() {
 		tablemodel.updateAllColumns();
+		updateTableColumnsWidth();
 		table.revalidate();
 	}
 
@@ -182,7 +204,7 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 		}
 		table.repaint();
 	}
-		
+	
 	public void setValueToAllBranches(int column, Object value)
 	{
 		for(int i = 0 ; i < tablemodel.getRowCount(); i++)
