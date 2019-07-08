@@ -70,7 +70,7 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 		// Disable column dragging
 		table.getTableHeader().setReorderingAllowed(false);
 		// Set toggle's width
-		int weighted_widths[] = { 300, 100, 50, 50 };
+		int weighted_widths[] = getWeightedWidths();
 		for( int i = 0 ; i < table.getColumnCount() ; i++ )
 			table.getColumnModel().getColumn(i).setPreferredWidth(weighted_widths[i]);
 		// Centralizes all string values in table
@@ -78,9 +78,33 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
 		table.setDefaultRenderer(String.class, centerRenderer);
 		scrollingBox.setViewportView(table);
+		scrollingBox.addComponentListener(new ScrollingTableListener(table, scrollingBox));
 		add(scrollingBox);
 	}
 	
+	private int[] getWeightedWidths() {
+		int numCol = table.getColumnCount();
+		int numRow = table.getRowCount();
+		int [] weights = new int[numCol];
+		for( int i = 0 ; i < numCol ; i++ )
+		{
+			int maxWidth = table.getColumnName(i).length();
+			for( int j = 0 ; j < numRow ; j++ )
+			{
+				Object cellObj = table.getValueAt(j, i);
+				if( cellObj instanceof String )
+				{
+					String cellStr = (String) cellObj;
+					int cellStrLen = cellStr.length();
+					if( cellStrLen > maxWidth ) maxWidth = cellStrLen;
+				}
+			}
+			weights[i] = maxWidth * 5;
+			System.out.println(weights[i]);
+		}
+		return weights;
+	}
+
 	public void updateTable() {
 		tablemodel.updateAllColumns();
 		table.revalidate();
