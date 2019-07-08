@@ -53,7 +53,9 @@ public class MainFrame extends JFrame {
 				switch(closeOperation)
 				{
 				case CLOSE:
+					/* Routines called before closing */
 					gp.cleanUp();
+					/* Then, exit */
 					System.exit(0);
 					break;
 				case TRAY:

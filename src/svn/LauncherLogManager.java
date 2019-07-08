@@ -139,7 +139,8 @@ public class LauncherLogManager {
 	 * since it could be running sensitive procedures during the
 	 * log registry.
 	 * @param action - action identifier
-	 * @param args - additional action arguments
+	 * @param args - additional action arguments (whose toString()
+	 * methods will be called to be written on the log)
 	 * @see LauncherLogManager#logMake(long) logMake(long)
 	 * @see LauncherLogManager#logSetup(Long, Long) logSetup(Long, Long)
 	 */
