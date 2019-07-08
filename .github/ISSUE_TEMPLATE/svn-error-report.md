@@ -2,7 +2,7 @@
 name: SVN Error report
 about: Report an unhandled SVN error
 title: ''
-labels: ''
+labels: svn
 assignees: ''
 
 ---
