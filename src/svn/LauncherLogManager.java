@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.StringJoiner;
 
 import gui.error.FatalError;
@@ -43,19 +44,22 @@ public class LauncherLogManager {
 	 * @return time stamp
 	 */
 	public long getLastSetupMillis() {
-		ArrayList<String []> logInfo = readLog();
+		ArrayList<String []> data = readLog();
+		if( data == null ) return 0;
+		Iterator<String []> iterator = data.iterator();
 		long timeStamp = 0;
-		for( String[] entry : logInfo )
+		while( iterator.hasNext() )
 		{
-			if( entry.length < 3 )
+			String [] registry = iterator.next();
+			String branch = registry[0];
+			if( !branch.equals(branchName) ) continue;
+			if( registry.length < 3 )
 			{
 				LightError.show(lang.get("gui_errmsg_launcher_log_badformat"));
 				break;
 			}
-			String branch = entry[0];
-			if( branch != branchName ) continue;
 			try {
-				long ts = Long.parseLong(entry[1]);
+				long ts = Long.parseLong(registry[1]);
 				if( ts > timeStamp ) timeStamp = ts;
 			}
 			catch( Exception e )
@@ -82,7 +86,7 @@ public class LauncherLogManager {
 		ArrayList<String []> info = new ArrayList<String []>();
 		File file = new File(logFile);
 		try {
-			file.createNewFile();
+			if ( file.createNewFile() ) return info;
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String s;
 			while((s=br.readLine()) != null)
