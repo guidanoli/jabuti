@@ -5,6 +5,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 import gui.dialog.preferences.PreferenceType;
+import vars.Language;
 import vars.properties.types.BooleanProperty;
 
 public class TogglePreferenceType implements PreferenceType {
@@ -30,7 +31,7 @@ public class TogglePreferenceType implements PreferenceType {
 		for( JCheckBox checkBox : checkBoxes ) { panel.add(checkBox); }
 	}
 	
-	public JPanel getPanel() { return panel; }
+	public JPanel getPanel(Language lang) { return panel; }
 
 	public void setState(String value) {
 		boolean [] booleanArray = booleanProperty.toBooleanArray(value);

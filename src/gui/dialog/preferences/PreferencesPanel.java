@@ -73,8 +73,9 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 		String key = (String) model.getSelectedItemProperty(PreferencesComboModel.KEY);
 		String value = gp.get(key);
 		type = (PreferenceType) model.getSelectedItemProperty(PreferencesComboModel.TYPE);
-		if (type.getPanel().getParent() != value_panel) // if not added
-			value_panel.add(type.getPanel(), key); // key as unique identifier
+		JPanel typePanel = type.getPanel(lang);
+		if (typePanel.getParent() != value_panel) // if not added...
+			value_panel.add(typePanel, key); // add with key as unique identifier
 		((CardLayout) value_panel.getLayout()).show(value_panel, key);
 		type.setState(value);
 		updateDialog();

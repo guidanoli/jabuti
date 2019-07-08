@@ -7,6 +7,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
 import gui.dialog.preferences.PreferenceType;
+import vars.Language;
 
 public class NumberPreferenceType implements PreferenceType {
 
@@ -17,7 +18,7 @@ public class NumberPreferenceType implements PreferenceType {
 		panel.add(spinner);
 	}
 	public boolean validateState() { return getState() != null; }
-	public JPanel getPanel() { return panel; }
+	public JPanel getPanel(Language lang) { return panel; }
 	public void setState(String value) { spinner.setValue(Integer.parseInt(value)); }
 	public String getState() { return Integer.toString((int) spinner.getValue()); }
 

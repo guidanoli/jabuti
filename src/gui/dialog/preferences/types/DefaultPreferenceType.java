@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import gui.dialog.preferences.PreferenceType;
+import vars.Language;
 
 public class DefaultPreferenceType implements PreferenceType {
 
@@ -13,7 +14,7 @@ public class DefaultPreferenceType implements PreferenceType {
 	protected JTextField txt = new JTextField();
 	public DefaultPreferenceType() { panel.add(txt); }
 	public boolean validateState() { return getState() != null; }
-	public JPanel getPanel() { return panel; }
+	public JPanel getPanel(Language lang) { return panel; }
 	public void setState(String value) { txt.setText(value); }
 	public String getState() { return txt.getText(); }
 	

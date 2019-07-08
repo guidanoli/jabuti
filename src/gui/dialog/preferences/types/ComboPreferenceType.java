@@ -6,6 +6,7 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import gui.dialog.preferences.PreferenceType;
+import vars.Language;
 
 public class ComboPreferenceType implements PreferenceType {
 
@@ -34,7 +35,7 @@ public class ComboPreferenceType implements PreferenceType {
 		panel.add(combo);
 	}
 	
-	public JPanel getPanel() { return panel; }
+	public JPanel getPanel(Language lang) { return panel; }
 	public void setState(String value) {
 		for(int i = 0 ; i < prefValues.length; i++)
 			if( prefValues[i].equals(value) ) combo.setSelectedIndex(i);

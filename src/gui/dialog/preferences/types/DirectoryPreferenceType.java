@@ -18,10 +18,12 @@ import vars.properties.GlobalProperties;
 
 public class DirectoryPreferenceType implements PreferenceType {
 
-	private Language lang = Language.getInstance();
 	protected JPanel panel;
 	protected JTextField txt = new JTextField();
-	protected JButton btn = new JButton(lang.get("gui_popup_preferences_type_dir_panel_btnlabel"));
+	protected JButton btn = new JButton();
+	protected String dlg_title;
+	protected String dlg_button_label;
+	
 	public DirectoryPreferenceType() {
 		GridBagLayout layout = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints ();
@@ -46,9 +48,9 @@ public class DirectoryPreferenceType implements PreferenceType {
 			defaultDir = GlobalProperties.getInstance().get("path");
 		File defdir = new File(defaultDir);
 		JFileChooser jfc = new JFileChooser(defdir);
-		jfc.setDialogTitle(lang.get("gui_popup_preferences_type_dir_dlg_title"));
+		jfc.setDialogTitle(dlg_title);
 		jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		int returnValue = jfc.showDialog(null,lang.get("gui_popup_preferences_type_dir_dlg_btnlabel"));
+		int returnValue = jfc.showDialog(null,dlg_button_label);
 		if (returnValue == JFileChooser.APPROVE_OPTION && jfc.getSelectedFile().isDirectory())
 			return jfc.getSelectedFile().getAbsolutePath();
 		return defaultDir;
@@ -56,5 +58,11 @@ public class DirectoryPreferenceType implements PreferenceType {
 	public void setState(String value) { txt.setText(value); }
 	public String getState() { return txt.getText(); }
 	public boolean validateState() { return new File(getState()).isDirectory(); }
-	public JPanel getPanel() { return panel; }
+	public JPanel getPanel(Language lang) {
+		assert lang != null;
+		btn.setText(lang.get("gui_popup_preferences_type_dir_panel_btnlabel"));
+		dlg_title = lang.get("gui_popup_preferences_type_dir_dlg_title");
+		dlg_button_label = lang.get("gui_popup_preferences_type_dir_dlg_btnlabel");
+		return panel;
+	}
 }
