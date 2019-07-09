@@ -6,6 +6,7 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import gui.dialog.preferences.PreferenceType;
+import gui.dialog.preferences.types.combo.ComboPreferenceTypeListener;
 import vars.Language;
 
 public class ComboPreferenceType implements PreferenceType {
@@ -14,28 +15,26 @@ public class ComboPreferenceType implements PreferenceType {
 	private JComboBox<String> combo;
 	private String [] prefValues = null;
 	
-	public ComboPreferenceType(String [] options) {
-		combo = new JComboBox<String>(options);
-		prefValues = options;
-		panel.add(combo);
+	ComboPreferenceTypeListener listener;
+	
+	public ComboPreferenceType(ComboPreferenceTypeListener listener) {
+		assert listener != null;
+		this.listener = listener;
 	}
 	
-	public ComboPreferenceType(String [] options, String [] tips, boolean hideValue) {
-		String [] labels = tips;
-		if( !hideValue )
-		{
-			labels = new String[options.length];
-			for(int i = 0 ; i < labels.length; i++)
-			{
-				labels[i] = String.format("%s (%s)", tips[i], options[i]);
-			}
-		}
-		combo = new JComboBox<String>(labels);
-		prefValues = options;
+	public JPanel getPanel(Language lang) {
+		String [] labels = listener.getOptionLabels(lang);
+		String [] tooltips = listener.getOptionToolTips(lang);
+		String [] optionStrings = new String[labels.length];
+		
+		for(int i = 0; i < labels.length; i++)
+			optionStrings[i] = listener.formatLabel(labels[i], tooltips[i]);
+		
+		combo = new JComboBox<String>(optionStrings);
+		prefValues = labels;
 		panel.add(combo);
+		return panel;
 	}
-	
-	public JPanel getPanel(Language lang) { return panel; }
 	public void setState(String value) {
 		for(int i = 0 ; i < prefValues.length; i++)
 			if( prefValues[i].equals(value) ) combo.setSelectedIndex(i);

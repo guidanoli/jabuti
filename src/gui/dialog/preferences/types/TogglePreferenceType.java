@@ -17,7 +17,6 @@ public class TogglePreferenceType implements PreferenceType {
 	public TogglePreferenceType(BooleanProperty booleanProperty) {
 		panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
 		this.booleanProperty = booleanProperty;
-		buildPanel();
 	}
 
 	private void buildPanel() {
@@ -31,7 +30,10 @@ public class TogglePreferenceType implements PreferenceType {
 		for( JCheckBox checkBox : checkBoxes ) { panel.add(checkBox); }
 	}
 	
-	public JPanel getPanel(Language lang) { return panel; }
+	public JPanel getPanel(Language lang) {
+		buildPanel();
+		return panel;
+	}
 
 	public void setState(String value) {
 		boolean [] booleanArray = booleanProperty.toBooleanArray(value);

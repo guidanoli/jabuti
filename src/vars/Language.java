@@ -21,16 +21,17 @@ import vars.properties.GlobalProperties;
  */
 public class Language {
 	
-	private static final Language INSTANCE = new Language();
 	private Properties lang; 
 	
-	private String [] langs = {
+	private static String [] langs = {
 		"English" , "Portuguese"	
 	};
 	
-	public String default_lang = langs[0];
+	public static String default_lang = langs[0];
 	
 	public static Language getInstance() { return INSTANCE; }
+
+	private static final Language INSTANCE = new Language();
 	
 	/**
 	 * Constructs a Language object
@@ -93,6 +94,6 @@ public class Language {
 	/**
 	 * @return all accepted languages
 	 */
-	public String [] getLanguages() { return langs; }
+	public static String [] getLanguages() { return langs; }
 	
 }

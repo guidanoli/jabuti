@@ -3,60 +3,66 @@ package gui.dialog.preferences;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
-import gui.dialog.preferences.types.ComboPreferenceType;
-import gui.dialog.preferences.types.DirectoryPreferenceType;
-import gui.dialog.preferences.types.NumberPreferenceType;
-import gui.dialog.preferences.types.TogglePreferenceType;
-import svn.TortoiseHandler;
+import gui.error.FatalError;
 import vars.Language;
 import vars.properties.GlobalProperties;
-
-
+import vars.properties.Property;
 
 @SuppressWarnings("serial")
 public class PreferencesComboModel extends AbstractListModel<String> implements ComboBoxModel<String> {
 
-	public final static int KEY = 0;
-	public final static int LABEL = 1;
-	public final static int TYPE = 2;
-	public final static int RESET = 3;
-	
+	private final static int KEY = 0;
+	private final static int LABEL = 1;
+	private final static int TYPE = 2;
+	private final static int RESET = 3;
+
+	private Property [] propertiesList = GlobalProperties.getPropertiesArray();
 	private Language lang = Language.getInstance();
+	private String selected; 
+		
+	public String getElementAt(int i) {
+		assert i < getSize();
+		return getLabel(propertiesList[i]);
+	}
 	
-	protected String selected;
+	public int getSize() { return propertiesList.length; }
 	
-	protected String [] makeCmds = TortoiseHandler.makeCommands;
-	protected String [] makeCmdsTips = getMakeCmdsTips(makeCmds);
-	
-	// { property label, property string on screen, preference type, asks for restart }
-	protected Object[][] list = { 
-			{ "path" , lang.get("gui_popup_preferences_proplabel_path") , new DirectoryPreferenceType() , false } ,
-			{ "lang" , lang.get("gui_popup_preferences_proplabel_lang") , new ComboPreferenceType(lang.getLanguages()) , true } ,
-			{ "maxthreads" , lang.get("gui_popup_preferences_proplabel_maxthreads") , new NumberPreferenceType(1,10) , false } ,
-			{ "cleanups" , lang.get("gui_popup_preferences_proplabel_cleanups") , new NumberPreferenceType(1,10) , false } ,
-			{ "makecmd" , lang.get("gui_popup_preferences_proplabel_makecmd") , new ComboPreferenceType(makeCmds,makeCmdsTips,false) , false } ,
-			{ "notify" , lang.get("gui_popup_preferences_proplabel_notify") , new TogglePreferenceType(GlobalProperties.notificationProperty), false} ,
-	};
-	
-	public String getElementAt(int i) { return (String) list[i][LABEL]; }
-	public int getSize() { return list.length; }
 	public void setSelectedItem(Object anItem) { selected = (String) anItem; }
+	
 	public String getSelectedItem() { return (String) selected; }
-	public Object getSelectedItemProperty(int index)
+		
+	private String getLabel( Property prop )
 	{
-		for( Object[] item : list )
+		String propKey = prop.getKey();
+		String langKey = String.format("gui_popup_preferences_proplabel_%s",propKey);
+		return lang.get(langKey);
+	}
+	
+	private Object getSelectedItemProperty(int propertyId)
+	{
+		for( Property prop : propertiesList )
 		{
-			if( item[LABEL] == selected )
-				return item[index];
+			if( getLabel(prop).equals(selected) )
+				switch( propertyId )
+				{
+				case KEY:
+					return prop.getKey();
+				case LABEL:
+					return selected;
+				case TYPE:
+					return prop.getType();
+				case RESET:
+					return prop.isReset();
+				default:
+					FatalError.show("Invalid item property identifier");
+					break;
+				}
 		}
 		return null;
 	}
-
-	private String[] getMakeCmdsTips(String[] cmds) {
-		String [] tips = new String[cmds.length];
-		for(int i = 0 ; i < tips.length; i++)
-			tips[i] = lang.get("gui_popup_preferences_propoption_makecmd_"+cmds[i]);
-		return tips;
-	}
 	
+	public String getSelectedItemKey() { return (String) getSelectedItemProperty(KEY); }
+	public String getSelectedItemLabel() { return getSelectedItem(); }
+	public PreferenceType getSelectedItemType() { return (PreferenceType) getSelectedItemProperty(TYPE); }
+	public boolean getSelectedItemReset() { return (boolean) getSelectedItemProperty(RESET); }
 }

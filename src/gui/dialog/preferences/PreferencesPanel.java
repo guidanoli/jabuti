@@ -70,9 +70,9 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 	}
 
 	public void updateTextBox() {
-		String key = (String) model.getSelectedItemProperty(PreferencesComboModel.KEY);
+		String key = model.getSelectedItemKey();
 		String value = gp.get(key);
-		type = (PreferenceType) model.getSelectedItemProperty(PreferencesComboModel.TYPE);
+		type = model.getSelectedItemType();
 		JPanel typePanel = type.getPanel(lang);
 		if (typePanel.getParent() != value_panel) // if not added...
 			value_panel.add(typePanel, key); // add with key as unique identifier
@@ -92,8 +92,8 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 			dlg.setVisible(false);
 		} else if (source == apply_btn) {
 			if (type.validateState()) {
-				String key = (String) model.getSelectedItemProperty(PreferencesComboModel.KEY);
-				String value = ((PreferenceType) model.getSelectedItemProperty(PreferencesComboModel.TYPE)).getState();
+				String key = model.getSelectedItemKey();
+				String value = model.getSelectedItemType().getState();
 				gp.setProperty(key, value);
 				applyPreference();
 				return;
@@ -101,7 +101,7 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 			JOptionPane.showMessageDialog(	dlg, lang.get("gui_popup_preferences_applymsg_invalid"),
 											lang.get("name"), JOptionPane.ERROR_MESSAGE	);
 		} else if (source == default_btn) {
-			String key = (String) model.getSelectedItemProperty(PreferencesComboModel.KEY);
+			String key = model.getSelectedItemKey();
 			String default_value = gp.resetPropertyToDefault(key);
 			if( default_value == null ) LightError.show(lang.get("gui_errmsg_gp_default_resetfailed"), dlg);
 			else type.setState(default_value);
@@ -116,7 +116,7 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 	private void applyPreference() {
 		if (gp.save()) {
 			LightError.show(lang.get("gui_popup_preferences_applymsg_ok"), dlg);
-			if ((boolean) model.getSelectedItemProperty(PreferencesComboModel.RESET))
+			if (model.getSelectedItemReset())
 				LightError.show(lang.get("gui_popup_preferences_applymsg_reset"), dlg);
 			parent.panel.updateTable();
 			return;
