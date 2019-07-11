@@ -1,11 +1,9 @@
 # Jabuti - A portable branch setup software
 
-This project was intended to help the Visualization district set up and compile branches. Although it uses SVN commands and some internal routines such as 'vis s' and 'vis mlldamt', it is totally adjustable to whichever source control software you use on your personal or professional workspace. The language of choice is Java, and uses the Swing graphics interface library.
+![Jabuti Main Dialog](https://i.imgur.com/rYUORKa.png)
 
-## Exporting as a runnable .jar
+This project is intended to assist the Visualization district set up and compile branches. Although it uses SVN commands and some internal routines such as 'vis s' and 'vis mlldamt', it is totally adjustable to whichever source control software you use on your personal or professional workspace. The language of choice is Java, and uses the Swing graphics interface library.
 
-In order to export the program as a runnable JAR file, it is highly recommended the assistance of an IDE, like Eclipse, for example. For Eclipse, open the project from the repository directory, right-click your project on the Project Explorer and click on 'Export...', open the folder 'Java' and select 'Runnable JAR file', click 'Next', select the output path to your JAR file. The other options may stay the same. Then, click on 'Finish'.
+## Getting Started
 
-## Icons
-
-The proper credits to the icon artists are properly placed on the 'About' section.
+To have **Jabuti** running in your machine you need to compile the source code and then, export it to as a runnable JAR file. It is pretty trivial to do that with the help of an IDE like Eclipse. The following link might help you with that part: [Click Here](https://www.albany.edu/faculty/jmower/geog/gog692/ImportExportJARFiles.htm)
