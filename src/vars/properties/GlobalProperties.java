@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Properties;
 
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 import gui.defaults.DefaultNotificationPopup;
 import gui.dialog.preferences.PreferenceType;
 import gui.dialog.preferences.types.*;
@@ -11,7 +16,9 @@ import gui.dialog.preferences.types.combo.*;
 import gui.error.FatalError;
 import gui.error.LightError;
 import svn.BranchManager;
+import vars.LocalResources;
 import vars.Metadata;
+import vars.Version;
 import vars.properties.types.LongBooleanProperty;
 
 /**
@@ -83,6 +90,28 @@ public class GlobalProperties extends Properties {
 	 */
 	private void validateProperties() {
 		boolean sameVersion = get("version").equals(getDefaultValue("version"));
+		if( !sameVersion )
+		{
+			Version thisVersion = new Version(getDefaultValue("version"));
+			Version fileVersion = new Version(get("version"));
+			boolean earlier = thisVersion.earlierThan(fileVersion);
+			String messageStr = earlier ? "Your software needs to be updated.\nYou can either update your copy of Jabuti or close program." :
+				"Some configuration files need to be updated.\nYou can either update them or close the program\nnot to damage any internal data.";
+			String titleStr = "Jabuti";
+			String [] options = {earlier ? "Update software" : "Update files", "Close program"};
+			Icon icon = null;
+			try {
+				icon = new ImageIcon(ImageIO.read(LocalResources.getStream(LocalResources.icon_bw)));
+			} catch (IOException e) {
+				FatalError.show(e);
+			}
+			int choice = JOptionPane.showOptionDialog(null, messageStr, titleStr,
+						JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE,
+						icon, options, options[0]);
+			if( choice == JOptionPane.CLOSED_OPTION || choice == 1 ) {
+				System.exit(0);
+			}
+		}
 		ArrayList<EditableProperty> propList = getEditablePropertiesList();
 		Iterator<EditableProperty> iter = propList.iterator();
 		while( iter.hasNext() ) {
@@ -97,6 +126,9 @@ public class GlobalProperties extends Properties {
 				}
 			}
 		}
+		// Now that the conflicts have been resolved,
+		// the new version can be set
+		resetPropertyToDefault("version");
 	}
 
 	/**
