@@ -8,8 +8,11 @@ import java.util.concurrent.TimeUnit;
 import gui.defaults.DefaultNotificationPopup;
 import gui.error.FatalError;
 import gui.error.LightError;
+import svn.error.MakeErrorListener;
+import svn.error.SetupErrorListener;
 import vars.Language;
 import vars.properties.GlobalProperties;
+import vars.properties.bool.NotificationProperty;
 
 /**
  * <p>The {@code Launcher} class servers the purpose of managing the set up and compile jobs, 
@@ -43,7 +46,9 @@ public class Launcher {
 	GlobalProperties gp = GlobalProperties.getInstance();
 	BranchManager branchManager;
 	TortoiseHandler tortoise = new TortoiseHandler();
-	LaunchProgressListener listener;
+	LaunchProgressListener progressListener;
+	SetupErrorListener setupListener;
+	MakeErrorListener makeListener;
 	
 	// branches
 	String [] branchNames;
@@ -67,8 +72,11 @@ public class Launcher {
 	 * @see svn.BranchManager
 	 * @see svn.LaunchProgressListener
 	 */
-	public Launcher(BranchManager manager, LaunchProgressListener listener ) {
-		this.listener = listener;
+	public Launcher( BranchManager manager, LaunchProgressListener listener , SetupErrorListener setupListener ,
+			MakeErrorListener makeListener ) {
+		this.progressListener = listener;
+		this.setupListener = setupListener;
+		this.makeListener = makeListener;
 		this.branchManager = manager;
 		this.branchNames = manager.getBranchNames();
 		if( maxThreadCount < 1 )
@@ -90,7 +98,7 @@ public class Launcher {
 	public void interrupt() {
 		interrupted = true;
 		tortoise.killProcesses();
-		listener.launchEnded();
+		progressListener.launchEnded();
 	}
 	
 	/**
@@ -126,7 +134,7 @@ public class Launcher {
 							if(success)
 							{
 								new DefaultNotificationPopup(
-										DefaultNotificationPopup.Type.CLEANUP,
+										NotificationProperty.Type.CLEANUP,
 										lang.format("gui_notification_launcher_clean_success", name));
 								state_setup = LaunchProgressListener.RUNNING;
 								update(i, state_setup, state_make);
@@ -134,7 +142,7 @@ public class Launcher {
 							else
 							{
 								new DefaultNotificationPopup(
-										DefaultNotificationPopup.Type.CLEANUP,
+										NotificationProperty.Type.CLEANUP,
 										lang.format("gui_notification_launcher_clean_fail", name));
 								state_setup = LaunchProgressListener.FAILED;
 								if( make ) state_make = LaunchProgressListener.FAILED;
@@ -144,12 +152,12 @@ public class Launcher {
 							}
 							if(interrupted) return;
 							Long oldRevisionNumber = tortoise.getRevisionNumber(name);
-							success = tortoise.setup(name);
+							success = tortoise.setup(name, setupListener);
 							if(interrupted) return;
 							if(success)
 							{
 								new DefaultNotificationPopup(
-										DefaultNotificationPopup.Type.SETUP,
+										NotificationProperty.Type.SETUP,
 										lang.format("gui_notification_launcher_setup_success", name));
 								state_setup = LaunchProgressListener.ENDED;
 								update(i, state_setup, state_make);
@@ -159,7 +167,7 @@ public class Launcher {
 							else
 							{
 								new DefaultNotificationPopup(
-										DefaultNotificationPopup.Type.SETUP,
+										NotificationProperty.Type.SETUP,
 										lang.format("gui_notification_launcher_setup_fail", name));
 								state_setup = LaunchProgressListener.FAILED;
 								if( make ) state_make = LaunchProgressListener.FAILED;
@@ -173,13 +181,13 @@ public class Launcher {
 							state_make = LaunchProgressListener.RUNNING;
 							update(i, state_setup, state_make);
 							Instant start = Instant.now();
-							success = tortoise.make(name);
+							success = tortoise.make(name, makeListener);
 							if(interrupted) return;
 							if(success)
 							{
 								Instant end = Instant.now();
 								new DefaultNotificationPopup(
-										DefaultNotificationPopup.Type.MAKE,
+										NotificationProperty.Type.MAKE,
 										lang.format("gui_notification_launcher_make_success", name));
 								Duration timeElapsed = Duration.between(start, end);
 								state_make = LaunchProgressListener.ENDED;
@@ -189,7 +197,7 @@ public class Launcher {
 							else
 							{
 								new DefaultNotificationPopup(
-										DefaultNotificationPopup.Type.MAKE,
+										NotificationProperty.Type.MAKE,
 										lang.format("gui_notification_launcher_make_fail", name));
 								state_make = LaunchProgressListener.FAILED;
 								update(i, state_setup, state_make);
@@ -221,7 +229,7 @@ public class Launcher {
 	private void update(int i, int setup, int make)
 	{
 		if(interrupted) return;
-		listener.progressUpdate(i, setup, make);
+		progressListener.progressUpdate(i, setup, make);
 	}
 	
 	/**
@@ -258,7 +266,7 @@ public class Launcher {
 			if(!emptyJob)
 			{
 				new DefaultNotificationPopup(
-						DefaultNotificationPopup.Type.GENERAL,
+						NotificationProperty.Type.GENERAL,
 						lang.get("gui_notification_launcher_done"));
 				try {
 					TimeUnit.SECONDS.sleep(3);
@@ -270,7 +278,7 @@ public class Launcher {
 			{
 				LightError.show(lang.get("gui_errmsg_launcher_emptyjob"));
 			}
-			listener.launchEnded();
+			progressListener.launchEnded();
 		}
 		countSem.release();
 	}

@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 
 import gui.dialog.preferences.PreferenceType;
 import vars.Language;
-import vars.properties.types.BooleanProperty;
+import vars.properties.bool.BooleanProperty;
 
 public class TogglePreferenceType implements PreferenceType {
 

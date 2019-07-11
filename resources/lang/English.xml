@@ -80,6 +80,7 @@
 <entry key="gui_popup_preferences_proplabel_maxthreads">Maximum thread count</entry>
 <entry key="gui_popup_preferences_proplabel_notify">Notifications</entry>
 <entry key="gui_popup_preferences_proplabel_path">Branches directory</entry>
+<entry key="gui_popup_preferences_proplabel_setup-err">Setup Errors</entry>
 <entry key="gui_popup_preferences_propoption_makecmd_mlld">Make Library Debug</entry>
 <entry key="gui_popup_preferences_propoption_makecmd_mllda">Make Library Debug App</entry>
 <entry key="gui_popup_preferences_propoption_makecmd_mlldad">Make Library Debug App Debug</entry>
@@ -95,6 +96,8 @@
 <entry key="meta_keylabel_notify_1">Cleanup</entry>
 <entry key="meta_keylabel_notify_2">Make</entry>
 <entry key="meta_keylabel_notify_3">Setup</entry>
+<entry key="meta_keylabel_setup-err_0">Notify of Arc Certificate absence</entry>
+<entry key="meta_keylabel_setup-err_1">Notify of any other errors</entry>
 <entry key="meta_locale">en</entry>
 <entry key="meta_name">English</entry>
 </properties>

@@ -11,17 +11,17 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-import gui.defaults.DefaultNotificationPopup;
 import gui.dialog.preferences.PreferenceType;
 import gui.dialog.preferences.types.*;
 import gui.dialog.preferences.types.combo.*;
 import gui.error.FatalError;
 import gui.error.LightError;
 import svn.BranchManager;
+import svn.error.SetupErrorListener;
 import vars.LocalResources;
 import vars.Metadata;
 import vars.Version;
-import vars.properties.types.LongBooleanProperty;
+import vars.properties.bool.NotificationProperty;
 
 /**
  * <h1>Global Properties</h1>
@@ -48,7 +48,9 @@ public class GlobalProperties extends Properties {
 	private static final String propertiesFile = vars.LocalResources.properties;
 
 	/* Properties */
-	private static LongBooleanProperty notificationProperty;
+	public static NotificationProperty notificationProperty;
+	public static SetupErrorListener setupErrorsProperty;
+	
 	private static final Property [] properties = {
 			new Property( "version", Metadata.getInstance().getProperty("version")),
 			new EditableProperty( "path", getDefaultPath(), new DirectoryPreferenceType(), false),
@@ -56,7 +58,9 @@ public class GlobalProperties extends Properties {
 			new EditableProperty( "maxthreads", "3", new NumberPreferenceType(1,10), false ),
 			new EditableProperty( "cleanups", "2", new NumberPreferenceType(1,10), false ),
 			new EditableProperty( "makecmd", "mlldamt", new ComboPreferenceType(new MakeCmdCommandListener()), false ),
-			new EditableProperty( "notify", getDefaultNotifications(), new TogglePreferenceType(GlobalProperties.notificationProperty), false),
+			new EditableProperty( "notify", getDefaultNotifications(), new TogglePreferenceType(notificationProperty), false),
+			new EditableProperty( "setup-err", getDefaultSetupErrors(), new TogglePreferenceType(setupErrorsProperty), false),
+			
 	};
 	
 	/* Singleton instance */
@@ -276,8 +280,14 @@ public class GlobalProperties extends Properties {
 	
 	private static String getDefaultNotifications()
 	{
-		notificationProperty = new LongBooleanProperty(DefaultNotificationPopup.NOTIFICATION_TYPES_COUNT, true, "notify");
+		notificationProperty = new NotificationProperty();
 		return notificationProperty.getDefaultPropertyValue();
+	}
+	
+	private static String getDefaultSetupErrors()
+	{
+		setupErrorsProperty = new SetupErrorListener();
+		return setupErrorsProperty.getDefaultPropertyValue();
 	}
 	
 }

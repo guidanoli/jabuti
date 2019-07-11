@@ -1,4 +1,4 @@
-package vars.properties.types;
+package vars.properties.bool;
 
 import vars.properties.GlobalProperties;
 

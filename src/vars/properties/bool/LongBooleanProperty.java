@@ -1,6 +1,7 @@
-package vars.properties.types;
+package vars.properties.bool;
 
 import vars.Language;
+import vars.properties.GlobalProperties;
 
 /**
  * Stores up to 64 properties in an optimal secure way (binary representation).
@@ -12,8 +13,9 @@ public class LongBooleanProperty implements BooleanProperty {
 	private int count;
 	private boolean [] defaultValues;
 	private String labelsKeyPreffix;
-	
+		
 	public LongBooleanProperty(int count, boolean defaultValue, String propertyLabelsKey) {
+		assert count > 0;
 		this.count = count;
 		this.defaultValues = new boolean[count];
 		for(int i = 0; i < count; i++) this.defaultValues[i] = defaultValue;
@@ -43,7 +45,9 @@ public class LongBooleanProperty implements BooleanProperty {
 		return binLong.toString();
 	}
 
-	public boolean validateProperty(boolean[] booleanArray) { return true; }
+	public boolean validateProperty(boolean[] booleanArray) {
+		return booleanArray.length == count;
+	}
 
 	public String[] getPropertyLabels() {
 		Language lang = Language.getInstance();
@@ -55,6 +59,13 @@ public class LongBooleanProperty implements BooleanProperty {
 			if( propertyLabels[i] == null ) propertyLabels[i] = String.format("<%s>", langKey);
 		}
 		return propertyLabels;
+	}
+	
+	public boolean isEnabled(int type) {
+		GlobalProperties gp = GlobalProperties.getInstance();
+		assert type >= 0 && type < count;
+    	boolean [] values = toBooleanArray(gp.get(labelsKeyPreffix));
+    	return values[type];
 	}
 	
 	public String getDefaultPropertyValue() { return toPropertyString(defaultValues); }

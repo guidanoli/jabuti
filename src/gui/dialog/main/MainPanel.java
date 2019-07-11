@@ -13,6 +13,8 @@ import gui.defaults.DefaultFrame;
 import svn.BranchManager;
 import svn.LaunchProgressListener;
 import svn.Launcher;
+import svn.error.MakeErrorListener;
+import svn.error.SetupErrorListener;
 import vars.Language;
 import vars.properties.GlobalProperties;
 
@@ -22,6 +24,8 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 	// managers
 	private Language lang = Language.getInstance();
 	private Launcher launcher = null; // constructor will instantly launch
+	private SetupErrorListener setupListener = GlobalProperties.setupErrorsProperty;
+	private MakeErrorListener makeListener = new MakeErrorListener();
 	protected GlobalProperties gp = GlobalProperties.getInstance();
 	
 	// JTable
@@ -141,7 +145,9 @@ public class MainPanel extends JPanel implements ActionListener, LaunchProgressL
 		}
 		else if( source == launchBtn )
 		{
-			launcher = new Launcher(branchManager,this);
+			setupListener.setHandling(true);
+			makeListener.setHandling(true);
+			launcher = new Launcher(branchManager, this, setupListener, makeListener);
 		}
 		else if( source == stopBtn )
 		{

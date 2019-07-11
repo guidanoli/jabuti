@@ -28,21 +28,10 @@ import javax.swing.WindowConstants;
 import gui.error.LightError;
 import vars.Language;
 import vars.LocalResources;
+import vars.properties.GlobalProperties;
+import vars.properties.bool.NotificationProperty;
 
 public class DefaultNotificationPopup implements ActionListener, MouseListener {
-
-	public static enum Type {
-		GENERAL(0),
-		CLEANUP(1),
-		SETUP(2),
-		MAKE(3);
-		
-		private final int value;
-	    private Type(int value) { this.value = value; }
-	    public int getValue() { return value; }
-	}
-	
-	public static int NOTIFICATION_TYPES_COUNT = Type.values().length;
 	
 	private Language lang = Language.getInstance();
 	
@@ -58,7 +47,8 @@ public class DefaultNotificationPopup implements ActionListener, MouseListener {
 	static Semaphore buffer = new Semaphore(1);
 	private final JDialog dlg = new JDialog();
 	
-	public DefaultNotificationPopup(Type notificationType, String message) {
+	public DefaultNotificationPopup(NotificationProperty.Type notificationType, String message) {
+		if( !GlobalProperties.notificationProperty.isEnabled(notificationType.getValue()) ) return;
 		DefaultNotificationPopup self = this;
 		new Thread() {
 			public void run() { 

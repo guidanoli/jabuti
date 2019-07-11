@@ -80,6 +80,7 @@
 <entry key="gui_popup_preferences_proplabel_maxthreads">Número máximo de threads</entry>
 <entry key="gui_popup_preferences_proplabel_notify">Notificações</entry>
 <entry key="gui_popup_preferences_proplabel_path">Diretório raiz</entry>
+<entry key="gui_popup_preferences_proplabel_setup-err">Erros de Atualização</entry>
 <entry key="gui_popup_preferences_propoption_makecmd_mlld">Compilar com Depuração</entry>
 <entry key="gui_popup_preferences_propoption_makecmd_mllda">Compilar com Depuração + Aplicação</entry>
 <entry key="gui_popup_preferences_propoption_makecmd_mlldad">Compilar com Depuração + Aplicação com Depuração</entry>
@@ -95,6 +96,8 @@
 <entry key="meta_keylabel_notify_1">Limpeza de locks</entry>
 <entry key="meta_keylabel_notify_2">Compilação</entry>
 <entry key="meta_keylabel_notify_3">Atualização</entry>
+<entry key="meta_keylabel_setup-err_0">Notificar sobre ausência de Arc Certificate</entry>
+<entry key="meta_keylabel_setup-err_1">Notificar de quaisquer outros erros</entry>
 <entry key="meta_locale">pt</entry>
 <entry key="meta_name">Portuguese</entry>
 </properties>
