@@ -1,12 +1,17 @@
 package vars.properties;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Properties;
 
 import gui.defaults.DefaultNotificationPopup;
+import gui.dialog.preferences.PreferenceType;
 import gui.dialog.preferences.types.*;
 import gui.dialog.preferences.types.combo.*;
 import gui.error.FatalError;
+import gui.error.LightError;
 import svn.BranchManager;
+import vars.Metadata;
 import vars.properties.types.LongBooleanProperty;
 
 /**
@@ -14,9 +19,14 @@ import vars.properties.types.LongBooleanProperty;
  * 
  * <p>A way to store global data locally in XML files information about
  * the software usage, file states, etc.
- * <p>Keys are set with the <b>set</b> function
- * <p>and gotten by the <b>get</b> function 
- * <p>and stored by the <b>save</b> function, very intuitively.
+ * <ul>
+ * <li>Keys are set with the <b>set</b> function</li>
+ * <li>and gotten by the <b>get</b> function</li>
+ * <li>and stored by the <b>save</b> function, very intuitively</li>
+ * </ul>
+ * 
+ * <p>{@link Property Properties} and their individual validation functions can be accessed
+ * through their {@link PreferenceType} objects.
  * 
  * @author guidanoli
  *
@@ -31,12 +41,13 @@ public class GlobalProperties extends Properties {
 	/* Properties */
 	private static LongBooleanProperty notificationProperty;
 	private static final Property [] properties = {
-			new Property( "path", getDefaultPath(), new DirectoryPreferenceType(), false),
-			new Property( "lang", "English", new ComboPreferenceType(new LanguageComboListener()), true ),
-			new Property( "maxthreads", "3", new NumberPreferenceType(1,10), false ),
-			new Property( "cleanups", "2", new NumberPreferenceType(1,10), false ),
-			new Property( "makecmd", "mlldamt", new ComboPreferenceType(new MakeCmdCommandListener()), false ),
-			new Property( "notify", getDefaultNotifications(), new TogglePreferenceType(GlobalProperties.notificationProperty), false),
+			new Property( "version", Metadata.getInstance().getProperty("version")),
+			new EditableProperty( "path", getDefaultPath(), new DirectoryPreferenceType(), false),
+			new EditableProperty( "lang", "English", new ComboPreferenceType(new LanguageComboListener()), true ),
+			new EditableProperty( "maxthreads", "3", new NumberPreferenceType(1,10), false ),
+			new EditableProperty( "cleanups", "2", new NumberPreferenceType(1,10), false ),
+			new EditableProperty( "makecmd", "mlldamt", new ComboPreferenceType(new MakeCmdCommandListener()), false ),
+			new EditableProperty( "notify", getDefaultNotifications(), new TogglePreferenceType(GlobalProperties.notificationProperty), false),
 	};
 	
 	/* Singleton instance */
@@ -57,12 +68,50 @@ public class GlobalProperties extends Properties {
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
 		}
+		validateProperties();
 		save();
 	}
 	
 	/* **************
 	 * MAIN FUNCTIONS
 	 * ************** */
+	
+	/**
+	 * Validates properties according to each validation routine.
+	 * If a property value is invalid, it will be overwritten by
+	 * the default value.
+	 */
+	private void validateProperties() {
+		boolean sameVersion = get("version").equals(getDefaultValue("version"));
+		ArrayList<EditableProperty> propList = getEditablePropertiesList();
+		Iterator<EditableProperty> iter = propList.iterator();
+		while( iter.hasNext() ) {
+			EditableProperty prop = iter.next();
+			PreferenceType type = prop.getType();
+			String key = prop.getKey();
+			if( !type.validateValue(get(key)) ) {
+				set(prop.getDefaultValue(), key);
+				if( sameVersion ) {
+					LightError.show(String.format("Property '%s' was corrupted and got recovered.", key));
+					// has to be in English because cannot initialize Language object on GlobalProperties constructor
+				}
+			}
+		}
+	}
+
+	/**
+	 * Get property default value by key
+	 * @param key - property key
+	 * @return property default value for said key
+	 */
+	public String getDefaultValue(String key) {
+		for( Property prop : properties ) {
+			if( prop.getKey().equals(key) ) {
+				return prop.getDefaultValue();
+			}
+		}
+		return null;
+	}
 	
 	/**
 	 * Get property value by dot separated key
@@ -156,13 +205,20 @@ public class GlobalProperties extends Properties {
 	 * @return array of property objects
 	 * @see Property
 	 */
-	public static Property [] getPropertiesArray() { return properties; }
+	public static ArrayList<EditableProperty> getEditablePropertiesList() {
+		ArrayList<EditableProperty> list = new ArrayList<EditableProperty>();
+		for( Property prop : properties ) {
+			if( prop instanceof EditableProperty ) {
+				list.add((EditableProperty) prop);
+			}
+		}
+		return list;
+	}
 	
 	/* *******************
 	 * AUXILIARY FUNCITONS
 	 * ******************* */
 	
-	// get default path
 	private static String getDefaultPath()
 	{
 		String [] candidates = {

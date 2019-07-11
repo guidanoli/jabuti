@@ -1,10 +1,13 @@
 package gui.dialog.preferences;
 
+import java.util.ArrayList;
+
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
 import gui.error.FatalError;
 import vars.Language;
+import vars.properties.EditableProperty;
 import vars.properties.GlobalProperties;
 import vars.properties.Property;
 
@@ -16,16 +19,16 @@ public class PreferencesComboModel extends AbstractListModel<String> implements 
 	private final static int TYPE = 2;
 	private final static int RESET = 3;
 
-	private Property [] propertiesList = GlobalProperties.getPropertiesArray();
+	private ArrayList<EditableProperty> propertiesList = GlobalProperties.getEditablePropertiesList();
 	private Language lang = Language.getInstance();
 	private String selected; 
 		
 	public String getElementAt(int i) {
 		assert i < getSize();
-		return getLabel(propertiesList[i]);
+		return getLabel(propertiesList.get(i));
 	}
 	
-	public int getSize() { return propertiesList.length; }
+	public int getSize() { return propertiesList.size(); }
 	
 	public void setSelectedItem(Object anItem) { selected = (String) anItem; }
 	
@@ -40,7 +43,7 @@ public class PreferencesComboModel extends AbstractListModel<String> implements 
 	
 	private Object getSelectedItemProperty(int propertyId)
 	{
-		for( Property prop : propertiesList )
+		for( EditableProperty prop : propertiesList )
 		{
 			if( getLabel(prop).equals(selected) )
 				switch( propertyId )

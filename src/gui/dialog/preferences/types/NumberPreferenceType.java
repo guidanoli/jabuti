@@ -17,7 +17,7 @@ public class NumberPreferenceType implements PreferenceType {
 		spinner = new JSpinner(new SpinnerNumberModel(1,min,max,1));
 		panel.add(spinner);
 	}
-	public boolean validateState() { return getState() != null; }
+	public boolean validateValue(String value) { return value != null && value.matches("-?\\d+"); }
 	public JPanel getPanel(Language lang) { return panel; }
 	public void setState(String value) { spinner.setValue(Integer.parseInt(value)); }
 	public String getState() { return Integer.toString((int) spinner.getValue()); }

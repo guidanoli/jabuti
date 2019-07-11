@@ -91,7 +91,7 @@ public class PreferencesPanel extends JPanel implements ActionListener {
 		if (source == cancel_btn) {
 			dlg.setVisible(false);
 		} else if (source == apply_btn) {
-			if (type.validateState()) {
+			if (type.validateValue(type.getState())) {
 				String key = model.getSelectedItemKey();
 				String value = model.getSelectedItemType().getState();
 				gp.setProperty(key, value);

@@ -15,8 +15,8 @@ public class MakeCmdCommandListener implements ComboPreferenceTypeListener {
 		return makeCmdsTips;
 	}
 
-	public String[] getOptionLabels(Language lang) {
-		cacheStrings(lang);
+	public String[] getOptionLabels() {
+		cacheStrings(null);
 		return makeCmds;
 	}
 
@@ -26,7 +26,7 @@ public class MakeCmdCommandListener implements ComboPreferenceTypeListener {
 
 	private void cacheStrings(Language lang) {
 		if( makeCmds == null ) makeCmds = TortoiseHandler.makeCommands;
-		if( makeCmdsTips == null ) makeCmdsTips = getMakeCmdsTips(lang,makeCmds);
+		if( makeCmdsTips == null && lang != null ) makeCmdsTips = getMakeCmdsTips(lang,makeCmds);
 	}
 	
 	private String[] getMakeCmdsTips(Language lang, String[] cmds) {

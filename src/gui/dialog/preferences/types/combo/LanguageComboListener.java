@@ -11,7 +11,7 @@ public class LanguageComboListener implements ComboPreferenceTypeListener {
 	}
 	
 	public String[] getOptionToolTips(Language lang) { return languages; } // placeholder -- will not be used
-	public String[] getOptionLabels(Language lang) { return languages; }
+	public String[] getOptionLabels() { return languages; }
 	public String formatLabel(String option, String tooltip) { return option; }
 
 }

@@ -26,11 +26,10 @@ public interface ComboPreferenceTypeListener {
 	/**
 	 * Get option labels (strings that will be set
 	 * as properties)
-	 * @param lang - Language object
 	 * @return array of options. The return and any of
 	 * its values cannot be {@code null}!
 	 */
-	public String [] getOptionLabels(Language lang);
+	public String [] getOptionLabels();
 		
 	/**
 	 * Format label as combo box items

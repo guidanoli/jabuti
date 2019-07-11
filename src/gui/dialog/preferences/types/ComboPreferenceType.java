@@ -23,7 +23,7 @@ public class ComboPreferenceType implements PreferenceType {
 	}
 	
 	public JPanel getPanel(Language lang) {
-		String [] labels = listener.getOptionLabels(lang);
+		String [] labels = listener.getOptionLabels();
 		String [] tooltips = listener.getOptionToolTips(lang);
 		String [] optionStrings = new String[labels.length];
 		
@@ -43,6 +43,15 @@ public class ComboPreferenceType implements PreferenceType {
 		int index = combo.getSelectedIndex();
 		return prefValues[index];
 	}
-	public boolean validateState() { return true; }
+	
+	public boolean validateValue(String value) {
+		if( value == null ) return false;
+		String [] labels = listener.getOptionLabels();
+		for( String label : labels )
+		{
+			if( label.equals(value) ) return true;
+		}
+		return false;
+	}
 
 }

@@ -57,7 +57,7 @@ public class DirectoryPreferenceType implements PreferenceType {
 	}
 	public void setState(String value) { txt.setText(value); }
 	public String getState() { return txt.getText(); }
-	public boolean validateState() { return new File(getState()).isDirectory(); }
+	public boolean validateValue(String value) { return value != null && new File(value).isDirectory(); }
 	public JPanel getPanel(Language lang) {
 		assert lang != null;
 		btn.setText(lang.get("gui_popup_preferences_type_dir_panel_btnlabel"));

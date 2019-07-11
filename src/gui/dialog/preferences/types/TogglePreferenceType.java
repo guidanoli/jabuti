@@ -57,8 +57,8 @@ public class TogglePreferenceType implements PreferenceType {
 		return booleanArray;
 	}
 	
-	public boolean validateState() {
-		boolean [] booleanArray = getBooleanArray();
+	public boolean validateValue(String value) {
+		boolean [] booleanArray = booleanProperty.toBooleanArray(value);
 		return booleanProperty.validateProperty(booleanArray);
 	}
 

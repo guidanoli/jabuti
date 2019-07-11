@@ -14,6 +14,6 @@ public interface PreferenceType {
 	public String getState();
 	
 	// validates value
-	public boolean validateState();
+	public boolean validateValue( String value );
 	
 }

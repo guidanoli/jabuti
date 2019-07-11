@@ -46,10 +46,8 @@ public class Language {
 			gp.set("lang", langname);
 			LightError.show("Invalid default language. Contact support.","Error",null);
 		}
-		Properties metalang = new Properties();
 		try {
-			metalang.loadFromXML(LocalResources.getStream(LocalResources.metalang));
-			lang = new Properties(metalang);
+			lang = new Properties(Metadata.getInstance());
 			lang.loadFromXML(LocalResources.getStream(LocalResources.langfolder+"/"+langname+".xml"));
 		}
 		catch (IOException e) {
