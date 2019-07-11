@@ -1,5 +1,7 @@
 package vars.properties;
+import java.awt.Desktop;
 import java.io.*;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Properties;
@@ -109,6 +111,17 @@ public class GlobalProperties extends Properties {
 						JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE,
 						icon, options, options[0]);
 			if( choice == JOptionPane.CLOSED_OPTION || choice == 1 ) {
+				System.exit(0);
+			}
+			else if( earlier ) {
+				if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+				    try {
+				    	String repositoryURL = Metadata.getInstance().getProperty("repository");
+				    	if( repositoryURL != null ) Desktop.getDesktop().browse(new URI(repositoryURL));
+					} catch (Exception e) {
+						FatalError.show(e);
+					}
+				}
 				System.exit(0);
 			}
 		}
