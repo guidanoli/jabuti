@@ -1,5 +1,7 @@
 package gui.error;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.StringJoiner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,6 +16,7 @@ public class ErrorHelper {
 		StringJoiner sj = new StringJoiner("\n");
 		Pattern pattern = Pattern.compile("E(\\d+)"); // SVN errors
 		Matcher matcher = pattern.matcher(errorContent);
+		Set<String> solutions = new HashSet<String>();
 		while(matcher.find())
 		{
 			String error = matcher.group(1);
@@ -24,9 +27,10 @@ public class ErrorHelper {
 			}
 			else
 			{
-				sj.add(solution);
+				solutions.add(solution);
 			}
 		}
+		for( String solution : solutions ) sj.add(solution);
 		return sj.toString();
 	}
 
