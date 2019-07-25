@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.StringJoiner;
 
 import gui.error.FatalError;
 import gui.error.LightError;
@@ -118,8 +119,8 @@ public class TortoiseHandler {
 	 * is returned instead.
 	 */
 	protected String runCmd(File dir, boolean promptError, boolean outputError, String... cmd) { 
-    	StringBuilder sb = new StringBuilder();
-		StringBuilder errsb = new StringBuilder();
+    	StringJoiner sj = new StringJoiner("\n");
+    	StringJoiner errsj = new StringJoiner("\n");
 		try {  
 	    	String line;
 	    	ProcessBuilder pb = new ProcessBuilder(cmd);
@@ -128,18 +129,18 @@ public class TortoiseHandler {
 	    	runningProcesses.add(p);
 	    	BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 	    	while ((line = input.readLine()) != null) {
-	    		sb.append(line);
+	    		sj.add(line);
 	    	}
 	    	input.close();
 	    	if(promptError || outputError)
 	    	{
 	    		BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 	    		while ((line = stdError.readLine()) != null) {
-	    			errsb.append(line);
+	    			errsj.add(line);
 	    		}
 	    		stdError.close();
-	    		String errout = errsb.toString();
-	    		String stdout = sb.toString();
+	    		String errout = errsj.toString();
+	    		String stdout = sj.toString();
     	  		if(!errout.equals("") && promptError) {
     	    		String logMessage = formatLogMessage(stdout, errout);
 		    		FatalError.showLog(logMessage,null,false);
@@ -151,7 +152,7 @@ public class TortoiseHandler {
 	    	FatalError.show(e,null,false);
 	    	if(promptError || outputError)
 	    	{
-		    	String logMessage = formatLogMessage(sb.toString(), errsb.toString());
+		    	String logMessage = formatLogMessage(sj.toString(), errsj.toString());
 		    	if(!logMessage.equals("") && promptError) {
 		    		FatalError.showLog(logMessage,null,false);
 		    		if( outputError )
@@ -159,7 +160,7 @@ public class TortoiseHandler {
 		    	}
 	    	}
 	    }
-    	return sb.toString();
+    	return sj.toString();
 	}
 	
 	/**
@@ -189,8 +190,8 @@ public class TortoiseHandler {
 	 * @see Paths.get
 	 */
 	protected boolean runLua(File dir, ErrorListener errorListener, String luaFilePath, String... args) {
-    	StringBuilder sb = new StringBuilder();
-		StringBuilder errsb = new StringBuilder();
+		StringJoiner sj = new StringJoiner("\n");
+    	StringJoiner errsj = new StringJoiner("\n");
 		try {  
 	    	String line;
 	    	
@@ -213,17 +214,17 @@ public class TortoiseHandler {
 	    	Process p = pb.start();
 	    	BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 	    	while ((line = input.readLine()) != null) {
-	    		sb.append(line);
+	    		sj.add(line);
 	    	}
 	    	input.close();
 	    	if(errorListener.isHandling())
 	    	{
 	    		BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 	    		while ((line = stdError.readLine()) != null) {
-	    			errsb.append(line);
+	    			errsj.add(line);
 	    		}
 	    		stdError.close();
-	    		String logMessage = formatLogMessage(sb.toString(), errsb.toString());
+	    		String logMessage = formatLogMessage(sj.toString(), errsj.toString());
     	  		if(!logMessage.equals("")) {
 		    		boolean ok = errorListener.handleErrorOutput(logMessage);
 		    		if( !ok ) FatalError.showLog(logMessage, null, false);
@@ -238,7 +239,7 @@ public class TortoiseHandler {
 	    	// but don't forget to show Lua error too
 	    	if(errorListener.isHandling())
 	    	{
-		    	String logMessage = formatLogMessage(sb.toString(), errsb.toString());
+		    	String logMessage = formatLogMessage(sj.toString(), errsj.toString());
 		    	if(!logMessage.equals("")) {
 		    		boolean ok = errorListener.handleErrorOutput(logMessage);
 		    		if( !ok ) FatalError.showLog(logMessage, null, false);
@@ -325,14 +326,15 @@ public class TortoiseHandler {
 	 */
 	public boolean cleanUp(String branchName, int persistence)
 	{
-		File f = openBranchFolder(branchName);
-		if(f==null) LightError.show(lang.get("gui_errmsg_nobranchrootfolder"));
-		for(int i = 0 ; i < persistence ; i++) {
-			boolean lastCleanUp = i == persistence - 1;
-			String output = runCmd(f,lastCleanUp,true,"svn", "cleanup");
-			if( output.equals("") ) return true;
-		}
-		return false;
+//		File f = openBranchFolder(branchName);
+//		if(f==null) LightError.show(lang.get("gui_errmsg_nobranchrootfolder"));
+//		for(int i = 0 ; i < persistence ; i++) {
+//			boolean lastCleanUp = i == persistence - 1;
+//			String output = runCmd(f,lastCleanUp,true,"svn", "cleanup");
+//			if( output.equals("") ) return true;
+//		}
+//		return false;
+		return true;
 	}
 	
 	/**
