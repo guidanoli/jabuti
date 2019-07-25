@@ -6,8 +6,10 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -28,17 +30,29 @@ public class FatalError {
 	}
 	
 	public static void showLog (String msg, Component parent, boolean exit) {
+		/* Setting up */
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.add(getScrollingPane(msg));
+		/* Helper */
 		String helper = ErrorHelper.getHelp(msg);
-		if( helper != null ) msg += '\n' + helper;
-		JTextArea txt = new JTextArea(msg);
+		if( !helper.equals("") ) {
+			panel.add(getScrollingPane(helper));
+		}
+		/* Display */
+		JOptionPane.showMessageDialog(parent, panel, ERROR_LOG_TITLE, JOptionPane.ERROR_MESSAGE);
+		if( exit ) System.exit(0);
+	}
+	
+	private static JScrollPane getScrollingPane(String str) {
+		JTextArea txt = new JTextArea(str);
 		JScrollPane sp = new JScrollPane();
 		txt.setEditable(false);
 		txt.setLineWrap(true);
 		txt.setWrapStyleWord(true);
 		sp.setViewportView(txt);
 		sp.setPreferredSize(new Dimension(1000,200));
-		JOptionPane.showMessageDialog(parent, sp, ERROR_LOG_TITLE, JOptionPane.ERROR_MESSAGE);
-		if( exit ) System.exit(0);
+		return sp;
 	}
 	
 	public static void show (Exception e, Component parent, boolean exit) {
