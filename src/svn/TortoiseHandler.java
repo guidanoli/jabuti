@@ -326,15 +326,14 @@ public class TortoiseHandler {
 	 */
 	public boolean cleanUp(String branchName, int persistence)
 	{
-//		File f = openBranchFolder(branchName);
-//		if(f==null) LightError.show(lang.get("gui_errmsg_nobranchrootfolder"));
-//		for(int i = 0 ; i < persistence ; i++) {
-//			boolean lastCleanUp = i == persistence - 1;
-//			String output = runCmd(f,lastCleanUp,true,"svn", "cleanup");
-//			if( output.equals("") ) return true;
-//		}
-//		return false;
-		return true;
+		File f = openBranchFolder(branchName);
+		if(f==null) LightError.show(lang.get("gui_errmsg_nobranchrootfolder"));
+		for(int i = 0 ; i < persistence ; i++) {
+			boolean lastCleanUp = i == persistence - 1;
+			String output = runCmd(f,lastCleanUp,true,"svn", "cleanup");
+			if( output.equals("") ) return true;
+		}
+		return false;
 	}
 	
 	/**
