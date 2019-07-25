@@ -167,6 +167,52 @@ public class LauncherLogManager {
 	}
 	
 	/**
+	 * <p>Restrains log to a maximum number of entries and, and if it surpasses that
+	 * threshold, reduces the log size to a percentage so that:
+	 * <p>{@code new size = maximum size * percentage}
+	 * @param maxEntriesCount - maximum number of log entries
+	 * @param percentage - % of entries after the restraint in relation to the maximum count
+	 * @return {@code true} if log has been reduced, or {@code false} if else.
+	 */
+	public boolean restrainLogEntriesCount(int maxEntriesCount, float percentage) {
+		ArrayList<String []> logArray = readLog();
+		if( logArray == null ) return false;
+		int logSize = logArray.size();
+		if( logSize < maxEntriesCount ) return false;
+		int newLogSize = (int) (maxEntriesCount * percentage);
+		int oldestEntryIndex = logSize - newLogSize;
+		ArrayList<String []> newLogArray = (ArrayList<String[]>) logArray.subList(oldestEntryIndex, logSize);
+		return registerArray(newLogArray);
+	}
+	
+	/**
+	 * <p>Registers array entries to log file
+	 * @param logEntries - array of entries, in the same format as returned from
+	 * the {@link #readLog()} method.
+	 * @return {@code true} if registered successfully, or {@code false} if else.
+	 */
+	public boolean registerArray(ArrayList<String []> logEntries) {
+		if( !assertLogFile() ) return false;
+		try {
+			BufferedWriter writer = new BufferedWriter(
+				new FileWriter(logFile, false) // false for 'write' mode
+			);
+			StringJoiner lines = new StringJoiner("\n");
+			for( String [] entryArray : logEntries ) {
+				String entryString = String.join(" ", entryArray);
+				lines.add(entryString);
+			}
+			writer.write(lines.toString());
+			writer.newLine();
+			writer.close();
+			return true;
+		} catch (IOException e) {
+			FatalError.show(lang.get("gui_errmsg_launcher_log_registerfailed"), null, false); // does not exit
+			return false;
+		}
+	}
+	
+	/**
 	 *  Creates log file if inexistent. Warns the user with an error dialog if unsuccessful,
 	 *  but does not terminate the program itself for safety reasons (The launcher could still
 	 *  be running some sensitive procedure during the log registry, for example).
@@ -183,5 +229,5 @@ public class LauncherLogManager {
 		}
 		return true;
 	}
-	
+		
 }
