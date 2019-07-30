@@ -2,11 +2,11 @@ package gui.dialog.preferences.types.combo;
 
 import vars.Language;
 
-public class LanguageComboListener implements ComboPreferenceTypeListener {
+public class LanguageCombo implements ComboPreferenceTypeListener {
 
 	private static String [] languages;
 	
-	public LanguageComboListener() {
+	public LanguageCombo() {
 		languages = Language.getLanguages();
 	}
 	

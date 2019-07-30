@@ -17,6 +17,20 @@ import gui.dialog.preferences.types.MixedPreferenceType;
 public interface MixedPreferenceTypeListener extends Iterable<PreferenceType> {
 
 	/**
+	 * 
+	 * <p>Mixed preference sub panels orientation
+	 * <p>Dictates in which direction will the sub panels
+	 * be displayed: horizontally or vertically
+	 * 
+	 * @author guidanoli
+	 *
+	 */
+	public enum Orientation {
+		HORIZONTAL,
+		VERTICAL;
+	}
+	
+	/**
 	 * Validates each sub panel state in order to generate the mixed preference
 	 * panel state string.
 	 * @return mixed preference panel state
@@ -35,7 +49,11 @@ public interface MixedPreferenceTypeListener extends Iterable<PreferenceType> {
 	 * @param subPanel - sub panel in question
 	 * @return sub panel state string
 	 */
-	
 	public String getSubPanelString(String state, PreferenceType subPanel);
+	
+	/**
+	 * @return sub panels orientation
+	 */
+	public Orientation getOrientation();
 	
 }

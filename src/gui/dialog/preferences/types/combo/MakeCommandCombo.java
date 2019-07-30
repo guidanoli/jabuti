@@ -3,12 +3,12 @@ package gui.dialog.preferences.types.combo;
 import svn.TortoiseHandler;
 import vars.Language;
 
-public class MakeCmdCommandListener implements ComboPreferenceTypeListener {
+public class MakeCommandCombo implements ComboPreferenceTypeListener {
 
 	private String [] makeCmds = null;
 	protected String [] makeCmdsTips = null;
 	
-	public MakeCmdCommandListener() {}
+	public MakeCommandCombo() {}
 	
 	public String[] getOptionToolTips(Language lang) {
 		cacheStrings(lang);

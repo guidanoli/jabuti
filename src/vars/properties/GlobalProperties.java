@@ -54,10 +54,10 @@ public class GlobalProperties extends Properties {
 	private static final Property [] properties = {
 			new Property( "version", Metadata.getInstance().getProperty("version")),
 			new EditableProperty( "path", getDefaultPath(), new DirectoryPreferenceType(), false),
-			new EditableProperty( "lang", "English", new ComboPreferenceType(new LanguageComboListener()), true ),
+			new EditableProperty( "lang", "English", new ComboPreferenceType(new LanguageCombo()), true ),
 			new EditableProperty( "maxthreads", "3", new NumberPreferenceType(1,10), false ),
 			new EditableProperty( "cleanups", "2", new NumberPreferenceType(1,10), false ),
-			new EditableProperty( "makecmd", "mlldamt", new ComboPreferenceType(new MakeCmdCommandListener()), false ),
+			new EditableProperty( "makecmd", "mlldamt", new ComboPreferenceType(new MakeCommandCombo()), false ),
 			new EditableProperty( "notify", getDefaultNotifications(), new TogglePreferenceType(notificationProperty), false),
 			new EditableProperty( "setup-err", getDefaultSetupErrors(), new TogglePreferenceType(setupErrorsProperty), false),
 			
