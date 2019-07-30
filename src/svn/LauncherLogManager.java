@@ -167,11 +167,32 @@ public class LauncherLogManager {
 	}
 	
 	/**
+	 * <p>Restrains log to a maximum file size and, and if it surpasses that
+	 * threshold, reduces the log size to a percentage so that:
+	 * <p>{@code new size = maximum size * percentage}
+	 * <p>The number of entries that will be deducted is roughly estimated by
+	 * the current log file size and the current number of entries.
+	 * @param maxSize - maximum log file size <b>in bytes</b> ( > 0 )
+	 * @param percentage - % of file size after reduction, between 0 and 1
+	 * @return {@code true} if log has been reduced, or {@code false} if else.
+	 */
+	public boolean restrainLogSize(int maxSize, float percentage) {
+		ArrayList<String []> logArray = readLog();
+		if( logArray == null ) return false;
+		int entriesCount = logArray.size();
+		File f = new File(logFile);
+		long fileSize = f.length();
+		if( fileSize < maxSize ) return false;
+		int maxEntriesCount = (int) (entriesCount * ((double) maxSize / (double) fileSize));
+		return restrainLogEntriesCount(maxEntriesCount, percentage);
+	}
+		
+	/**
 	 * <p>Restrains log to a maximum number of entries and, and if it surpasses that
 	 * threshold, reduces the log size to a percentage so that:
 	 * <p>{@code new size = maximum size * percentage}
-	 * @param maxEntriesCount - maximum number of log entries
-	 * @param percentage - % of entries after the restraint in relation to the maximum count
+	 * @param maxEntriesCount - maximum number of log entries ( > 0 )
+	 * @param percentage - % of entries after reduction, between 0 and 1
 	 * @return {@code true} if log has been reduced, or {@code false} if else.
 	 */
 	public boolean restrainLogEntriesCount(int maxEntriesCount, float percentage) {
@@ -221,13 +242,15 @@ public class LauncherLogManager {
 	private boolean assertLogFile()
 	{
 		new File(LocalResources.datafolder).mkdirs();
+		File f = null;
 		try {
-			new File(logFile).createNewFile();
+			f = new File(logFile);
+			f.createNewFile(); // if does not exists, will create an empty one.
 		} catch (IOException e) {
 			FatalError.show(lang.get("gui_errmsg_launcher_log_openfailed"),null,false); // does not exit
 			return false;
 		}
-		return true;
+		return f.exists() && f.isFile();
 	}
 		
 }
