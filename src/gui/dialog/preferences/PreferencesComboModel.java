@@ -45,7 +45,9 @@ public class PreferencesComboModel extends AbstractListModel<String> implements 
 	{
 		for( EditableProperty prop : propertiesList )
 		{
-			if( getLabel(prop).equals(selected) )
+			String propLabel = getLabel(prop);
+			if( propLabel == null ) FatalError.show(String.format("Property label for '%s' is undefined.", prop.getKey()));
+			if( propLabel.equals(selected) )
 				switch( propertyId )
 				{
 				case KEY:

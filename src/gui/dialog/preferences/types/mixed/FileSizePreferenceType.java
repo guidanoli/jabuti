@@ -9,7 +9,6 @@ import gui.dialog.preferences.types.NumberPreferenceType;
 import gui.dialog.preferences.types.combo.ByteUnitsCombo;
 import gui.dialog.preferences.types.combo.ComboPreferenceTypeListener;
 import gui.error.FatalError;
-import vars.Language;
 
 public class FileSizePreferenceType implements MixedPreferenceTypeListener {
 
@@ -52,13 +51,16 @@ public class FileSizePreferenceType implements MixedPreferenceTypeListener {
 	public String getSubPanelString(String state, PreferenceType subPanel) {
 		Long numericValue = Long.parseLong(state);
 		if( subPanel == numberPanel ) {
-			return Long.toString(numericValue % 1024);
+			while(numericValue >= 1024) numericValue /= 1024;
+			return Long.toString(numericValue);
 		}
 		else {
-			int index = (int) (numericValue / 1024);
-			Language lang = Language.getInstance();
-			String [] dimensionArray = comboListener.getOptionToolTips(lang);
-			return dimensionArray[index];
+			Long multiplier = 1L;
+			while(numericValue >= 1024) {
+				numericValue /= 1024;
+				multiplier *= 1024;
+			}
+			return Long.toString(multiplier);
 		}
 	}
 

@@ -77,6 +77,7 @@
 <entry key="gui_popup_preferences_proplabel_cleanups">Pre-setup clean up cycles</entry>
 <entry key="gui_popup_preferences_proplabel_lang">Language</entry>
 <entry key="gui_popup_preferences_proplabel_makecmd">Compilation command</entry>
+<entry key="gui_popup_preferences_proplabel_maxlogsize">Maximum Log Size</entry>
 <entry key="gui_popup_preferences_proplabel_maxthreads">Maximum thread count</entry>
 <entry key="gui_popup_preferences_proplabel_notify">Notifications</entry>
 <entry key="gui_popup_preferences_proplabel_path">Branches directory</entry>

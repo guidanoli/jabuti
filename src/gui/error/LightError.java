@@ -8,8 +8,6 @@ import javax.swing.JOptionPane;
 import vars.Language;
 
 public class LightError {
-
-	private final static Language lang = Language.getInstance();
 	
 	/* Show message */
 	public static void show(String msg, String title, Component parent)
@@ -20,13 +18,20 @@ public class LightError {
 	/* Show exception */
 	public static void show(Exception e, String title, Component parent) {
 		String msg = e.getMessage();
+		Language lang = Language.getInstance();
 		if( msg == null ) msg = lang.get("gui_error_light_general_msg");
 		show(msg,title,parent);
 	}
 	
 	// SIGNATURE OVERLOAD -- missing title
-	public static void show(String msg, Component parent) { show(msg,lang.get("gui_error_light_msg_title"),parent); }
-	public static void show(Exception e, Component parent) { show(e,lang.get("gui_error_light_msg_title"),parent); }
+	public static void show(String msg, Component parent) {
+		Language lang = Language.getInstance();
+		show(msg,lang.get("gui_error_light_msg_title"),parent);
+	}
+	public static void show(Exception e, Component parent) {
+		Language lang = Language.getInstance();
+		show(e,lang.get("gui_error_light_msg_title"),parent);
+	}
 	
 	// SIGNATURE OVERLOAD -- missing parent
 	public static void show(String msg, String title) { show(msg,title,(JFrame)null); }

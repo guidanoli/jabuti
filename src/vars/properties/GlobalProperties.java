@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import gui.dialog.preferences.PreferenceType;
 import gui.dialog.preferences.types.*;
 import gui.dialog.preferences.types.combo.*;
+import gui.dialog.preferences.types.mixed.FileSizePreferenceType;
 import gui.error.FatalError;
 import gui.error.LightError;
 import svn.BranchManager;
@@ -51,6 +52,21 @@ public class GlobalProperties extends Properties {
 	public static NotificationProperty notificationProperty;
 	public static SetupErrorListener setupErrorsProperty;
 	
+	/**
+	 * The routine to add a new property is:
+	 * <ol><li>Choose a <b>identifier</b> (string)
+	 * 		<ul><li>small and yet intuitive</li>
+	 * 		<li>must NOT be changed afterwards</li></ul></li>
+	 * <li>Choose a <b>default value</b> (string)
+	 * 		<ul><li>a reasonable value for all users</li>
+	 * 		<li>can be changed afterwards</li></ul></li>
+	 * <li>choose a <b>preference type</b> (for later display)
+	 * 		<ul><li>make sure it works properly</li>
+	 * 		<li>can be changed afterwards</li></ul></li>
+	 * <li>choose whether <b>reset</b> is necessary after changed
+	 * 		<ul><li>must be avoided</li>
+	 * 		<li>can be changed afterwards</li></ul></li></ol> 
+	 */
 	private static final Property [] properties = {
 			new Property( "version", Metadata.getInstance().getProperty("version")),
 			new EditableProperty( "path", getDefaultPath(), new DirectoryPreferenceType(), false),
@@ -60,7 +76,7 @@ public class GlobalProperties extends Properties {
 			new EditableProperty( "makecmd", "mlldamt", new ComboPreferenceType(new MakeCommandCombo()), false ),
 			new EditableProperty( "notify", getDefaultNotifications(), new TogglePreferenceType(notificationProperty), false),
 			new EditableProperty( "setup-err", getDefaultSetupErrors(), new TogglePreferenceType(setupErrorsProperty), false),
-			
+			new EditableProperty( "maxlogsize", "4194304", new MixedPreferenceType(new FileSizePreferenceType(1073741824)), false),
 	};
 	
 	/* Singleton instance */
@@ -138,7 +154,7 @@ public class GlobalProperties extends Properties {
 			if( !type.validateValue(get(key)) ) {
 				set(prop.getDefaultValue(), key);
 				if( sameVersion ) {
-					LightError.show(String.format("Property '%s' was corrupted and got recovered.", key));
+					LightError.show(String.format("Property '%s' was corrupted and got recovered.", key),"Error");
 					// has to be in English because cannot initialize Language object on GlobalProperties constructor
 				}
 			}

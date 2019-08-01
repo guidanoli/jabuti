@@ -77,6 +77,7 @@
 <entry key="gui_popup_preferences_proplabel_cleanups">Número de limpezas pré-atualização</entry>
 <entry key="gui_popup_preferences_proplabel_lang">Idioma</entry>
 <entry key="gui_popup_preferences_proplabel_makecmd">Comando de compilação</entry>
+<entry key="gui_popup_preferences_proplabel_maxlogsize">Tamanho Máximo de Log</entry>
 <entry key="gui_popup_preferences_proplabel_maxthreads">Número máximo de threads</entry>
 <entry key="gui_popup_preferences_proplabel_notify">Notificações</entry>
 <entry key="gui_popup_preferences_proplabel_path">Diretório raiz</entry>
