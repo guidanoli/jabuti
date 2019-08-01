@@ -6,7 +6,7 @@ import vars.Language;
 
 /**
  * 
- * <p>The {@code SetMeUp} class serves as a starting point on the program call chain. 
+ * <p>This class serves as a starting point on the program call chain. 
  * It initializes the main frame component safely with the use of the
  * {@link javax.swing.SwingUtilities#invokeLater(Runnable) invokeLater} function.
  * 

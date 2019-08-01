@@ -14,6 +14,7 @@ import gui.error.FatalError;
 import gui.error.LightError;
 import vars.Language;
 import vars.LocalResources;
+import vars.properties.GlobalProperties;
 
 /**
  * The {@code LauncherLog} class is intended to handle and store log data
@@ -26,7 +27,7 @@ import vars.LocalResources;
  */
 public class LauncherLogManager {
 
-	private Language lang = Language.getInstance();
+	private static Language lang = Language.getInstance();
 	private String branchName;
 	private static String logFile = LocalResources.launchlog;
 		
@@ -172,18 +173,18 @@ public class LauncherLogManager {
 	 * <p>{@code new size = maximum size * percentage}
 	 * <p>The number of entries that will be deducted is roughly estimated by
 	 * the current log file size and the current number of entries.
-	 * @param maxSize - maximum log file size <b>in bytes</b> ( > 0 )
+	 * @param maxLogSize - maximum log file size <b>in bytes</b> ( > 0 )
 	 * @param percentage - % of file size after reduction, between 0 and 1
 	 * @return {@code true} if log has been reduced, or {@code false} if else.
 	 */
-	public boolean restrainLogSize(int maxSize, float percentage) {
+	public static boolean restrainLogSize(long maxLogSize, float percentage) {
 		ArrayList<String []> logArray = readLog();
 		if( logArray == null ) return false;
 		int entriesCount = logArray.size();
 		File f = new File(logFile);
 		long fileSize = f.length();
-		if( fileSize < maxSize ) return false;
-		int maxEntriesCount = (int) (entriesCount * ((double) maxSize / (double) fileSize));
+		if( fileSize < maxLogSize ) return false;
+		int maxEntriesCount = (int) (entriesCount * ((double) maxLogSize / (double) fileSize));
 		return restrainLogEntriesCount(maxEntriesCount, percentage);
 	}
 		
@@ -195,14 +196,14 @@ public class LauncherLogManager {
 	 * @param percentage - % of entries after reduction, between 0 and 1
 	 * @return {@code true} if log has been reduced, or {@code false} if else.
 	 */
-	public boolean restrainLogEntriesCount(int maxEntriesCount, float percentage) {
+	public static boolean restrainLogEntriesCount(int maxEntriesCount, float percentage) {
 		ArrayList<String []> logArray = readLog();
 		if( logArray == null ) return false;
 		int logSize = logArray.size();
 		if( logSize < maxEntriesCount ) return false;
 		int newLogSize = (int) (maxEntriesCount * percentage);
 		int oldestEntryIndex = logSize - newLogSize;
-		ArrayList<String []> newLogArray = (ArrayList<String[]>) logArray.subList(oldestEntryIndex, logSize);
+		ArrayList<String []> newLogArray = new ArrayList<String []>(logArray.subList(oldestEntryIndex, logSize));
 		return registerArray(newLogArray);
 	}
 	
@@ -212,19 +213,17 @@ public class LauncherLogManager {
 	 * the {@link #readLog()} method.
 	 * @return {@code true} if registered successfully, or {@code false} if else.
 	 */
-	public boolean registerArray(ArrayList<String []> logEntries) {
+	public static boolean registerArray(ArrayList<String []> logEntries) {
 		if( !assertLogFile() ) return false;
 		try {
 			BufferedWriter writer = new BufferedWriter(
 				new FileWriter(logFile, false) // false for 'write' mode
 			);
-			StringJoiner lines = new StringJoiner("\n");
 			for( String [] entryArray : logEntries ) {
 				String entryString = String.join(" ", entryArray);
-				lines.add(entryString);
+				writer.write(entryString);
+				writer.newLine();
 			}
-			writer.write(lines.toString());
-			writer.newLine();
 			writer.close();
 			return true;
 		} catch (IOException e) {
@@ -232,14 +231,14 @@ public class LauncherLogManager {
 			return false;
 		}
 	}
-	
+		
 	/**
 	 *  Creates log file if inexistent. Warns the user with an error dialog if unsuccessful,
 	 *  but does not terminate the program itself for safety reasons (The launcher could still
 	 *  be running some sensitive procedure during the log registry, for example).
 	 *  @return {@code true} if successful.
 	 */
-	private boolean assertLogFile()
+	private static boolean assertLogFile()
 	{
 		new File(LocalResources.datafolder).mkdirs();
 		File f = null;
@@ -251,6 +250,25 @@ public class LauncherLogManager {
 			return false;
 		}
 		return f.exists() && f.isFile();
+	}
+	
+	/**
+	 * Checks whether the log file size exceeds the maximum size allowed, and if so, restraints
+	 * it size by a percentage (both adjustable by the preferences dialog)
+	 */
+	public static void cleanUp() {
+		GlobalProperties gp = GlobalProperties.getInstance();
+		String maxLogSizeString = gp.get("maxlogsize");
+		String percentageString = gp.get("logreduction");
+		long maxLogSize;
+		float percentage;
+		try {
+			maxLogSize = Long.parseLong(maxLogSizeString);
+			percentage = (float) Integer.parseInt(percentageString) / 100;
+			restrainLogSize(maxLogSize, percentage);
+		} catch( NumberFormatException e ) {
+			LightError.show(e);
+		}
 	}
 		
 }

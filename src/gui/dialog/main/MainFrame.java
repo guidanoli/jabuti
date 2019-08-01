@@ -4,6 +4,7 @@ import javax.swing.JMenuBar;
 
 import gui.defaults.DefaultClosingCallback;
 import gui.defaults.DefaultFrame;
+import svn.LauncherLogManager;
 import vars.properties.GlobalProperties;
 
 /**
@@ -55,6 +56,7 @@ public class MainFrame extends JFrame {
 				case CLOSE:
 					/* Routines called before closing */
 					gp.cleanUp();
+					LauncherLogManager.cleanUp();
 					/* Then, exit */
 					System.exit(0);
 					break;
