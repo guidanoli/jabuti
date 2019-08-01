@@ -74,6 +74,15 @@
 <entry key="gui_popup_preferences_btn_apply">Apply</entry>
 <entry key="gui_popup_preferences_btn_cancel">Cancel</entry>
 <entry key="gui_popup_preferences_btn_restore">Restore Default</entry>
+<entry key="gui_popup_preferences_prophelp_cleanups">Maximum number of times the application will try to clean up the branch folder while unsuccessful before giving up on setting up a certain branch.</entry>
+<entry key="gui_popup_preferences_prophelp_lang">Language in which this application will be displayed</entry>
+<entry key="gui_popup_preferences_prophelp_logreduction">Percentage of the maximum log file size that will stay on disk if it surpasses the threshold.</entry>
+<entry key="gui_popup_preferences_prophelp_makecmd">Compilation comand that will run on the branch source folder. Equivalent to vis COMMAND.</entry>
+<entry key="gui_popup_preferences_prophelp_maxlogsize">Size cap for your log file. This setting prevents the log file from getting too big and consuming unnecessary memory space. If the log file size exceeds this threshold, a percentage of the older entries will be deleted permanently.</entry>
+<entry key="gui_popup_preferences_prophelp_maxthreads">Maximum number of threads allowed to run any launch job. Less threads might consume less computer power but take longer to accomplish setup, and vice versa.</entry>
+<entry key="gui_popup_preferences_prophelp_notify">Choose which events will be notified through a silent popup on the lower-right corner of your screen.</entry>
+<entry key="gui_popup_preferences_prophelp_path">Path where all your branch folders are located</entry>
+<entry key="gui_popup_preferences_prophelp_setup-err">Choose which erros to ignore from the setup jobs.</entry>
 <entry key="gui_popup_preferences_proplabel_cleanups">Pre-setup clean up cycles</entry>
 <entry key="gui_popup_preferences_proplabel_lang">Language</entry>
 <entry key="gui_popup_preferences_proplabel_logreduction">Log file reduction %</entry>

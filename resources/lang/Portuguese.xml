@@ -74,6 +74,15 @@
 <entry key="gui_popup_preferences_btn_apply">Aplicar</entry>
 <entry key="gui_popup_preferences_btn_cancel">Cancelar</entry>
 <entry key="gui_popup_preferences_btn_restore">Restaurar padrão</entry>
+<entry key="gui_popup_preferences_prophelp_cleanups">Número máximo de vezes que a aplicação tentará limpar o diretório da branch enquanto sem sucesso antes de desistir de atualizar tal branch.</entry>
+<entry key="gui_popup_preferences_prophelp_lang">Idioma no qual esta aplicação se apresentará</entry>
+<entry key="gui_popup_preferences_prophelp_logreduction">Porcentagem do tamanho máximo do arquivo de log que permanescerá em disco após ultrapassar o limiar.</entry>
+<entry key="gui_popup_preferences_prophelp_makecmd">Comando de compilação que será executado na pasta source da branch. Equivalente a vis COMANDO.</entry>
+<entry key="gui_popup_preferences_prophelp_maxlogsize">Limite de tamanho para seu arquivo de log. Esta configuração evita que o arquivo de log cresça e consuma desnecessariamente espaço de memória. Se o tamanho do arquivo de log exceder este limiar, uma porcentagem das entradas mais antigas serão apagadas permanentemente.</entry>
+<entry key="gui_popup_preferences_prophelp_maxthreads">Número máximo de threads permitidas para rodar ao mesmo tempo. Menos threads podem consumir menos poder de processamento mas, por outro lado, demorar mais para finalizar a rotina, e vice-versa.</entry>
+<entry key="gui_popup_preferences_prophelp_notify">Escolha quais eventos serão notificados através de um singelo popup no canto inferior direito da sua tela.</entry>
+<entry key="gui_popup_preferences_prophelp_path">Diretório aonde se encontram todas as suas pastas de branches</entry>
+<entry key="gui_popup_preferences_prophelp_setup-err">Escolha quais erros ignorar das rotinas de atualização.</entry>
 <entry key="gui_popup_preferences_proplabel_cleanups">Número de limpezas pré-atualização</entry>
 <entry key="gui_popup_preferences_proplabel_lang">Idioma</entry>
 <entry key="gui_popup_preferences_proplabel_logreduction">% de redução do log</entry>
