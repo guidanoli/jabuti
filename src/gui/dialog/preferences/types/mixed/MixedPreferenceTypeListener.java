@@ -38,10 +38,15 @@ public interface MixedPreferenceTypeListener extends Iterable<PreferenceType> {
 	public String getPanelState();
 	
 	/**
-	 * Validates mixed preference panel according to each sub panel state
-	 * @return
+	 * <p>Validates mixed preference panel according to state string.
+	 * <p><b>Must not</b> validate sub panels because this method will
+	 * be called earlier when the panel is not even launched and property
+	 * state is not set. Thus, only the state string and variables initialized
+	 * in the constructor can be used.
+	 * @param state - mixed preference panel state string
+	 * @return {@code true} if is valid, and {@code false} if else.
 	 */
-	public boolean validatePanelState();
+	public boolean validatePanelString(String state);
 	
 	/**
 	 * Converts {@code mixed preference panel state -> sub panel state}

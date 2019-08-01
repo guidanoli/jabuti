@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import gui.dialog.preferences.PreferenceType;
 import gui.dialog.preferences.types.*;
 import gui.dialog.preferences.types.combo.*;
-import gui.dialog.preferences.types.mixed.FileSizePreferenceType;
+import gui.dialog.preferences.types.mixed.LogSizePreferenceType;
 import gui.error.FatalError;
 import gui.error.LightError;
 import svn.BranchManager;
@@ -65,18 +65,21 @@ public class GlobalProperties extends Properties {
 	 * 		<li>can be changed afterwards</li></ul></li>
 	 * <li>choose whether <b>reset</b> is necessary after changed
 	 * 		<ul><li>must be avoided</li>
+	 * 		<li>can be changed afterwards</li></ul></li>
+	 * <li>add a <b>label</b> in every language file
+	 * 		<ul><li>must be consistent with the rest of the language</li>
 	 * 		<li>can be changed afterwards</li></ul></li></ol> 
 	 */
 	private static final Property [] properties = {
-			new Property( "version", Metadata.getInstance().getProperty("version")),
-			new EditableProperty( "path", getDefaultPath(), new DirectoryPreferenceType(), false),
+			new Property( "version", Metadata.getInstance().getProperty("version") ),
+			new EditableProperty( "path", getDefaultPath(), new DirectoryPreferenceType(), false ),
 			new EditableProperty( "lang", "English", new ComboPreferenceType(new LanguageCombo()), true ),
 			new EditableProperty( "maxthreads", "3", new NumberPreferenceType(1,10), false ),
 			new EditableProperty( "cleanups", "2", new NumberPreferenceType(1,10), false ),
 			new EditableProperty( "makecmd", "mlldamt", new ComboPreferenceType(new MakeCommandCombo()), false ),
-			new EditableProperty( "notify", getDefaultNotifications(), new TogglePreferenceType(notificationProperty), false),
-			new EditableProperty( "setup-err", getDefaultSetupErrors(), new TogglePreferenceType(setupErrorsProperty), false),
-			new EditableProperty( "maxlogsize", "4194304", new MixedPreferenceType(new FileSizePreferenceType(1073741824)), false),
+			new EditableProperty( "notify", getDefaultNotifications(), new TogglePreferenceType(notificationProperty), false ),
+			new EditableProperty( "setup-err", getDefaultSetupErrors(), new TogglePreferenceType(setupErrorsProperty), false ),
+			new EditableProperty( "maxlogsize", "4194304/0.5", new MixedPreferenceType(new LogSizePreferenceType(1073741824)), false ),
 	};
 	
 	/* Singleton instance */
@@ -152,7 +155,7 @@ public class GlobalProperties extends Properties {
 			PreferenceType type = prop.getType();
 			String key = prop.getKey();
 			if( !type.validateValue(get(key)) ) {
-				set(prop.getDefaultValue(), key);
+				set(key, prop.getDefaultValue());
 				if( sameVersion ) {
 					LightError.show(String.format("Property '%s' was corrupted and got recovered.", key),"Error");
 					// has to be in English because cannot initialize Language object on GlobalProperties constructor
@@ -210,10 +213,10 @@ public class GlobalProperties extends Properties {
 	
 	/**
 	 * Sets value to property of a given key
-	 * @param value - the value to be attributed to key
 	 * @param key - the property key
+	 * @param value - the value to be attributed to key
 	 */
-	public void set(String value, String key) { setProperty(value,key); }
+	public void set(String key, String value) { setProperty(key, value); }
 	
 	/**
 	 * Saves all changes to property object to a XML file in UTF-8 encoding

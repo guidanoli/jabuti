@@ -49,11 +49,16 @@ public class MixedPreferenceType implements PreferenceType {
 	}
 
 	public boolean validateValue(String value) {
+		/* Validate global scope */
+		boolean globalScope = listener.validatePanelString(value);
+		if(!globalScope) return false;
+		/* Validate individual sub panels */
 		for(PreferenceType subPanel : listener) {
 			String subState = listener.getSubPanelString(value, subPanel);
-			if(!subPanel.validateValue(subState)) return false;
+			if(subState == null || !subPanel.validateValue(subState)) return false;
 		}
-		return listener.validatePanelState();
+		/* Validate */
+		return true;
 	}
 	
 }

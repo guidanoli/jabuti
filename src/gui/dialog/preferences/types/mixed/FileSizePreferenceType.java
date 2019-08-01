@@ -44,8 +44,11 @@ public class FileSizePreferenceType implements MixedPreferenceTypeListener {
 		return Long.toString(getNumericValue());
 	}
 
-	public boolean validatePanelState() {
-		return getNumericValue() <= maxSize;
+	public boolean validatePanelString(String state) {
+		boolean isNumeric = state.matches("\\d+");
+		if(!isNumeric) return false;
+		Long stateAsLong = Long.parseLong(state);
+		return stateAsLong <= maxSize;
 	}
 
 	public String getSubPanelString(String state, PreferenceType subPanel) {
