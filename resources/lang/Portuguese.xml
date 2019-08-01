@@ -76,6 +76,7 @@
 <entry key="gui_popup_preferences_btn_restore">Restaurar padrão</entry>
 <entry key="gui_popup_preferences_proplabel_cleanups">Número de limpezas pré-atualização</entry>
 <entry key="gui_popup_preferences_proplabel_lang">Idioma</entry>
+<entry key="gui_popup_preferences_proplabel_logreduction">% de redução do log</entry>
 <entry key="gui_popup_preferences_proplabel_makecmd">Comando de compilação</entry>
 <entry key="gui_popup_preferences_proplabel_maxlogsize">Tamanho Máximo de Log</entry>
 <entry key="gui_popup_preferences_proplabel_maxthreads">Número máximo de threads</entry>

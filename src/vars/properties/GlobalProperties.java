@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import gui.dialog.preferences.PreferenceType;
 import gui.dialog.preferences.types.*;
 import gui.dialog.preferences.types.combo.*;
-import gui.dialog.preferences.types.mixed.LogSizePreferenceType;
+import gui.dialog.preferences.types.mixed.FileSizePreferenceType;
 import gui.error.FatalError;
 import gui.error.LightError;
 import svn.BranchManager;
@@ -79,7 +79,8 @@ public class GlobalProperties extends Properties {
 			new EditableProperty( "makecmd", "mlldamt", new ComboPreferenceType(new MakeCommandCombo()), false ),
 			new EditableProperty( "notify", getDefaultNotifications(), new TogglePreferenceType(notificationProperty), false ),
 			new EditableProperty( "setup-err", getDefaultSetupErrors(), new TogglePreferenceType(setupErrorsProperty), false ),
-			new EditableProperty( "maxlogsize", "4194304/0.5", new MixedPreferenceType(new LogSizePreferenceType(1073741824)), false ),
+			new EditableProperty( "maxlogsize", "4194304", new MixedPreferenceType(new FileSizePreferenceType(1073741824)), false ),
+			new EditableProperty( "logreduction", "50", new SliderPreferenceType(10,90,5,20), false ),
 	};
 	
 	/* Singleton instance */

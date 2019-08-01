@@ -1,5 +1,10 @@
 package gui.dialog.preferences.types;
 
+import java.awt.Component;
+import java.awt.Dimension;
+import java.util.function.Supplier;
+
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
@@ -27,12 +32,19 @@ public class MixedPreferenceType implements PreferenceType {
 	
 	public MixedPreferenceType(MixedPreferenceTypeListener listener) {
 		this.listener = listener;
-		int orientationId = listener.getOrientation() == Orientation.HORIZONTAL ?
-				BoxLayout.X_AXIS : BoxLayout.Y_AXIS;
+		boolean h = listener.getOrientation() == Orientation.HORIZONTAL;
+		int orientationId = h ? BoxLayout.X_AXIS : BoxLayout.Y_AXIS;
+		Supplier<Component> gapSupplier = h ? () -> Box.createRigidArea(new Dimension(5, 0))
+											: () -> Box.createRigidArea(new Dimension(0, 5));
 		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, orientationId));
 		Language lang = Language.getInstance();
-		for(PreferenceType subPanel : listener) panel.add(subPanel.getPanel(lang));
+		boolean first = true;
+		for(PreferenceType subPanel : listener) {
+			if(first) first = false;
+			else panel.add(gapSupplier.get());
+			panel.add(subPanel.getPanel(lang));
+		}
 	}
 
 	public JPanel getPanel(Language lang) { return panel; }
