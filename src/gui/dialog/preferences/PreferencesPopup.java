@@ -15,14 +15,10 @@ public class PreferencesPopup implements MenuPopup {
 	// containers
 	PreferencesPanel panel;
 	
-	public PreferencesPopup(MainFrame parent) {
-		this.parent = parent;
-		dlg = new DefaultPopup(parent,lang.get("gui_popup_preferences_title"));
-		panel = new PreferencesPanel(dlg,parent);
-		dlg.getContentPane().add(panel);
-	}
-
 	public void open(JFrame parent) {
+		dlg = new DefaultPopup(parent,lang.get("gui_popup_preferences_title"));
+		panel = new PreferencesPanel(dlg,(MainFrame) parent);
+		dlg.getContentPane().add(panel);
 		panel.updateTextBox();
 		dlg.setResizable(false);
 		dlg.setVisible(true);

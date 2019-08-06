@@ -93,7 +93,7 @@ public class MenuBar extends JMenuBar {
 		newBranchItem.addActionListener(
 			new MenuItemListener(
 				parent,
-				new NewBranchPopup(parent)
+				new NewBranchPopup()
 			)
 		);
 		updateItem.addActionListener(
@@ -144,7 +144,7 @@ public class MenuBar extends JMenuBar {
 		prefItem.addActionListener(
 			new MenuItemListener(
 				parent,
-				new PreferencesPopup(parent)
+				new PreferencesPopup()
 			)
 		);
 		aboutItem.addActionListener(
