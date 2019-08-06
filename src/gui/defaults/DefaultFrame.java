@@ -23,7 +23,7 @@ public class DefaultFrame {
 		}
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
 			FatalError.show(e,frame);
 		}

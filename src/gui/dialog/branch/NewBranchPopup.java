@@ -33,16 +33,12 @@ public class NewBranchPopup implements MenuPopup {
 		JTextField branchNameTextComponent = new JTextField();
 		TextPrompt branchNameHint = new TextPrompt(branchDefaultHint, branchNameTextComponent);
 		branchNameHint.changeAlpha(0.5f);
-		panel.add(branchNameLabel);
-		panel.add(branchNameTextComponent, "wrap, growx");
 				
 		/* Folder name text field */
 		JLabel folderNameLabel = new JLabel("Folder:");
 		JTextField folderNameTextComponent = new JTextField();
 		TextPrompt folderNameHint = new TextPrompt(folderDefaultHint, folderNameTextComponent);
 		folderNameHint.changeAlpha(0.5f);
-		panel.add(folderNameLabel);
-		panel.add(folderNameTextComponent, "wrap, growx");
 		
 		/* Add copying functionality to names text fields */
 		branchNameTextComponent.getDocument().addDocumentListener(new DocumentListener() {
@@ -83,14 +79,10 @@ public class NewBranchPopup implements MenuPopup {
 		/* Make settings combo box */
 		JLabel makeSettingsLabel = new JLabel("Make settings:");
 		JComboBox<String> makeSettingsCombo = new JComboBox<String>(branchList);
-		panel.add(makeSettingsLabel);
-		panel.add(makeSettingsCombo, "wrap, growx");
 				
 		/* Projects settings combo box */
 		JLabel prjSettingsLabel = new JLabel("Projects settings:");
 		JComboBox<String> prjSettingsCombo = new JComboBox<String>(branchList);
-		panel.add(prjSettingsLabel);
-		panel.add(prjSettingsCombo, "wrap 15px, growx");
 		
 		/* Adding copying functionality to settings combo boxes */
 		makeSettingsCombo.addActionListener(new ActionListener() {
@@ -113,15 +105,23 @@ public class NewBranchPopup implements MenuPopup {
 			}
 		});
 
-		panel.add(okButton, "skip 1, split 2, gapbefore push");
-		panel.add(cancelButton, "wrap");
+		panel.add(branchNameLabel);
+		panel.add(branchNameTextComponent);
+		panel.add(folderNameLabel);
+		panel.add(folderNameTextComponent);
+		panel.add(makeSettingsLabel);
+		panel.add(makeSettingsCombo);
+		panel.add(prjSettingsLabel);
+		panel.add(prjSettingsCombo);
+		panel.add(okButton, "skip 1, split 2, gapbefore push, sizegroup btns");
+		panel.add(cancelButton, "sizegroup btns");
 	}
 		
 	@Override
 	public void open(JFrame parent) {
 		dlg = new DefaultPopup(parent, "New Branch");
 		JPanel panel = new JPanel();
-		panel.setLayout(new MigLayout());
+		panel.setLayout(new MigLayout("fill, wrap 2", "10[right]rel[grow,fill]10"));
 		buildDialog(panel);
 		dlg.getContentPane().add(panel);
 		dlg.pack();

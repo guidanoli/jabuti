@@ -30,7 +30,7 @@ public class DefaultPopup extends JDialog {
 			FatalError.show(e);
 		}
 		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
 			FatalError.show(e,owner,false);
 		}
