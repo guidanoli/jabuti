@@ -18,7 +18,7 @@ import vars.Language;
 import vars.properties.GlobalProperties;
 
 /**
- * <p>The {@code TortoiseHandler} handles Tortoise SVN commands as a sort of wrapper to
+ * <p>The <code>TortoiseHandler</code> handles Tortoise SVN commands as a sort of wrapper to
  * the {@link svn.Launcher Launcher} class mainly, but can be used anywhere else, since
  * it is given the proper parameters.
  * 
@@ -59,8 +59,8 @@ public class TortoiseHandler {
 	}
 	
 	/**
-	 * <p>{@code public boolean isTortoiseDir(String branchName)}
-	 * <p>Checks if the folder of name {@code branchName} has a .svn folder - that is -
+	 * <p><code>public boolean isTortoiseDir(String branchName)</code>
+	 * <p>Checks if the folder of name <code>branchName</code> has a .svn folder - that is -
 	 * can be operated via Tortoise SVN functions.
 	 * <p><b>Observation:</b> Does not prompt errors (that is, if branchName isn't a SVN Folder)
 	 * @param branchName folder name from the branch directory absolute path
@@ -75,7 +75,7 @@ public class TortoiseHandler {
 	}
 	
 	/**
-	 * <p>{@code public long getRevisionNumber(String branchName)}
+	 * <p><code>public long getRevisionNumber(String branchName)</code>
 	 * <p>Gets last changed revision from local copy. Its effect is the same of the
 	 * 'svn info --show-item last-changed-revision' SVN command executed from any
 	 * branch's root folder.
@@ -108,14 +108,14 @@ public class TortoiseHandler {
 	 * to many of the function of the {@link TortoiseHandler} class, dealing with
 	 * input, output and error streams.
 	 * @param dir - File object to directory where the command will be executed
-	 * @param promptError - if {@code true}, on any error output, an error dialog will
+	 * @param promptError - if <code>true</code>, on any error output, an error dialog will
 	 * be prompted to the user with the error message along with it
-	 * @param outputError - if {@code true}, on any error output, the method will return
+	 * @param outputError - if <code>true</code>, on any error output, the method will return
 	 * the error message instead of output of any other type
 	 * @param cmd - Command arguments
-	 * @return Output stream of the command. If {@code error} is true, and an error
-	 * has been encountered, the {@code return} value will also contain the error output string.
-	 * If a Java Exception is raised, but no error message has been streamed, {@code null}
+	 * @return Output stream of the command. If <code>error</code> is true, and an error
+	 * has been encountered, the <code>return</code> value will also contain the error output string.
+	 * If a Java Exception is raised, but no error message has been streamed, <code>null</code>
 	 * is returned instead.
 	 */
 	protected String runCmd(File dir, boolean promptError, boolean outputError, String... cmd) { 
@@ -164,7 +164,7 @@ public class TortoiseHandler {
 	}
 	
 	/**
-	 * <p>{@code boolean runLua(File dir, boolean error, String luaFilePath, String... args)}
+	 * <p><code>boolean runLua(File dir, boolean error, String luaFilePath, String... args)</code>
 	 * <p>Runs Lua scripts making use of the lua5posix executable that should be on the
 	 * binaries folder of every SVN branch folder.
 	 * <p><b>Observations:</b>
@@ -177,15 +177,15 @@ public class TortoiseHandler {
 	 * be thrown.</li>
 	 * </ul>
 	 * <p>Example of usage:
-	 * <p><b>{@code String output = runLua(f, true, "bin/vis.lua", "s");}</b>
-	 * <p>Note that {@code f} stands for a file object that points to the branch folder and is
+	 * <p><b><code>String output = runLua(f, true, "bin/vis.lua", "s");</code></b>
+	 * <p>Note that <code>f</code> stands for a file object that points to the branch folder and is
 	 * valid. The lua file path, unlike the simple example above, should be safely formatted by
 	 * the {@link Paths.get} function, for the operating system might differ file separators.
 	 * @param dir - file object that points to the directory of a certain branch 
 	 * @param errorListener - {@link ErrorListener}
 	 * @param luaFilePath - lua script relative path from branch directory path
 	 * @param args - list of all arguments provided to the lua script
-	 * @return {@code true} if no errors occurred
+	 * @return <code>true</code> if no errors occurred
 	 * @see TortoiseHandler#openBranchFolder(String)
 	 * @see Paths.get
 	 */
@@ -255,7 +255,7 @@ public class TortoiseHandler {
 	}
 	
 	/**
-	 * {@code private File openBranchFolder(String branchName)}
+	 * <code>private File openBranchFolder(String branchName)</code>
 	 * <p>Wrapper function that opens the branch folder through its folder name,
 	 * loading it to a File object.
 	 * @param branchName - branch folder name
@@ -266,7 +266,7 @@ public class TortoiseHandler {
 	}
 	
 	/**
-	 * {@code private File openBranchFolder(String branchName)}
+	 * <code>private File openBranchFolder(String branchName)</code>
 	 * <p>Wrapper function that opens a subfolder in a branch folder through its folder name,
 	 * loading it to a File object.
 	 * @param branchName - branch folder name
@@ -280,13 +280,13 @@ public class TortoiseHandler {
 	}
 	
 	/**
-	 * <p>{@code void setup(String branchName)}
+	 * <p><code>void setup(String branchName)</code>
 	 * <p>Sets up the branch. Its effect is the same of the './vis s' batch job executed from
 	 * the branch source folder.
 	 * <p>If it could not set up the branch, an error message will be prompted, but not forcing the
 	 * application to be terminated.
 	 * @param branchName - the name of the branch folder
-	 * @return {@code true} on success and {@code false} on error
+	 * @return <code>true</code> on success and <code>false</code> on error
 	 */
 	public boolean setup(String branchName, SetupErrorListener listener)
 	{
@@ -297,13 +297,13 @@ public class TortoiseHandler {
 	}
 	
 	/**
-	 * <p>{@code void make(String branchName)}
+	 * <p><code>void make(String branchName)</code>
 	 * <p>Compiles the branch. Its effect is the same of the './vis <make command>' batch job executed from
 	 * the branch source folder.
 	 * <p>If it could not set up the branch, an error message will be prompted, but not forcing the
 	 * application to be terminated.
 	 * @param branchName - the name of the branch folder
-	 * @return {@code true} on success and {@code false} on error
+	 * @return <code>true</code> on success and <code>false</code> on error
 	 */
 	public boolean make(String branchName, MakeErrorListener listener)
 	{
@@ -315,14 +315,14 @@ public class TortoiseHandler {
 	}
 	
 	/**
-	 * <p>{@code public boolean cleanUp(String branchName, int persistence)}
+	 * <p><code>public boolean cleanUp(String branchName, int persistence)</code>
 	 * <p>Cleans up the branch. Its effect is the same of the './vis clean' batch job executed from the
 	 * branch source folder. 
 	 * <p>If it could not clean up the branch after all the tried, an error message will be prompted,
 	 * but not forcing the application to be terminated.
 	 * @param branchName - the name of the branch folder
 	 * @param persistence - maximum number of tries until clean up job runs without errors
-	 * @return {@code true} if successful, {@code false} if failed all #persistence times
+	 * @return <code>true</code> on success and <code>false</code> if failed all #persistence times
 	 */
 	public boolean cleanUp(String branchName, int persistence)
 	{
@@ -337,7 +337,7 @@ public class TortoiseHandler {
 	}
 	
 	/**
-	 * <p>{@code public static void killProcesses()}
+	 * <p><code>public static void killProcesses()</code>
 	 * <p>Kills all currently running processes
 	 * <p>May be unsafe and leave objects in an unstable state
 	 */

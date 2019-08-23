@@ -18,9 +18,10 @@ import svn.error.SetupErrorListener;
 import vars.Language;
 import vars.properties.GlobalProperties;
 
-@SuppressWarnings("serial")
 public class MainPanel extends JPanel implements ActionListener, LaunchProgressListener {
 
+	private static final long serialVersionUID = -4898286059140758983L;
+	
 	// managers
 	private Language lang = Language.getInstance();
 	private Launcher launcher = null; // constructor will instantly launch

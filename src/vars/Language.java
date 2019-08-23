@@ -9,7 +9,7 @@ import gui.error.LightError;
 import vars.properties.GlobalProperties;
 
 /**
- * The {@code Language} class deals with language strings that can vary depending on
+ * The <code>Language</code> class deals with language strings that can vary depending on
  * the user preferences. It causes the programmer to have full control of which string
  * will be shown where, independently of the actual language.
  * <p> All the language strings are stored in Properties format virtually and in XML
@@ -56,7 +56,7 @@ public class Language {
 	}
 		
 	/**
-	 * {@code public static String get(String label)}
+	 * <code>public static String get(String label)</code>
 	 * <p>Get String from the abstract label in the current language
 	 * @param label - string label, used to access label in XML
 	 * @return string in the current language
@@ -73,14 +73,14 @@ public class Language {
 	}
 	
 	/**
-	 * {@code public static String format(String formatkey, String... labels)}
+	 * <code>public static String format(String formatkey, String... labels)</code>
 	 * <p>Formats String containing many Language labels, in a similar way to
 	 * {@link java.lang.String#format(String, Object...) String.format} function
 	 * <p>Makes use of formatted strings on the XML language files
 	 * <p><b>Note:</b> for a given string key, there must be the same format footprint, in the same order
 	 * @param formatkey - key of language string that represent a format
 	 * @param labels - labels to be replaced in string
-	 * @return formatted string or {@code null} if formatkey is invalid
+	 * @return formatted string or <code>null</code> if formatkey is invalid
 	 */
 	public String format(String formatkey, Object... values)
 	{

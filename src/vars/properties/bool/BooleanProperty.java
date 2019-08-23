@@ -37,7 +37,7 @@ public interface BooleanProperty {
 	 * @param booleanArray - array of boolean values for each
 	 * sub-property
 	 * @return property String, as to be set to GP. It can
-	 * only return {@code null} if the state is invalid.
+	 * only return <code>null</code> if the state is invalid.
 	 * @see {@link #toBooleanArray(String)}
 	 * @see {@link GlobalProperties}
 	 */
@@ -47,7 +47,7 @@ public interface BooleanProperty {
 	 * Validates the current state of the boolean array.
 	 * @param booleanArray - array of booleans, whether the i-th
 	 * sub-property is true or not
-	 * @return {@code true} if the state is valid and can be
+	 * @return <code>true</code> if the state is valid and can be
 	 * set to GP
 	 * @see {@link #toBooleanArray(String)}
 	 * @see {@link GlobalProperties}

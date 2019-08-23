@@ -9,7 +9,7 @@ import vars.properties.GlobalProperties;
 
 /**
  * 
- * <p>The {@code MainFrame} class defines the barebones of the JFrame component for the
+ * <p>The <code>MainFrame</code> class defines the barebones of the JFrame component for the
  * application, setting default closing operations, which can be manipulated later on
  * the application when a sensitive task is being executed and closing promptly the process
  * might damage the user's data - for example, when setting up or compiling branches. This
@@ -19,9 +19,10 @@ import vars.properties.GlobalProperties;
  * @author guidanoli
  *
  */
-@SuppressWarnings("serial")
 public class MainFrame extends JFrame {
 	
+	private static final long serialVersionUID = -2177227823320529007L;
+
 	/**
 	 * <p>Closes the window by clicking on the X button on the upper right corner
 	 */

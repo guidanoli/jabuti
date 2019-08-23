@@ -1,7 +1,7 @@
 package svn;
 
 /**
- * <p>The {@code LaunchProgressListener} interface intends to connect the main application
+ * <p>The <code>LaunchProgressListener</code> interface intends to connect the main application
  * graphical class {@link gui.dialog.main.MainPanel MainPanel} and its kernel classes such
  * as {@link svn.BranchManager BranchManager}, {@link svn.Launcher Launcher} and
  * {@link svn.TortoiseHandler TortoiseHandler}.

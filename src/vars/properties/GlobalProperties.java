@@ -41,9 +41,10 @@ import vars.properties.bool.NotificationProperty;
  * @author guidanoli
  *
  */
-@SuppressWarnings("serial")
 public class GlobalProperties extends Properties {
 
+	private static final long serialVersionUID = -6808146187988682780L;
+	
 	/* Local Resources */
 	private static final String configFolder = vars.LocalResources.datafolder;
 	private static final String propertiesFile = vars.LocalResources.properties;
@@ -254,7 +255,7 @@ public class GlobalProperties extends Properties {
 	 * Resets property value to default value
 	 * @param key - property key
 	 * @return the property default and current value or
-	 * {@code null} if property key does not exist
+	 * <code>null</code> if property key does not exist
 	 * 
 	 */
 	public String resetPropertyToDefault(String key)

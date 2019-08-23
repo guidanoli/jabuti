@@ -9,8 +9,9 @@ import gui.dialog.log.LogPopup;
 import gui.dialog.preferences.PreferencesPopup;
 import vars.Language;
 
-@SuppressWarnings("serial")
 public class MenuBar extends JMenuBar {
+
+	private static final long serialVersionUID = -2627301045318942787L;
 
 	private Language lang = Language.getInstance();
 	

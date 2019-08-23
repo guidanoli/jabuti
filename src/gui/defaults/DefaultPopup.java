@@ -12,8 +12,9 @@ import javax.swing.UIManager;
 import gui.error.FatalError;
 import vars.LocalResources;
 
-@SuppressWarnings("serial")
 public class DefaultPopup extends JDialog {
+
+	private static final long serialVersionUID = 5239596504066756266L;
 
 	/**
 	 * Constructs a modal with the software default icon and Windows Look and Feel

@@ -16,9 +16,9 @@ public interface ComboPreferenceTypeListener {
 	/**
 	 * Get option tool tips (description of each option)
 	 * @param lang - Language object
-	 * @return array of tool tips or {@code null} if no
+	 * @return array of tool tips or <code>null</code> if no
 	 * tool tip will be presented. If one of the tool
-	 * tips is {@code null} (but the array isn't), then there
+	 * tips is <code>null</code> (but the array isn't), then there
 	 * will not be a tool tip for that option in specific.
 	 */
 	public String [] getOptionToolTips(Language lang);
@@ -27,7 +27,7 @@ public interface ComboPreferenceTypeListener {
 	 * Get option labels (strings that will be set
 	 * as properties)
 	 * @return array of options. The return and any of
-	 * its values cannot be {@code null}!
+	 * its values cannot be <code>null</code>!
 	 */
 	public String [] getOptionLabels();
 		

@@ -5,8 +5,9 @@ import java.util.Properties;
 
 import gui.error.FatalError;
 
-@SuppressWarnings("serial")
 public class Metadata extends Properties {
+
+	private static final long serialVersionUID = -6578015679206165199L;
 
 	/* Singleton instance */
 	public static Metadata getInstance() { return INSTANCE; }

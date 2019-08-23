@@ -1,29 +1,87 @@
 package gui.dialog.branch;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.function.Consumer;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import ext.TextPrompt;
+import gui.component.Console;
 import gui.defaults.DefaultPopup;
 import gui.dialog.MenuPopup;
+import gui.error.LightError;
 import net.miginfocom.swing.MigLayout;
 import svn.BranchManager;
+import vars.properties.GlobalProperties;
 
-public class NewBranchPopup implements MenuPopup {
+/**
+ * The "New Branch" dialog allows the user to initialize a new branch
+ * on its working directory by making use of an initialization script.
+ * 
+ * @author guidanoli
+ *
+ */
+public class NewBranchPopup implements MenuPopup, Consumer<Boolean> {
 
 	private DefaultPopup dlg;
+	private BranchManager manager = BranchManager.getInstance();
+	private GlobalProperties gp = GlobalProperties.getInstance();
+	private String [] branchList;
+	private JFrame parent;
+	private String dlgTitle = "New Branch";
 	
+	/**
+	 * Implementing {@link MenuPopup}
+	 */
+	@Override
+	public void open(JFrame parent) {
+		this.parent = parent;
+		
+		/* Updates branch list */
+		branchList = manager.getBranchNames();
+		if(branchList.length == 0){
+			invalidate("There are no branches to base upon.");
+			return;
+		}
+		
+		/* Constructs dialog */
+		dlg = new DefaultPopup(parent, dlgTitle);
+		JPanel panel = new JPanel();
+		panel.setLayout(new MigLayout(
+				"fill, wrap 2",
+				"10[right]rel[grow,fill]10"
+		));
+		buildDialog(panel);
+		dlg.getContentPane().add(panel);
+		
+		/* Sets up to display */
+		dlg.pack();
+		dlg.setResizable(false);
+		dlg.setLocationRelativeTo(parent);
+		dlg.setVisible(true);
+	}
+
+	/**
+	 * Builds the dialog itself
+	 * @param panel - the panel in which the components will be laid on
+	 */
 	private void buildDialog(JPanel panel) {
 		String branchDefaultHint = "Name of your branch";
 		String folderDefaultHint = "Name of your folder";
@@ -71,10 +129,6 @@ public class NewBranchPopup implements MenuPopup {
 				}
 			}
 		});
-				
-		/* Branches list */
-		BranchManager manager = BranchManager.getInstance();
-		String [] branchList = manager.getBranchNames();
 		
 		/* Make settings combo box */
 		JLabel makeSettingsLabel = new JLabel("Make settings:");
@@ -91,14 +145,51 @@ public class NewBranchPopup implements MenuPopup {
 				prjSettingsCombo.setSelectedItem(value);
 			}
 		});
+
+		Console console = new Console(this);
+		JScrollPane jsp = new JScrollPane(console);
+		jsp.setMinimumSize(new Dimension(700, 300));
 		
 		JButton okButton = new JButton("OK");
+		JButton cancelButton = new JButton("Cancel");
+		
+		/* Adding validation functionality to OK button */
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-//				TODO Validate and take action
+				String branchName = branchNameTextComponent.getText();
+				String folderName = folderNameTextComponent.getText();
+				String makeSettingSource = (String) makeSettingsCombo.getSelectedItem();
+				String prjSettingSource = (String) prjSettingsCombo.getSelectedItem();
+				
+				/* Validates fields */
+				if (folderName.equals("")) folderName = branchName;
+				if(branchName.equals("")) {
+					invalidate("Branch name cannot be empty!");
+					return;
+				}
+				String basePath = gp.get("path");
+				Path newFolderPath = null;
+				try {
+					newFolderPath = Paths.get(basePath, folderName);
+				} catch(InvalidPathException e) {
+					invalidate("Folder name isn't valid!");
+					return;
+				}
+				if(Files.exists(newFolderPath)) {
+					invalidate("Folder name already exists!");
+					return;
+				}
+				ProcessBuilder initProcessBuilder = new ProcessBuilder("cmd", "/C", "test.bat", folderName)
+						.directory(new File(basePath));
+				console.clearScreen();
+				console.run(initProcessBuilder);
+				// does initxp.bat <folderName> -> console
+				// copies configprojects from <prjSettingSource>/src to <folderName>/src
+				// copies configvismake from <makeSettingSource>/src to <folderName/src and changes branch name to <branchName>
 			}
 		});
-		JButton cancelButton = new JButton("Cancel");
+		
+		/* Adding closing functionality to Cancel button */
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dlg.dispose();
@@ -113,21 +204,30 @@ public class NewBranchPopup implements MenuPopup {
 		panel.add(makeSettingsCombo);
 		panel.add(prjSettingsLabel);
 		panel.add(prjSettingsCombo);
+		panel.add(jsp, "span, grow");
 		panel.add(okButton, "skip 1, split 2, gapbefore push, sizegroup btns");
 		panel.add(cancelButton, "sizegroup btns");
 	}
 		
-	@Override
-	public void open(JFrame parent) {
-		dlg = new DefaultPopup(parent, "New Branch");
-		JPanel panel = new JPanel();
-		panel.setLayout(new MigLayout("fill, wrap 2", "10[right]rel[grow,fill]10"));
-		buildDialog(panel);
-		dlg.getContentPane().add(panel);
-		dlg.pack();
-		dlg.setResizable(false);
-		dlg.setLocationRelativeTo(parent);
-		dlg.setVisible(true);
+	/**
+	 * Implementing {@link Consumer}
+	 * Used by the console to tell whether a command was successful or not
+	 * @param successful - <code>true</code>
+	 */
+	public void accept(Boolean successful) {
+		if (successful) {
+			// now copy config files to new branch
+		} else {
+			invalidate("An IO error occurred and the program was terminated.");
+		}
 	}
-
+	
+	/**
+	 * Present an error message to the screen
+	 * @param message
+	 */
+	private void invalidate(String message) {
+		LightError.show(message, dlgTitle, parent);
+	}
+	
 }

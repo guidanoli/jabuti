@@ -15,7 +15,7 @@ import vars.properties.GlobalProperties;
 import vars.properties.bool.NotificationProperty;
 
 /**
- * <p>The {@code Launcher} class servers the purpose of managing the set up and compile jobs, 
+ * <p>The <code>Launcher</code> class servers the purpose of managing the set up and compile jobs, 
  * with respect to thread buffers, semaphores and call backs to the main panel.
  * <p>It does not handles the processes directly. This functionality is delegated to the methods of the
  * {@link svn.TortoiseHandler TortoiseHandler} wrapper class.

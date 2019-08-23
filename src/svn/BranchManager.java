@@ -9,7 +9,7 @@ import vars.Language;
 import vars.properties.GlobalProperties;
 
 /**
- * <p>The {@code BranchManager} class intends to centralize any operation dealing
+ * <p>The <code>BranchManager</code> class intends to centralize any operation dealing
  * with branches, their history and their current state on the application.
  * <p><b>It does not directly operate them</b>. It only sets and gets local
  * information stored as {@link vars.properties.GlobalProperties GlobalProperties}, in a

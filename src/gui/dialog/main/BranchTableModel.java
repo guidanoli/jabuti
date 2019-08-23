@@ -16,13 +16,10 @@ import vars.LocalResources;
  * @author guidanoli
  *
  */
-/**
- * @author guidanoli
- *
- */
-@SuppressWarnings("serial")
 public class BranchTableModel extends AbstractTableModel {
 
+	private static final long serialVersionUID = -3381824531233680142L;
+	
 	protected static final int BRANCH_NAME = 0;
 	protected static final int LAST_SETUP = 1;
 	protected static final int SETUP = 2;

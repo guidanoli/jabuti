@@ -8,10 +8,11 @@ import java.awt.*;
  * @author MadProgrammer
  *
  */
-@SuppressWarnings("serial")
 public class DefaultCardLayout extends CardLayout {
 
-    @Override
+	private static final long serialVersionUID = 4636079149948679140L;
+
+	@Override
     public Dimension preferredLayoutSize(Container parent) {
         Component current = findCurrentComponent(parent);
         if (current != null) {

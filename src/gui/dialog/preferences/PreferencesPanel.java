@@ -18,8 +18,9 @@ import vars.Language;
 import vars.LocalResources;
 import vars.properties.GlobalProperties;
 
-@SuppressWarnings("serial")
 public class PreferencesPanel extends JPanel implements ActionListener {
+
+	private static final long serialVersionUID = 3199951055300785816L;
 
 	// Language
 	Language lang = Language.getInstance();

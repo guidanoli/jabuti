@@ -11,9 +11,10 @@ import vars.properties.EditableProperty;
 import vars.properties.GlobalProperties;
 import vars.properties.Property;
 
-@SuppressWarnings("serial")
 public class PreferencesComboModel extends AbstractListModel<String> implements ComboBoxModel<String> {
 
+	private static final long serialVersionUID = -3979062597066404576L;
+	
 	private final static int KEY = 0;
 	private final static int LABEL = 1;
 	private final static int TYPE = 2;

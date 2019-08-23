@@ -17,7 +17,7 @@ import vars.LocalResources;
 import vars.properties.GlobalProperties;
 
 /**
- * The {@code LauncherLog} class is intended to handle and store log data
+ * The <code>LauncherLog</code> class is intended to handle and store log data
  * about previous jobs (setup, makes...) to the log file. It appends each
  * new action to the log file along with a time stamp, the branch name and,
  * optionally, additional parameters related to the action.
@@ -170,12 +170,12 @@ public class LauncherLogManager {
 	/**
 	 * <p>Restrains log to a maximum file size and, and if it surpasses that
 	 * threshold, reduces the log size to a percentage so that:
-	 * <p>{@code new size = maximum size * percentage}
+	 * <p><code>new size = maximum size * percentage</code>
 	 * <p>The number of entries that will be deducted is roughly estimated by
 	 * the current log file size and the current number of entries.
 	 * @param maxLogSize - maximum log file size <b>in bytes</b> ( > 0 )
 	 * @param percentage - % of file size after reduction, between 0 and 1
-	 * @return {@code true} if log has been reduced, or {@code false} if else.
+	 * @return <code>true</code> if log has been reduced, or <code>false</code> if else.
 	 */
 	public static boolean restrainLogSize(long maxLogSize, float percentage) {
 		ArrayList<String []> logArray = readLog();
@@ -191,10 +191,10 @@ public class LauncherLogManager {
 	/**
 	 * <p>Restrains log to a maximum number of entries and, and if it surpasses that
 	 * threshold, reduces the log size to a percentage so that:
-	 * <p>{@code new size = maximum size * percentage}
+	 * <p><code>new size = maximum size * percentage</code>
 	 * @param maxEntriesCount - maximum number of log entries ( > 0 )
 	 * @param percentage - % of entries after reduction, between 0 and 1
-	 * @return {@code true} if log has been reduced, or {@code false} if else.
+	 * @return <code>true</code> if log has been reduced, or <code>false</code> if else.
 	 */
 	public static boolean restrainLogEntriesCount(int maxEntriesCount, float percentage) {
 		ArrayList<String []> logArray = readLog();
@@ -211,7 +211,7 @@ public class LauncherLogManager {
 	 * <p>Registers array entries to log file
 	 * @param logEntries - array of entries, in the same format as returned from
 	 * the {@link #readLog()} method.
-	 * @return {@code true} if registered successfully, or {@code false} if else.
+	 * @return <code>true</code> if log has been reduced, or <code>false</code> if else.
 	 */
 	public static boolean registerArray(ArrayList<String []> logEntries) {
 		if( !assertLogFile() ) return false;
@@ -236,7 +236,7 @@ public class LauncherLogManager {
 	 *  Creates log file if inexistent. Warns the user with an error dialog if unsuccessful,
 	 *  but does not terminate the program itself for safety reasons (The launcher could still
 	 *  be running some sensitive procedure during the log registry, for example).
-	 *  @return {@code true} if successful.
+	 *  @return <code>true</code> if successful.
 	 */
 	private static boolean assertLogFile()
 	{

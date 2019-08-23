@@ -9,7 +9,7 @@ import gui.dialog.preferences.PreferenceType;
  * 
  * <ul>
  * <li><b>type</b> - {@link PreferenceType}</li>
- * <li><b>reset</b> - {@code true} if user is advised to reset application after modifying this property value</li>
+ * <li><b>reset</b> - <code>true</code> if user is advised to reset application after modifying this property value</li>
  * </ul>
  * 
  * @author guidanoli
